@@ -473,6 +473,267 @@ btoa(rawFingerprint).substring(0,50);
 
 addItem(fingerprint,"Fingerprint Hash",hash);
 
+// ===============================
+// EXTRA SYSTEM INFORMATION
+// ===============================
+
+const advanced = createSection("🧬 Advanced Capabilities");
+
+addItem(advanced,"Browser Vendor",navigator.vendor);
+addItem(advanced,"Browser CodeName",navigator.appCodeName);
+addItem(advanced,"Browser Name",navigator.appName);
+addItem(advanced,"Browser Version",navigator.appVersion);
+addItem(advanced,"Product",navigator.product);
+addItem(advanced,"Product Sub",navigator.productSub);
+addItem(advanced,"PDF Viewer Enabled",navigator.pdfViewerEnabled);
+addItem(advanced,"Do Not Track",navigator.doNotTrack);
+addItem(advanced,"Java Enabled",navigator.javaEnabled());
+addItem(advanced,"Webdriver (Bot)",navigator.webdriver || false);
+addItem(advanced,"Dark Mode",window.matchMedia('(prefers-color-scheme: dark)').matches);
+addItem(advanced,"Reduced Motion",window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+addItem(advanced,"Standalone App",window.matchMedia('(display-mode: standalone)').matches);
+
+
+// ===============================
+// STORAGE
+// ===============================
+
+const storage = createSection("💾 Storage & Browser Features");
+
+addItem(storage,"localStorage",typeof localStorage !== "undefined");
+addItem(storage,"sessionStorage",typeof sessionStorage !== "undefined");
+addItem(storage,"IndexedDB","indexedDB" in window);
+addItem(storage,"Cache API","caches" in window);
+addItem(storage,"Service Worker","serviceWorker" in navigator);
+addItem(storage,"Clipboard API","clipboard" in navigator);
+addItem(storage,"Share API","share" in navigator);
+addItem(storage,"Vibration API","vibrate" in navigator);
+
+
+// ===============================
+// DEVICE FEATURES
+// ===============================
+
+const device = createSection("📱 Device Features");
+
+addItem(device,"Mobile Device",/Mobi|Android/i.test(navigator.userAgent));
+addItem(device,"Touch Device",'ontouchstart' in window);
+addItem(device,"Portrait Mode",window.innerHeight > window.innerWidth);
+addItem(device,"Screen Orientation",screen.orientation?.type || "Unknown");
+addItem(device,"Fullscreen Enabled",document.fullscreenEnabled);
+addItem(device,"Device Pixel Ratio",window.devicePixelRatio);
+
+
+// ===============================
+// MEDIA DEVICES
+// ===============================
+
+const media = createSection("🎤 Media Devices");
+
+if(navigator.mediaDevices){
+
+  navigator.mediaDevices.enumerateDevices()
+  .then(devices => {
+
+    const audioInputs =
+      devices.filter(d => d.kind === "audioinput").length;
+
+    const audioOutputs =
+      devices.filter(d => d.kind === "audiooutput").length;
+
+    const videoInputs =
+      devices.filter(d => d.kind === "videoinput").length;
+
+    addItem(media,"Microphones",audioInputs);
+    addItem(media,"Speakers",audioOutputs);
+    addItem(media,"Cameras",videoInputs);
+
+  });
+
+}else{
+
+  addItem(media,"Media Devices","Not Supported");
+
+}
+
+
+// ===============================
+// SPEECH SYNTHESIS
+// ===============================
+
+const speech = createSection("🗣️ Speech & Voice");
+
+if("speechSynthesis" in window){
+
+  const voices =
+    speechSynthesis.getVoices();
+
+  addItem(speech,"Speech Synthesis",true);
+  addItem(speech,"Installed Voices",voices.length);
+
+}else{
+
+  addItem(speech,"Speech Synthesis",false);
+
+}
+
+
+// ===============================
+// PLUGINS
+// ===============================
+
+const plugins = createSection("🧩 Plugins & MIME Types");
+
+addItem(plugins,"Installed Plugins",navigator.plugins.length);
+addItem(plugins,"MIME Types",navigator.mimeTypes.length);
+
+
+// ===============================
+// WEBRTC
+// ===============================
+
+const webrtc = createSection("🌐 WebRTC");
+
+addItem(webrtc,"RTCPeerConnection",
+  !!window.RTCPeerConnection);
+
+addItem(webrtc,"MediaRecorder",
+  !!window.MediaRecorder);
+
+addItem(webrtc,"WebSocket",
+  !!window.WebSocket);
+
+
+// ===============================
+// BATTERY LIVE UPDATE
+// ===============================
+
+if(navigator.getBattery){
+
+  navigator.getBattery().then((battery)=>{
+
+    battery.addEventListener("levelchange",()=>{
+
+      console.log("Battery changed");
+
+    });
+
+  });
+
+}
+
+
+// ===============================
+// PAGE PERFORMANCE
+// ===============================
+
+const performanceSection =
+createSection("⚡ Performance");
+
+addItem(
+  performanceSection,
+  "Page Load Time",
+  performance.now().toFixed(2) + " ms"
+);
+
+addItem(
+  performanceSection,
+  "CPU Cores",
+  navigator.hardwareConcurrency || "Unknown"
+);
+
+addItem(
+  performanceSection,
+  "Estimated RAM",
+  navigator.deviceMemory
+    ? navigator.deviceMemory + " GB"
+    : "Unknown"
+);
+
+
+// ===============================
+// CANVAS FINGERPRINT
+// ===============================
+
+const canvasFp =
+createSection("🎨 Canvas Fingerprint");
+
+try{
+
+  const canvas =
+    document.createElement("canvas");
+
+  const ctx =
+    canvas.getContext("2d");
+
+  ctx.textBaseline = "top";
+  ctx.font = "16px Arial";
+  ctx.fillStyle = "#00ff88";
+  ctx.fillText("faysk.dev",10,10);
+
+  const data =
+    canvas.toDataURL();
+
+  addItem(
+    canvasFp,
+    "Canvas Hash",
+    btoa(data).substring(0,60)
+  );
+
+}catch(e){
+
+  addItem(canvasFp,"Canvas Error",e.message);
+
+}
+
+
+// ===============================
+// AD BLOCK DETECTION
+// ===============================
+
+const adblock =
+createSection("🚫 AdBlock Detection");
+
+const bait =
+document.createElement("div");
+
+bait.className =
+"adsbox";
+
+document.body.appendChild(bait);
+
+setTimeout(()=>{
+
+  if(
+    bait.offsetHeight === 0
+  ){
+
+    addItem(adblock,"AdBlock Enabled",true);
+
+  }else{
+
+    addItem(adblock,"AdBlock Enabled",false);
+
+  }
+
+  bait.remove();
+
+},100);
+
+// ===============================
+// LIVE CLOCK
+// ===============================
+
+setInterval(()=>{
+
+  const time =
+    new Date().toLocaleTimeString();
+
+  document.title =
+    `🚀 ${time} • faysk.dev`;
+
+},1000);
+
 </script>
 
 </body>
