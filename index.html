@@ -1,202 +1,464 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>faysk.dev | System Scanner</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <style>
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
-    }
+<title>faysk.dev | System Scanner</title>
 
-    body{
-      background:#050505;
-      color:#00ff88;
-      font-family:Consolas, monospace;
-      padding:20px;
-    }
+<style>
 
-    h1{
-      font-size:3rem;
-      margin-bottom:10px;
-      color:white;
-    }
+:root{
+  --bg:#050505;
+  --card:#0f0f0f;
+  --border:#1f1f1f;
+  --primary:#00ff88;
+  --primary-soft:#00ffaa;
+  --text:#ffffff;
+  --muted:#7d7d7d;
+}
 
-    h2{
-      margin-top:30px;
-      margin-bottom:10px;
-      color:#00ffaa;
-      border-bottom:1px solid #222;
-      padding-bottom:5px;
-    }
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
 
-    .card{
-      background:#0d0d0d;
-      border:1px solid #1f1f1f;
-      border-radius:10px;
-      padding:15px;
-      margin-bottom:15px;
-      box-shadow:0 0 15px rgba(0,255,100,0.05);
-    }
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:Inter, Arial, sans-serif;
+  min-height:100vh;
+  overflow-x:hidden;
+}
 
-    .item{
-      margin:6px 0;
-      word-break:break-word;
-    }
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:
+    radial-gradient(circle at top left, rgba(0,255,136,.08), transparent 25%),
+    radial-gradient(circle at bottom right, rgba(0,255,255,.06), transparent 25%);
+  z-index:-1;
+}
 
-    .label{
-      color:#888;
-    }
+.container{
+  width:100%;
+  max-width:1400px;
+  margin:auto;
+  padding:20px;
+}
 
-    .value{
-      color:#00ff88;
-    }
+.hero{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:20px;
 
-    .loading{
-      color:orange;
-    }
+  margin-bottom:30px;
+  padding:25px;
 
-    .error{
-      color:red;
-    }
+  border:1px solid var(--border);
+  background:rgba(15,15,15,.85);
+  backdrop-filter:blur(10px);
 
-    canvas{
-      margin-top:10px;
-      border:1px solid #222;
-    }
-  </style>
+  border-radius:20px;
+
+  box-shadow:
+    0 0 30px rgba(0,255,136,.05);
+}
+
+.hero-left h1{
+  font-size:clamp(2rem,5vw,4rem);
+  margin-bottom:10px;
+}
+
+.hero-left p{
+  color:var(--muted);
+}
+
+.status{
+  display:flex;
+  gap:15px;
+  flex-wrap:wrap;
+}
+
+.status-box{
+  background:#101010;
+  border:1px solid #222;
+  padding:15px;
+  border-radius:14px;
+  min-width:120px;
+}
+
+.status-box .title{
+  font-size:.8rem;
+  color:var(--muted);
+  margin-bottom:6px;
+}
+
+.status-box .value{
+  color:var(--primary);
+  font-weight:bold;
+  font-size:1rem;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+  gap:20px;
+}
+
+.section{
+  background:rgba(15,15,15,.9);
+  border:1px solid var(--border);
+  border-radius:18px;
+  overflow:hidden;
+
+  box-shadow:
+    0 0 20px rgba(0,255,136,.03);
+
+  transition:.25s;
+}
+
+.section:hover{
+  transform:translateY(-3px);
+  border-color:#2b2b2b;
+}
+
+.section-header{
+  padding:18px;
+  border-bottom:1px solid var(--border);
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  background:#111;
+}
+
+.section-header h2{
+  font-size:1rem;
+  color:var(--primary-soft);
+}
+
+.section-body{
+  padding:18px;
+}
+
+.item{
+  display:flex;
+  justify-content:space-between;
+  gap:15px;
+
+  padding:12px 0;
+
+  border-bottom:1px solid rgba(255,255,255,.04);
+}
+
+.item:last-child{
+  border-bottom:none;
+}
+
+.label{
+  color:var(--muted);
+  font-size:.92rem;
+  min-width:120px;
+}
+
+.value{
+  color:var(--primary);
+  text-align:right;
+  word-break:break-word;
+  font-size:.92rem;
+}
+
+.footer{
+  margin-top:40px;
+  text-align:center;
+  color:#666;
+  font-size:.85rem;
+}
+
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+
+  background:#111;
+  border:1px solid #222;
+
+  padding:8px 14px;
+  border-radius:999px;
+
+  color:var(--primary);
+  font-size:.85rem;
+}
+
+.dot{
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:var(--primary);
+
+  box-shadow:
+    0 0 10px var(--primary);
+}
+
+.loading{
+  color:orange;
+}
+
+.error{
+  color:red;
+}
+
+@media(max-width:768px){
+
+  .hero{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  .item{
+    flex-direction:column;
+  }
+
+  .value{
+    text-align:left;
+  }
+
+}
+
+</style>
 </head>
+
 <body>
 
-  <h1>🚀 faysk.dev</h1>
-  <p>System & Browser Scanner</p>
+<div class="container">
 
-  <div id="content"></div>
+  <div class="hero">
+
+    <div class="hero-left">
+      <h1>🚀 faysk.dev</h1>
+      <p>Advanced Browser & System Scanner</p>
+    </div>
+
+    <div class="status">
+
+      <div class="status-box">
+        <div class="title">STATUS</div>
+        <div class="value">ONLINE</div>
+      </div>
+
+      <div class="status-box">
+        <div class="title">TIMEZONE</div>
+        <div class="value" id="timezone-top">...</div>
+      </div>
+
+      <div class="status-box">
+        <div class="title">LANGUAGE</div>
+        <div class="value" id="language-top">...</div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="grid" id="content"></div>
+
+  <div class="footer">
+    faysk.dev • telemetry interface • cyberpunk edition 😎
+  </div>
+
+</div>
 
 <script>
 
 const content = document.getElementById("content");
 
-function addSection(title){
+function createSection(title){
+
   const section = document.createElement("div");
-  section.innerHTML = `<h2>${title}</h2>`;
-  content.appendChild(section);
-  return section;
-}
+  section.className = "section";
 
-function addItem(section, label, value){
-  const div = document.createElement("div");
-  div.className = "card";
-  div.innerHTML = `
-    <div class="item">
-      <span class="label">${label}: </span>
-      <span class="value">${value}</span>
+  section.innerHTML = `
+    <div class="section-header">
+      <h2>${title}</h2>
+      <div class="badge">
+        <div class="dot"></div>
+        ACTIVE
+      </div>
     </div>
+
+    <div class="section-body"></div>
   `;
-  section.appendChild(div);
+
+  content.appendChild(section);
+
+  return section.querySelector(".section-body");
 }
 
-const browserSection = addSection("🌐 Browser Information");
+function addItem(section,label,value){
 
-addItem(browserSection, "User Agent", navigator.userAgent);
-addItem(browserSection, "Platform", navigator.platform);
-addItem(browserSection, "Language", navigator.language);
-addItem(browserSection, "Languages", navigator.languages.join(", "));
-addItem(browserSection, "Cookies Enabled", navigator.cookieEnabled);
-addItem(browserSection, "Online", navigator.onLine);
-addItem(browserSection, "Hardware Concurrency", navigator.hardwareConcurrency || "Unknown");
-addItem(browserSection, "Device Memory", navigator.deviceMemory ? navigator.deviceMemory + " GB" : "Unknown");
-addItem(browserSection, "Max Touch Points", navigator.maxTouchPoints);
+  const item = document.createElement("div");
 
-const screenSection = addSection("🖥️ Screen Information");
+  item.className = "item";
 
-addItem(screenSection, "Screen Resolution", `${screen.width} x ${screen.height}`);
-addItem(screenSection, "Available Resolution", `${screen.availWidth} x ${screen.availHeight}`);
-addItem(screenSection, "Color Depth", screen.colorDepth);
-addItem(screenSection, "Pixel Ratio", window.devicePixelRatio);
+  item.innerHTML = `
+    <div class="label">${label}</div>
+    <div class="value">${value}</div>
+  `;
 
-const timeSection = addSection("🕒 Time Information");
+  section.appendChild(item);
+}
 
-addItem(timeSection, "Timezone", Intl.DateTimeFormat().resolvedOptions().timeZone);
-addItem(timeSection, "Current Time", new Date().toString());
+document.getElementById("timezone-top").innerText =
+Intl.DateTimeFormat().resolvedOptions().timeZone;
 
-const networkSection = addSection("📡 Network");
+document.getElementById("language-top").innerText =
+navigator.language;
+
+const browser = createSection("🌐 Browser Information");
+
+addItem(browser,"User Agent",navigator.userAgent);
+addItem(browser,"Platform",navigator.platform);
+addItem(browser,"Language",navigator.language);
+addItem(browser,"Languages",navigator.languages.join(", "));
+addItem(browser,"Cookies Enabled",navigator.cookieEnabled);
+addItem(browser,"Online",navigator.onLine);
+addItem(browser,"CPU Threads",navigator.hardwareConcurrency || "Unknown");
+addItem(browser,"RAM",navigator.deviceMemory ? navigator.deviceMemory + " GB" : "Unknown");
+addItem(browser,"Touch Points",navigator.maxTouchPoints);
+
+const screenInfo = createSection("🖥️ Screen Information");
+
+addItem(screenInfo,"Resolution",`${screen.width} x ${screen.height}`);
+addItem(screenInfo,"Available Area",`${screen.availWidth} x ${screen.availHeight}`);
+addItem(screenInfo,"Color Depth",screen.colorDepth);
+addItem(screenInfo,"Pixel Ratio",window.devicePixelRatio);
+
+const timeInfo = createSection("🕒 Time Information");
+
+addItem(timeInfo,"Timezone",Intl.DateTimeFormat().resolvedOptions().timeZone);
+addItem(timeInfo,"Current Time",new Date().toString());
+
+const network = createSection("📡 Network");
 
 if(navigator.connection){
-  addItem(networkSection, "Connection Type", navigator.connection.effectiveType);
-  addItem(networkSection, "Downlink", navigator.connection.downlink + " Mbps");
-  addItem(networkSection, "RTT", navigator.connection.rtt + " ms");
-  addItem(networkSection, "Save Data", navigator.connection.saveData);
+
+  addItem(network,"Connection Type",navigator.connection.effectiveType);
+  addItem(network,"Downlink",navigator.connection.downlink + " Mbps");
+  addItem(network,"RTT",navigator.connection.rtt + " ms");
+  addItem(network,"Save Data",navigator.connection.saveData);
+
 }else{
-  addItem(networkSection, "Connection API", "Not supported");
+
+  addItem(network,"Network API","Not Supported");
+
 }
 
-const gpuSection = addSection("🎮 GPU Information");
+const gpu = createSection("🎮 GPU Information");
 
 try{
+
   const canvas = document.createElement("canvas");
-  const gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
+
+  const gl =
+    canvas.getContext("webgl") ||
+    canvas.getContext("experimental-webgl");
 
   if(gl){
-    const debugInfo = gl.getExtension("WEBGL_debug_renderer_info");
+
+    const debugInfo =
+      gl.getExtension("WEBGL_debug_renderer_info");
 
     if(debugInfo){
-      addItem(gpuSection, "GPU Vendor", gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL));
-      addItem(gpuSection, "GPU Renderer", gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL));
+
+      addItem(
+        gpu,
+        "GPU Vendor",
+        gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL)
+      );
+
+      addItem(
+        gpu,
+        "GPU Renderer",
+        gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL)
+      );
+
     }
-  }else{
-    addItem(gpuSection, "WebGL", "Not supported");
+
   }
+
 }catch(e){
-  addItem(gpuSection, "GPU Error", e.message);
+
+  addItem(gpu,"GPU Error",e.message);
+
 }
 
-const locationSection = addSection("📍 Geolocation");
+const locationInfo = createSection("📍 Geolocation");
 
-addItem(locationSection, "Location Status", "Waiting permission...");
+addItem(locationInfo,"Location Status","Waiting permission...");
 
 navigator.geolocation.getCurrentPosition(
-  (position) => {
-    locationSection.innerHTML = `<h2>📍 Geolocation</h2>`;
 
-    addItem(locationSection, "Latitude", position.coords.latitude);
-    addItem(locationSection, "Longitude", position.coords.longitude);
-    addItem(locationSection, "Accuracy", position.coords.accuracy + " meters");
-  },
-  (error) => {
-    locationSection.innerHTML = `<h2>📍 Geolocation</h2>`;
-    addItem(locationSection, "Location Error", error.message);
-  }
-);
+(position)=>{
 
-const batterySection = addSection("🔋 Battery");
+  locationInfo.innerHTML = "";
 
-if(navigator.getBattery){
-  navigator.getBattery().then((battery) => {
-    addItem(batterySection, "Charging", battery.charging);
-    addItem(batterySection, "Battery Level", Math.round(battery.level * 100) + "%");
-  });
-}else{
-  addItem(batterySection, "Battery API", "Not supported");
+  addItem(locationInfo,"Latitude",position.coords.latitude);
+  addItem(locationInfo,"Longitude",position.coords.longitude);
+  addItem(locationInfo,"Accuracy",position.coords.accuracy + "m");
+
+},
+
+(error)=>{
+
+  locationInfo.innerHTML = "";
+
+  addItem(locationInfo,"Location Error",error.message);
+
 }
 
-const ipSection = addSection("🌍 Public IP");
+);
+
+const battery = createSection("🔋 Battery");
+
+if(navigator.getBattery){
+
+  navigator.getBattery().then((b)=>{
+
+    addItem(battery,"Charging",b.charging);
+    addItem(battery,"Battery Level",Math.round(b.level*100)+"%");
+
+  });
+
+}else{
+
+  addItem(battery,"Battery API","Not Supported");
+
+}
+
+const ip = createSection("🌍 Public IP");
 
 fetch("https://api.ipify.org?format=json")
-.then(res => res.json())
-.then(data => {
-  addItem(ipSection, "IP Address", data.ip);
+.then(res=>res.json())
+.then(data=>{
+
+  addItem(ip,"IP Address",data.ip);
+
 })
-.catch(() => {
-  addItem(ipSection, "IP Error", "Could not fetch IP");
+.catch(()=>{
+
+  addItem(ip,"IP Error","Could not fetch IP");
+
 });
 
-const fingerprintSection = addSection("🧠 Fingerprint");
+const fingerprint = createSection("🧠 Fingerprint");
 
-const fingerprint = `
+const rawFingerprint = `
 ${navigator.userAgent}
 ${screen.width}
 ${screen.height}
@@ -206,9 +468,10 @@ ${navigator.hardwareConcurrency}
 ${navigator.deviceMemory}
 `;
 
-const hash = btoa(fingerprint).substring(0, 50);
+const hash =
+btoa(rawFingerprint).substring(0,50);
 
-addItem(fingerprintSection, "Fingerprint Hash", hash);
+addItem(fingerprint,"Fingerprint Hash",hash);
 
 </script>
 
