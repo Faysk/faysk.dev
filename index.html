@@ -20,3 +20,468 @@
   <script type="module" src="./assets/js/app.js"></script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+
+  <!-- ========================================= -->
+  <!-- 🚀 META -->
+  <!-- ========================================= -->
+
+  <meta charset="UTF-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <meta
+    name="description"
+    content="Advanced Browser Intelligence & Telemetry Interface"
+  />
+
+  <meta
+    name="theme-color"
+    content="#050505"
+  />
+
+  <meta
+    http-equiv="X-UA-Compatible"
+    content="IE=edge"
+  />
+
+  <!-- ========================================= -->
+  <!-- 🚀 TITLE -->
+  <!-- ========================================= -->
+
+  <title>🚀 faysk.dev</title>
+
+  <!-- ========================================= -->
+  <!-- 🔥 FONTS -->
+  <!-- ========================================= -->
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  />
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  />
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- ========================================= -->
+  <!-- 🎨 CSS -->
+  <!-- ========================================= -->
+
+  <link rel="stylesheet" href="./assets/css/variables.css" />
+  <link rel="stylesheet" href="./assets/css/animations.css" />
+  <link rel="stylesheet" href="./assets/css/layout.css" />
+  <link rel="stylesheet" href="./assets/css/components.css" />
+  <link rel="stylesheet" href="./assets/css/terminal.css" />
+  <link rel="stylesheet" href="./assets/css/responsive.css" />
+  <link rel="stylesheet" href="./assets/css/style.css" />
+
+  <!-- ========================================= -->
+  <!-- 🧠 PRELOAD -->
+  <!-- ========================================= -->
+
+  <link
+    rel="modulepreload"
+    href="./assets/js/app.js"
+  />
+
+</head>
+
+<body>
+
+  <!-- ========================================= -->
+  <!-- 🌌 BACKGROUND LAYERS -->
+  <!-- ========================================= -->
+
+  <div id="background-grid"></div>
+
+  <div id="background-glow"></div>
+
+  <div id="particles-layer"></div>
+
+  <div id="noise-layer"></div>
+
+  <!-- ========================================= -->
+  <!-- 🚀 APP -->
+  <!-- ========================================= -->
+
+  <div id="app">
+
+    <!-- ========================================= -->
+    <!-- 🧭 SIDEBAR -->
+    <!-- ========================================= -->
+
+    <aside id="sidebar">
+
+      <div class="sidebar-top">
+
+        <div class="logo-container">
+
+          <div class="logo-glow"></div>
+
+          <h1 class="logo-text">
+            🚀 faysk.dev
+          </h1>
+
+        </div>
+
+        <p class="sidebar-description">
+          Browser Intelligence Interface
+        </p>
+
+      </div>
+
+      <!-- ========================================= -->
+      <!-- 📡 STATUS -->
+      <!-- ========================================= -->
+
+      <div class="sidebar-status">
+
+        <div class="status-card">
+
+          <span class="status-dot"></span>
+
+          <span class="status-text">
+            ONLINE
+          </span>
+
+        </div>
+
+      </div>
+
+      <!-- ========================================= -->
+      <!-- 🔎 SEARCH -->
+      <!-- ========================================= -->
+
+      <div class="sidebar-search">
+
+        <input
+          type="text"
+          id="search-input"
+          placeholder="Search modules..."
+          autocomplete="off"
+        />
+
+      </div>
+
+      <!-- ========================================= -->
+      <!-- 🧭 NAVIGATION -->
+      <!-- ========================================= -->
+
+      <nav id="sidebar-nav"></nav>
+
+      <!-- ========================================= -->
+      <!-- ⚡ SIDEBAR FOOTER -->
+      <!-- ========================================= -->
+
+      <div class="sidebar-footer">
+
+        <div class="sidebar-version">
+          v0.1-alpha
+        </div>
+
+        <div class="sidebar-build">
+          cyberpunk-build
+        </div>
+
+      </div>
+
+    </aside>
+
+    <!-- ========================================= -->
+    <!-- 🌌 MAIN -->
+    <!-- ========================================= -->
+
+    <main id="main-content">
+
+      <!-- ========================================= -->
+      <!-- 🚀 HERO -->
+      <!-- ========================================= -->
+
+      <section id="hero">
+
+        <div class="hero-left">
+
+          <div class="hero-badge">
+            Advanced Browser Intelligence
+          </div>
+
+          <h1 class="hero-title">
+            Browser Telemetry
+            <span class="hero-highlight">
+              Reimagined
+            </span>
+          </h1>
+
+          <p class="hero-description">
+
+            A futuristic cyberpunk-inspired browser
+            intelligence interface focused on telemetry,
+            fingerprinting, diagnostics and immersive UI systems.
+
+          </p>
+
+          <!-- ========================================= -->
+          <!-- 🎛️ HERO ACTIONS -->
+          <!-- ========================================= -->
+
+          <div class="hero-actions">
+
+            <button id="scan-button" class="primary-button">
+              🚀 Start Scan
+            </button>
+
+            <button id="terminal-button" class="secondary-button">
+              💻 Open Terminal
+            </button>
+
+          </div>
+
+        </div>
+
+        <!-- ========================================= -->
+        <!-- 📊 HERO STATS -->
+        <!-- ========================================= -->
+
+        <div class="hero-right">
+
+          <div class="hero-stats-grid">
+
+            <div class="hero-stat-card">
+
+              <div class="stat-label">
+                PRIVACY SCORE
+              </div>
+
+              <div class="stat-value">
+                74%
+              </div>
+
+              <div class="stat-progress">
+                <div
+                  class="stat-progress-bar"
+                  style="width:74%"
+                ></div>
+              </div>
+
+            </div>
+
+            <div class="hero-stat-card">
+
+              <div class="stat-label">
+                ENTROPY
+              </div>
+
+              <div class="stat-value">
+                HIGH
+              </div>
+
+            </div>
+
+            <div class="hero-stat-card">
+
+              <div class="stat-label">
+                SECURITY
+              </div>
+
+              <div class="stat-value">
+                STABLE
+              </div>
+
+            </div>
+
+            <div class="hero-stat-card">
+
+              <div class="stat-label">
+                TELEMETRY
+              </div>
+
+              <div class="stat-value">
+                ACTIVE
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- ========================================= -->
+      <!-- 📡 LIVE TERMINAL -->
+      <!-- ========================================= -->
+
+      <section id="live-terminal">
+
+        <div class="terminal-header">
+
+          <div class="terminal-title">
+            LIVE TELEMETRY TERMINAL
+          </div>
+
+          <div class="terminal-controls">
+
+            <span class="terminal-dot red"></span>
+            <span class="terminal-dot yellow"></span>
+            <span class="terminal-dot green"></span>
+
+          </div>
+
+        </div>
+
+        <div id="terminal-output">
+
+          <div class="terminal-line">
+            [INFO] Initializing telemetry systems...
+          </div>
+
+          <div class="terminal-line">
+            [INFO] Preparing browser diagnostics...
+          </div>
+
+          <div class="terminal-line">
+            [OK] Cyberpunk interface online.
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- ========================================= -->
+      <!-- 🧩 MODULE GRID -->
+      <!-- ========================================= -->
+
+      <section id="telemetry-grid">
+
+        <!-- Dynamic JS Modules Render Here -->
+
+      </section>
+
+      <!-- ========================================= -->
+      <!-- 📊 PERFORMANCE OVERLAY -->
+      <!-- ========================================= -->
+
+      <section id="performance-overlay">
+
+        <div class="overlay-card">
+
+          <div class="overlay-title">
+            FPS
+          </div>
+
+          <div id="fps-counter">
+            60
+          </div>
+
+        </div>
+
+        <div class="overlay-card">
+
+          <div class="overlay-title">
+            LATENCY
+          </div>
+
+          <div id="latency-counter">
+            0ms
+          </div>
+
+        </div>
+
+        <div class="overlay-card">
+
+          <div class="overlay-title">
+            MEMORY
+          </div>
+
+          <div id="memory-counter">
+            -- GB
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- ========================================= -->
+      <!-- 🌍 FOOTER -->
+      <!-- ========================================= -->
+
+      <footer id="footer">
+
+        <div class="footer-left">
+
+          <div class="footer-logo">
+            🚀 faysk.dev
+          </div>
+
+          <div class="footer-description">
+            Browser Intelligence & Telemetry Interface
+          </div>
+
+        </div>
+
+        <div class="footer-right">
+
+          <div class="footer-item">
+            Cyberpunk Build
+          </div>
+
+          <div class="footer-item">
+            Vanilla JS
+          </div>
+
+          <div class="footer-item">
+            Experimental
+          </div>
+
+        </div>
+
+      </footer>
+
+    </main>
+
+  </div>
+
+  <!-- ========================================= -->
+  <!-- 🧠 MODAL ROOT -->
+  <!-- ========================================= -->
+
+  <div id="modal-root"></div>
+
+  <!-- ========================================= -->
+  <!-- 🔔 NOTIFICATIONS -->
+  <!-- ========================================= -->
+
+  <div id="notifications-root"></div>
+
+  <!-- ========================================= -->
+  <!-- 🎮 OVERLAY EFFECTS -->
+  <!-- ========================================= -->
+
+  <div id="scanline-overlay"></div>
+
+  <div id="crt-overlay"></div>
+
+  <!-- ========================================= -->
+  <!-- ⚡ JAVASCRIPT -->
+  <!-- ========================================= -->
+
+  <script
+    type="module"
+    src="./assets/js/app.js"
+  ></script>
+
+</body>
+</html>
