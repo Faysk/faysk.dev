@@ -1,11 +1,20 @@
 import { createElement } from "../core/dom.js";
 
+function createValueRows(items) {
+  return items.map((item) => createElement("div", {
+    className: "card-row",
+    children: [
+      createElement("span", { className: "card-row-label", text: item.label }),
+      createElement("span", { className: "card-row-value", text: item.value })
+    ]
+  }));
+}
+
 export function createTelemetryCard(module) {
   const statusClass = module.status === "permission-required" ? "permission-required" : module.status;
-  const lines = module.items.map((item) => `${item.label}: ${item.value}`).join("\n");
 
   return createElement("article", {
-    className: "telemetry-card is-revealed",
+    className: `telemetry-card is-revealed status-${statusClass}`,
     attrs: {
       "data-group": module.group,
       "data-title": module.title.toLowerCase()
@@ -26,9 +35,14 @@ export function createTelemetryCard(module) {
           })
         ]
       }),
+      createElement("p", { className: "card-description", text: module.description }),
       createElement("div", {
-        className: "card-value",
-        text: lines || module.description
+        className: "card-value-grid",
+        children: createValueRows(module.items)
+      }),
+      createElement("div", {
+        className: "card-scanline",
+        attrs: { "aria-hidden": "true" }
       })
     ]
   });

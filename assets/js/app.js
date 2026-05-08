@@ -24,6 +24,8 @@ function boot() {
 
   subscribe(() => {
     ui.renderTelemetryGrid();
+    ui.updateSummary();
+    ui.updateGridHeader();
     ui.updateSidebar();
     ui.updateOverlay();
   });

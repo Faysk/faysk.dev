@@ -1,4 +1,4 @@
-import { APP_NAME, APP_VERSION, BUILD_NAME } from "../constants.js";
+import { APP_NAME, APP_VERSION, BUILD_NAME, MODULE_GROUPS } from "../constants.js";
 import { createElement, qs, clear } from "../core/dom.js";
 import { log } from "../core/logger.js";
 import { getState, setState } from "../state.js";
@@ -7,6 +7,42 @@ import { createEmptyState, createTelemetryCard } from "./cards.js";
 import { renderSidebar } from "./sidebar.js";
 import { renderTerminal } from "./terminal.js";
 import { bindSearch } from "./search.js";
+
+function getTelemetryStats(telemetry) {
+  return telemetry.reduce((stats, module) => {
+    stats.total += 1;
+    stats[module.status] = (stats[module.status] || 0) + 1;
+    return stats;
+  }, {
+    total: 0,
+    available: 0,
+    unsupported: 0,
+    "permission-required": 0
+  });
+}
+
+function renderCommandBar() {
+  return createElement("section", {
+    className: "command-bar is-revealed",
+    children: [
+      createElement("div", {
+        className: "command-title",
+        children: [
+          createElement("span", { className: "command-eyebrow", text: "CONTROL CENTER" }),
+          createElement("strong", { text: "Passive telemetry interface" })
+        ]
+      }),
+      createElement("div", {
+        className: "command-pills",
+        children: [
+          createElement("span", { text: "No permission prompts" }),
+          createElement("span", { text: "ES Modules" }),
+          createElement("span", { text: "Static build" })
+        ]
+      })
+    ]
+  });
+}
 
 function renderHero() {
   const scanButton = createElement("button", {
@@ -49,6 +85,14 @@ function renderHero() {
             text: "A futuristic browser intelligence interface focused on diagnostics, capability checks, privacy-aware telemetry and modular UI systems."
           }),
           createElement("div", {
+            className: "hero-meta-grid",
+            children: [
+              createElement("span", { text: "Safe mode active" }),
+              createElement("span", { text: "Local runtime" }),
+              createElement("span", { text: "No backend required" })
+            ]
+          }),
+          createElement("div", {
             className: "hero-actions",
             children: [scanButton, terminalButton]
           })
@@ -57,6 +101,16 @@ function renderHero() {
       createElement("div", {
         className: "hero-right is-revealed",
         children: [
+          createElement("div", {
+            className: "scanner-visual",
+            attrs: { "aria-hidden": "true" },
+            children: [
+              createElement("span", { className: "scanner-ring ring-a" }),
+              createElement("span", { className: "scanner-ring ring-b" }),
+              createElement("span", { className: "scanner-core" }),
+              createElement("span", { className: "scanner-sweep" })
+            ]
+          }),
           createElement("div", {
             className: "hero-stats-grid",
             children: [
@@ -68,6 +122,23 @@ function renderHero() {
           })
         ]
       })
+    ]
+  });
+}
+
+function renderModuleSummary() {
+  return createElement("section", {
+    className: "module-summary",
+    attrs: { id: "module-summary", "aria-live": "polite" }
+  });
+}
+
+function createSummaryCard(label, value, variant = "available") {
+  return createElement("div", {
+    className: `summary-card summary-${variant}`,
+    children: [
+      createElement("span", { className: "summary-label", text: label }),
+      createElement("strong", { className: "summary-value", text: String(value) })
     ]
   });
 }
@@ -112,6 +183,13 @@ function createOverlayCard(label, value, id) {
   });
 }
 
+function renderGridHeader() {
+  return createElement("div", {
+    className: "grid-header",
+    attrs: { id: "grid-header" }
+  });
+}
+
 function renderFooter() {
   return createElement("footer", {
     attrs: { id: "footer" },
@@ -149,7 +227,8 @@ function renderShell() {
   const sidebarNav = createElement("nav", { attrs: { id: "sidebar-nav" } });
   sidebarNav.append(renderSidebar({
     activeGroup: state.activeGroup,
-    onGroupSelect: (activeGroup) => setState({ activeGroup })
+    onGroupSelect: (activeGroup) => setState({ activeGroup }),
+    modules: state.telemetry
   }));
 
   const sidebar = createElement("aside", {
@@ -195,7 +274,7 @@ function renderShell() {
   const grid = createElement("section", { attrs: { id: "telemetry-grid" } });
   const main = createElement("main", {
     attrs: { id: "main-content" },
-    children: [renderHero(), renderTerminal(), grid, renderOverlay(), renderFooter()]
+    children: [renderCommandBar(), renderHero(), renderModuleSummary(), renderTerminal(), renderGridHeader(), grid, renderOverlay(), renderFooter()]
   });
 
   const shell = createElement("div", {
@@ -228,13 +307,60 @@ function renderTelemetryGrid() {
   filtered.forEach((module) => grid.append(createTelemetryCard(module)));
 }
 
+function updateSummary() {
+  const summary = qs("#module-summary");
+  if (!summary) return;
+
+  const stats = getTelemetryStats(getState().telemetry);
+  clear(summary);
+  summary.append(
+    createSummaryCard("Modules", stats.total, "total"),
+    createSummaryCard("Available", stats.available, "available"),
+    createSummaryCard("Permission gated", stats["permission-required"], "permission"),
+    createSummaryCard("Unsupported", stats.unsupported, "unsupported")
+  );
+}
+
+function updateGridHeader() {
+  const header = qs("#grid-header");
+  if (!header) return;
+
+  const { telemetry, activeGroup, searchTerm } = getState();
+  const visible = telemetry.filter((module) => {
+    const matchesGroup = activeGroup === "all" || module.group === activeGroup;
+    const haystack = `${module.title} ${module.groupLabel} ${module.description}`.toLowerCase();
+    return matchesGroup && (!searchTerm || haystack.includes(searchTerm));
+  });
+  const activeLabel = activeGroup === "all"
+    ? "All modules"
+    : MODULE_GROUPS.find((group) => group.id === activeGroup)?.label || activeGroup;
+
+  clear(header);
+  header.append(
+    createElement("div", {
+      children: [
+        createElement("span", { className: "grid-eyebrow", text: "Telemetry matrix" }),
+        createElement("h2", { className: "grid-title", text: activeLabel })
+      ]
+    }),
+    createElement("div", {
+      className: "grid-meta",
+      children: [
+        createElement("span", { text: `${visible.length} visible` }),
+        createElement("span", { text: searchTerm ? `filter: ${searchTerm}` : "no active filter" })
+      ]
+    })
+  );
+}
+
 function updateSidebar() {
   const nav = qs("#sidebar-nav");
   if (!nav) return;
   clear(nav);
   nav.append(renderSidebar({
     activeGroup: getState().activeGroup,
-    onGroupSelect: (activeGroup) => setState({ activeGroup })
+    onGroupSelect: (activeGroup) => setState({ activeGroup }),
+    modules: getState().telemetry
   }));
 }
 
@@ -253,10 +379,15 @@ export function initUI(root) {
 
   setState({ telemetry: collectTelemetry() });
   renderTelemetryGrid();
+  updateSummary();
+  updateGridHeader();
+  updateSidebar();
   updateOverlay();
 
   return {
     renderTelemetryGrid,
+    updateSummary,
+    updateGridHeader,
     updateSidebar,
     updateOverlay
   };

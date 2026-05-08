@@ -9,14 +9,14 @@ export const MODULE_STATUSES = {
 };
 
 export const MODULE_GROUPS = [
-  { id: "browser", label: "Browser", icon: "🌐" },
-  { id: "system", label: "System", icon: "🖥️" },
-  { id: "gpu", label: "GPU", icon: "🎮" },
-  { id: "fingerprint", label: "Fingerprint", icon: "🧠" },
-  { id: "network", label: "Network", icon: "📡" },
-  { id: "geolocation", label: "Geolocation", icon: "📍" },
-  { id: "media", label: "Media", icon: "🎤" },
-  { id: "telemetry", label: "Telemetry", icon: "⚡" },
-  { id: "security", label: "Security", icon: "🔐" },
-  { id: "experimental", label: "Experimental", icon: "🧪" }
+  { id: "browser", label: "Browser", icon: "BR" },
+  { id: "system", label: "System", icon: "SY" },
+  { id: "gpu", label: "GPU", icon: "GP" },
+  { id: "fingerprint", label: "Fingerprint", icon: "FP" },
+  { id: "network", label: "Network", icon: "NW" },
+  { id: "geolocation", label: "Geolocation", icon: "GL" },
+  { id: "media", label: "Media", icon: "AV" },
+  { id: "telemetry", label: "Telemetry", icon: "TM" },
+  { id: "security", label: "Security", icon: "SC" },
+  { id: "experimental", label: "Experimental", icon: "XP" }
 ];
