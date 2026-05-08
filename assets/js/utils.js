@@ -1,34 +1,20 @@
-const content =
+
+export const content =
 document.getElementById('content');
 
-export function createSection(title){
+export function createSection(id,title){
 
   const section =
-    document.createElement('div');
+  document.createElement('div');
 
-  section.className = 'fade-in';
+  section.className = 'section';
 
   section.innerHTML = `
-    <div style="
-      background:#0f0f0f;
-      border:1px solid #1d1d1d;
-      border-radius:20px;
-      overflow:hidden;
-    ">
-
-      <div style="
-        padding:18px;
-        border-bottom:1px solid #1d1d1d;
-        background:#111;
-        color:#00ffaa;
-        font-weight:bold;
-      ">
-        ${title}
-      </div>
-
-      <div class="section-body" style="padding:18px"></div>
-
+    <div class="section-header">
+      <h2>${title}</h2>
     </div>
+
+    <div class="section-body"></div>
   `;
 
   content.appendChild(section);
@@ -40,19 +26,13 @@ export function createSection(title){
 export function addItem(section,label,value){
 
   const item =
-    document.createElement('div');
+  document.createElement('div');
 
-  item.style.padding = '10px 0';
-  item.style.borderBottom = '1px solid rgba(255,255,255,.05)';
+  item.className = 'item';
 
   item.innerHTML = `
-    <div style="color:#7d7d7d;font-size:.85rem;">
-      ${label}
-    </div>
-
-    <div style="color:#00ff88;">
-      ${value}
-    </div>
+    <div class="label">${label}</div>
+    <div class="value">${value}</div>
   `;
 
   section.appendChild(item);
