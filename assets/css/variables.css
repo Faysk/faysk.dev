@@ -1,15 +1,4 @@
-:root{
-  --bg:#050505;
-  --card:#0f0f0f;
-  --border:#1d1d1d;
-
-  --primary:#00ff88;
-  --primary-soft:#00ffaa;
-
-  --text:#ffffff;
-  --muted:#7d7d7d;
-
-  --danger:#ff4d4d;
-  --warning:#ffb020;
-  --info:#00d9ff;
+:root {
+  --primary: #00ff88;
+  --bg: #050505;
 }

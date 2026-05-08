@@ -1,89 +1,22 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>faysk.dev</title>
 
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
-<title>🚀 faysk.dev</title>
-
-<link rel="stylesheet" href="./assets/css/variables.css">
-<link rel="stylesheet" href="./assets/css/animations.css">
-<link rel="stylesheet" href="./assets/css/style.css">
-
+  <link rel="stylesheet" href="./assets/css/variables.css">
+  <link rel="stylesheet" href="./assets/css/animations.css">
+  <link rel="stylesheet" href="./assets/css/layout.css">
+  <link rel="stylesheet" href="./assets/css/components.css">
+  <link rel="stylesheet" href="./assets/css/responsive.css">
+  <link rel="stylesheet" href="./assets/css/style.css">
 </head>
-
 <body>
 
-<div class="container">
+  <div id="app"></div>
 
-  <div class="hero">
-
-    <div class="hero-left">
-      <h1>🚀 faysk.dev</h1>
-      <p>Advanced Browser Intelligence & Telemetry Interface</p>
-    </div>
-
-    <div class="stats">
-
-      <div class="stat">
-        <div class="stat-title">STATUS</div>
-        <div class="stat-value">ONLINE</div>
-      </div>
-
-      <div class="stat">
-        <div class="stat-title">TIMEZONE</div>
-        <div class="stat-value" id="timezoneTop">...</div>
-      </div>
-
-      <div class="stat">
-        <div class="stat-title">LANGUAGE</div>
-        <div class="stat-value" id="languageTop">...</div>
-      </div>
-
-      <div class="stat">
-        <div class="stat-title">PRIVACY SCORE</div>
-        <div class="stat-value">74%</div>
-
-        <div class="progress">
-          <div class="progress-bar" style="width:74%"></div>
-        </div>
-      </div>
-
-      <div class="stat">
-        <div class="stat-title">ENTROPY</div>
-        <div class="stat-value">HIGH</div>
-      </div>
-
-    </div>
-
-  </div>
-
-  <div class="layout">
-
-    <aside class="sidebar">
-
-      <h3>🧭 Navigation</h3>
-
-      <nav id="sidebarNav"></nav>
-
-    </aside>
-
-    <main>
-
-      <div class="grid" id="content"></div>
-
-    </main>
-
-  </div>
-
-  <div class="footer">
-    faysk.dev • telemetry interface • cyberpunk edition 😎
-  </div>
-
-</div>
-
-<script type="module" src="./assets/js/app.js"></script>
-
+  <script type="module" src="./assets/js/app.js"></script>
 </body>
 </html>
