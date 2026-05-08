@@ -1,0 +1,54 @@
+#live-terminal {
+  overflow: hidden;
+  margin-top: var(--space-6);
+  font-family: var(--font-mono);
+}
+
+.terminal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+  background: rgba(5, 7, 10, 0.55);
+}
+
+.terminal-title {
+  color: var(--color-cyan);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.terminal-controls {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.terminal-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+}
+
+.terminal-dot.red { background: var(--color-red); }
+.terminal-dot.yellow { background: var(--color-yellow); }
+.terminal-dot.green { background: var(--color-green); }
+
+#terminal-output {
+  display: grid;
+  gap: var(--space-2);
+  min-height: 170px;
+  max-height: 280px;
+  overflow: auto;
+  padding: var(--space-4);
+  color: var(--color-green);
+  font-size: 0.88rem;
+}
+
+.terminal-line::after {
+  content: "_";
+  display: inline-block;
+  margin-left: 0.2rem;
+  animation: terminalBlink 1s steps(1) infinite;
+}
