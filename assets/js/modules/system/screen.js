@@ -15,3 +15,5 @@ export function getScreenInfo() {
     ]
   };
 }
+
+export const initScreen = getScreenInfo;

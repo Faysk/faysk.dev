@@ -14,3 +14,5 @@ export function getVrInfo() {
     ]
   };
 }
+
+export const initVr = getVrInfo;

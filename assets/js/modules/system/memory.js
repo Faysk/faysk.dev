@@ -16,3 +16,5 @@ export function getMemoryInfo() {
     ]
   };
 }
+
+export const initMemory = getMemoryInfo;

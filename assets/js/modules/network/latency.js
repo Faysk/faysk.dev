@@ -14,3 +14,5 @@ export function getLatencyInfo() {
     ]
   };
 }
+
+export const initLatency = getLatencyInfo;

@@ -14,3 +14,5 @@ export function getTouchInfo() {
     ]
   };
 }
+
+export const initTouch = getTouchInfo;

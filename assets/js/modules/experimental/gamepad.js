@@ -14,3 +14,5 @@ export function getGamepadInfo() {
     ]
   };
 }
+
+export const initGamepad = getGamepadInfo;

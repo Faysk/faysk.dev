@@ -14,3 +14,5 @@ export function getPermissionsInfo() {
     ]
   };
 }
+
+export const initPermissions = getPermissionsInfo;

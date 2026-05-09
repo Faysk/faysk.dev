@@ -14,3 +14,5 @@ export function getBatteryInfo() {
     ]
   };
 }
+
+export const initBattery = getBatteryInfo;

@@ -14,3 +14,5 @@ export function getBenchmarkInfo() {
     ]
   };
 }
+
+export const initBenchmark = getBenchmarkInfo;

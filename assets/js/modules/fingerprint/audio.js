@@ -14,3 +14,5 @@ export function getAudioFingerprintInfo() {
     ]
   };
 }
+
+export const initAudio = getAudioFingerprintInfo;

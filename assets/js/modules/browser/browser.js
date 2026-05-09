@@ -16,3 +16,5 @@ export function getBrowserInfo() {
     ]
   };
 }
+
+export const initBrowser = getBrowserInfo;

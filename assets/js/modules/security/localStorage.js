@@ -14,3 +14,5 @@ export function getLocalStorageInfo() {
     ]
   };
 }
+
+export const initLocalStorage = getLocalStorageInfo;

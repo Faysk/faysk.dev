@@ -16,3 +16,5 @@ export function getGpuInfo() {
     ]
   };
 }
+
+export const initGpu = getGpuInfo;

@@ -14,3 +14,6 @@ export function getWebRtcInfo() {
     ]
   };
 }
+
+export const initWebrtc = getWebRtcInfo;
+export const initWebRtc = getWebRtcInfo;

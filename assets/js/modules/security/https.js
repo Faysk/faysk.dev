@@ -15,3 +15,5 @@ export function getHttpsInfo() {
     ]
   };
 }
+
+export const initHttps = getHttpsInfo;

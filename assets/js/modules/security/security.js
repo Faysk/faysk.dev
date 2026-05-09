@@ -14,3 +14,5 @@ export function getSecurityInfo() {
     ]
   };
 }
+
+export const initSecurity = getSecurityInfo;

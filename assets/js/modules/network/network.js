@@ -16,3 +16,5 @@ export function getNetworkInfo() {
     ]
   };
 }
+
+export const initNetwork = getNetworkInfo;

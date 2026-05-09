@@ -14,3 +14,5 @@ export function getMicrophoneInfo() {
     ]
   };
 }
+
+export const initMicrophone = getMicrophoneInfo;

@@ -14,3 +14,5 @@ export function getFontsInfo() {
     ]
   };
 }
+
+export const initFonts = getFontsInfo;

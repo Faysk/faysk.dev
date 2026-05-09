@@ -14,3 +14,5 @@ export function getEntropyInfo() {
     ]
   };
 }
+
+export const initEntropy = getEntropyInfo;

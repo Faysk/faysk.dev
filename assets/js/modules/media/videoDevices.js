@@ -14,3 +14,5 @@ export function getVideoDevicesInfo() {
     ]
   };
 }
+
+export const initVideoDevices = getVideoDevicesInfo;

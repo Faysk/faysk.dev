@@ -14,3 +14,5 @@ export function getFpsInfo() {
     ]
   };
 }
+
+export const initFps = getFpsInfo;

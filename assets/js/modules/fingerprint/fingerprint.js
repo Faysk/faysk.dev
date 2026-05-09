@@ -14,3 +14,5 @@ export function getFingerprintInfo() {
     ]
   };
 }
+
+export const initFingerprint = getFingerprintInfo;

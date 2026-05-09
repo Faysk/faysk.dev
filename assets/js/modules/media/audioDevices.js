@@ -14,3 +14,5 @@ export function getAudioDevicesInfo() {
     ]
   };
 }
+
+export const initAudioDevices = getAudioDevicesInfo;

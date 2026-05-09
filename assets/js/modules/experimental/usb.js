@@ -14,3 +14,5 @@ export function getUsbInfo() {
     ]
   };
 }
+
+export const initUsb = getUsbInfo;

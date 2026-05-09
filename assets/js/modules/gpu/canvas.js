@@ -14,3 +14,5 @@ export function getCanvasInfo() {
     ]
   };
 }
+
+export const initCanvas = getCanvasInfo;

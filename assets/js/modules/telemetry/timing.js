@@ -14,3 +14,5 @@ export function getTimingInfo() {
     ]
   };
 }
+
+export const initTiming = getTimingInfo;

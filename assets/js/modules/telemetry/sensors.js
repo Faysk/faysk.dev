@@ -14,3 +14,5 @@ export function getSensorsInfo() {
     ]
   };
 }
+
+export const initSensors = getSensorsInfo;

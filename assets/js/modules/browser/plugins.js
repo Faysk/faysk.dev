@@ -14,3 +14,5 @@ export function getPluginsInfo() {
     ]
   };
 }
+
+export const initPlugins = getPluginsInfo;

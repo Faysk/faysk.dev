@@ -14,3 +14,5 @@ export function getIpInfo() {
     ]
   };
 }
+
+export const initIp = getIpInfo;

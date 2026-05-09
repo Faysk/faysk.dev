@@ -15,3 +15,5 @@ export function getCspInfo() {
     ]
   };
 }
+
+export const initCsp = getCspInfo;

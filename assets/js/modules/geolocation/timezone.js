@@ -14,3 +14,5 @@ export function getTimezoneInfo() {
     ]
   };
 }
+
+export const initTimezone = getTimezoneInfo;

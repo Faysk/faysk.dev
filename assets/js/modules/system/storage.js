@@ -14,3 +14,5 @@ export function getStorageInfo() {
     ]
   };
 }
+
+export const initStorage = getStorageInfo;

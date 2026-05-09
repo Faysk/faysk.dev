@@ -14,3 +14,5 @@ export function getHardwareInfo() {
     ]
   };
 }
+
+export const initHardware = getHardwareInfo;

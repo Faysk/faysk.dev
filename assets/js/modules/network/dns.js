@@ -14,3 +14,5 @@ export function getDnsInfo() {
     ]
   };
 }
+
+export const initDns = getDnsInfo;

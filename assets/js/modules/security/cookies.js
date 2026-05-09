@@ -14,3 +14,5 @@ export function getCookiesInfo() {
     ]
   };
 }
+
+export const initCookies = getCookiesInfo;

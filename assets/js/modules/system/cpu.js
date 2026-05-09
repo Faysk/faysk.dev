@@ -14,3 +14,5 @@ export function getCpuInfo() {
     ]
   };
 }
+
+export const initCpu = getCpuInfo;

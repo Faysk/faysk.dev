@@ -14,3 +14,5 @@ export function getSerialInfo() {
     ]
   };
 }
+
+export const initSerial = getSerialInfo;

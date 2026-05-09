@@ -14,3 +14,5 @@ export function getBehaviorInfo() {
     ]
   };
 }
+
+export const initBehavior = getBehaviorInfo;

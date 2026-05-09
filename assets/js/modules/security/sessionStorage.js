@@ -14,3 +14,5 @@ export function getSessionStorageInfo() {
     ]
   };
 }
+
+export const initSessionStorage = getSessionStorageInfo;

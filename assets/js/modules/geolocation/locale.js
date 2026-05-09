@@ -16,3 +16,5 @@ export function getLocaleInfo() {
     ]
   };
 }
+
+export const initLocale = getLocaleInfo;

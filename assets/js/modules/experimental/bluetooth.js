@@ -14,3 +14,5 @@ export function getBluetoothInfo() {
     ]
   };
 }
+
+export const initBluetooth = getBluetoothInfo;

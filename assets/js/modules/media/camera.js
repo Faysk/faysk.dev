@@ -14,3 +14,5 @@ export function getCameraInfo() {
     ]
   };
 }
+
+export const initCamera = getCameraInfo;

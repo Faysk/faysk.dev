@@ -14,3 +14,5 @@ export function getMediaDevicesInfo() {
     ]
   };
 }
+
+export const initMediaDevices = getMediaDevicesInfo;
