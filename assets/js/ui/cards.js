@@ -17,7 +17,8 @@ export function createTelemetryCard(module) {
     className: `telemetry-card is-revealed status-${statusClass}`,
     attrs: {
       "data-group": module.group,
-      "data-title": module.title.toLowerCase()
+      "data-title": module.title.toLowerCase(),
+      "aria-label": `${module.title} telemetry card, status ${module.status}`
     },
     children: [
       createElement("div", {

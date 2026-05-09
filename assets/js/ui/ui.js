@@ -21,6 +21,14 @@ function getTelemetryStats(telemetry) {
   });
 }
 
+function createSearchIndex(module) {
+  const itemText = module.items
+    .map((item) => `${item.label} ${item.value}`)
+    .join(" ");
+
+  return `${module.title} ${module.groupLabel} ${module.description} ${module.status} ${itemText}`.toLowerCase();
+}
+
 function renderCommandBar() {
   return createElement("section", {
     className: "command-bar is-revealed",
@@ -219,12 +227,13 @@ function renderShell() {
     attrs: {
       type: "text",
       id: "search-input",
+      "aria-label": "Search telemetry modules",
       placeholder: "Search modules...",
       autocomplete: "off"
     }
   });
 
-  const sidebarNav = createElement("nav", { attrs: { id: "sidebar-nav" } });
+  const sidebarNav = createElement("nav", { attrs: { id: "sidebar-nav", "aria-label": "Module categories" } });
   sidebarNav.append(renderSidebar({
     activeGroup: state.activeGroup,
     onGroupSelect: (activeGroup) => setState({ activeGroup }),
@@ -271,9 +280,9 @@ function renderShell() {
     ]
   });
 
-  const grid = createElement("section", { attrs: { id: "telemetry-grid" } });
+  const grid = createElement("section", { attrs: { id: "telemetry-grid", "aria-live": "polite" } });
   const main = createElement("main", {
-    attrs: { id: "main-content" },
+    attrs: { id: "main-content", tabindex: "-1" },
     children: [renderCommandBar(), renderHero(), renderModuleSummary(), renderTerminal(), renderGridHeader(), grid, renderOverlay(), renderFooter()]
   });
 
@@ -293,8 +302,7 @@ function renderTelemetryGrid() {
   const { telemetry, activeGroup, searchTerm } = getState();
   const filtered = telemetry.filter((module) => {
     const matchesGroup = activeGroup === "all" || module.group === activeGroup;
-    const haystack = `${module.title} ${module.groupLabel} ${module.description}`.toLowerCase();
-    const matchesSearch = !searchTerm || haystack.includes(searchTerm);
+    const matchesSearch = !searchTerm || createSearchIndex(module).includes(searchTerm);
     return matchesGroup && matchesSearch;
   });
 
@@ -328,8 +336,7 @@ function updateGridHeader() {
   const { telemetry, activeGroup, searchTerm } = getState();
   const visible = telemetry.filter((module) => {
     const matchesGroup = activeGroup === "all" || module.group === activeGroup;
-    const haystack = `${module.title} ${module.groupLabel} ${module.description}`.toLowerCase();
-    return matchesGroup && (!searchTerm || haystack.includes(searchTerm));
+    return matchesGroup && (!searchTerm || createSearchIndex(module).includes(searchTerm));
   });
   const activeLabel = activeGroup === "all"
     ? "All modules"
@@ -366,9 +373,15 @@ function updateSidebar() {
 
 function updateOverlay() {
   const state = getState();
-  qs("#fps-counter").textContent = "60";
-  qs("#latency-counter").textContent = `${Math.round(performance.now() % 90)}ms`;
-  qs("#memory-counter").textContent = performance.memory
+  const fpsCounter = qs("#fps-counter");
+  const latencyCounter = qs("#latency-counter");
+  const memoryCounter = qs("#memory-counter");
+
+  if (!fpsCounter || !latencyCounter || !memoryCounter) return;
+
+  fpsCounter.textContent = "60";
+  latencyCounter.textContent = `${Math.round(performance.now() % 90)}ms`;
+  memoryCounter.textContent = performance.memory
     ? `${Math.round(performance.memory.usedJSHeapSize / 1024 / 1024)} MB`
     : `${state.telemetry.length} modules`;
 }

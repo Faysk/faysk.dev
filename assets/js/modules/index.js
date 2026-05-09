@@ -96,6 +96,27 @@ const collectors = [
   getVrInfo
 ];
 
+function createCollectorError(collector, error) {
+  return {
+    id: `collector-error-${collector.name || "unknown"}`,
+    group: "telemetry",
+    groupLabel: "Telemetry",
+    title: collector.name || "Telemetry Collector",
+    status: "unsupported",
+    description: "This module failed safely and did not stop the interface.",
+    items: [
+      { label: "Error", value: error?.message || "unknown failure" },
+      { label: "Fallback", value: "isolated" }
+    ]
+  };
+}
+
 export function collectTelemetry() {
-  return collectors.map((collector) => collector());
+  return collectors.map((collector) => {
+    try {
+      return collector();
+    } catch (error) {
+      return createCollectorError(collector, error);
+    }
+  });
 }

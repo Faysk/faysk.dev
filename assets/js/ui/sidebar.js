@@ -15,7 +15,11 @@ export function renderSidebar({ activeGroup, onGroupSelect, modules = [] }) {
     const count = countGroupModules(group.id, modules);
     const button = createElement("button", {
       className: `nav-button${activeGroup === group.id ? " is-active" : ""}`,
-      attrs: { type: "button", "data-group": group.id },
+      attrs: {
+        type: "button",
+        "data-group": group.id,
+        "aria-pressed": activeGroup === group.id ? "true" : "false"
+      },
       children: [
         createElement("span", {
           className: "nav-label",
