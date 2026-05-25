@@ -1,0 +1,16 @@
+{
+  "name": "faysk.dev",
+  "short_name": "faysk",
+  "description": "Developer hub for projects, labs and tools.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#080b0f",
+  "theme_color": "#080b0f",
+  "icons": [
+    {
+      "src": "/assets/icons/favicon.svg",
+      "sizes": "64x64",
+      "type": "image/svg+xml"
+    }
+  ]
+}

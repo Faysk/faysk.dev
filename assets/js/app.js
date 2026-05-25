@@ -1,4 +1,4 @@
-import { profile, projects, projectTypes } from "./projects.js";
+import { operatingNotes, profile, projects, projectTypes } from "./projects.js";
 
 const state = {
   activeType: "all",
@@ -7,72 +7,66 @@ const state = {
 
 function createElement(tag, options = {}) {
   const element = document.createElement(tag);
-  if (options.className) element.className = options.className;
-  if (options.text) element.textContent = options.text;
-  if (options.html) element.innerHTML = options.html;
-  if (options.attrs) {
-    Object.entries(options.attrs).forEach(([key, value]) => {
-      if (value !== "" && !value) return;
-      element.setAttribute(key, value);
-    });
-  }
-  if (options.children) {
-    options.children.filter(Boolean).forEach((child) => element.append(child));
-  }
+  const { className, text, html, attrs = {}, children = [] } = options;
+
+  if (className) element.className = className;
+  if (text !== undefined) element.textContent = text;
+  if (html !== undefined) element.innerHTML = html;
+
+  Object.entries(attrs).forEach(([key, value]) => {
+    if (value !== undefined && value !== null && value !== "") {
+      element.setAttribute(key, String(value));
+    }
+  });
+
+  children.filter(Boolean).forEach((child) => element.append(child));
   return element;
 }
 
-function slug(value) {
-  return value.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
-}
-
 function createLink(label, href, variant = "") {
-  const isDisabled = !href || href === "#";
-  const isExternal = /^https?:\/\//.test(href || "");
+  const disabled = !href || href === "#";
+  const external = /^https?:\/\//.test(href || "");
   return createElement("a", {
     className: `button ${variant}`.trim(),
     text: label,
     attrs: {
-      href: isDisabled ? "#" : href,
-      target: isExternal ? "_blank" : "",
-      rel: isExternal ? "noreferrer" : "",
-      "aria-disabled": isDisabled ? "true" : ""
+      href: disabled ? "#" : href,
+      target: external ? "_blank" : "",
+      rel: external ? "noreferrer" : "",
+      "aria-disabled": disabled ? "true" : ""
     }
   });
 }
 
-function matchesProject(project) {
-  const matchesType = state.activeType === "all" || project.type === state.activeType;
-  const haystack = [
-    project.name,
-    project.type,
-    project.status,
-    project.description,
-    project.stack.join(" ")
-  ].join(" ").toLowerCase();
-
-  return matchesType && haystack.includes(state.searchTerm.toLowerCase());
+function createBrand() {
+  return createElement("a", {
+    className: "brand",
+    attrs: { href: "#" },
+    children: [
+      createElement("span", { className: "brand-mark", text: "FD" }),
+      createElement("span", {
+        className: "brand-copy",
+        children: [
+          createElement("strong", { text: profile.domain }),
+          createElement("span", { text: profile.role })
+        ]
+      })
+    ]
+  });
 }
 
 function renderTopbar() {
   return createElement("header", {
     className: "topbar",
     children: [
-      createElement("a", {
-        className: "brand",
-        attrs: { href: "#" },
-        children: [
-          createElement("span", { className: "brand-mark", text: "FD" }),
-          createElement("span", { text: profile.domain })
-        ]
-      }),
+      createBrand(),
       createElement("nav", {
         className: "nav-links",
         attrs: { "aria-label": "Primary navigation" },
         children: [
           createElement("a", { text: "Projects", attrs: { href: "#projects" } }),
           createElement("a", { text: "System", attrs: { href: "#system" } }),
-          createElement("a", { text: "Lab", attrs: { href: profile.labUrl } }),
+          createElement("a", { text: "Lab", attrs: { href: profile.labUrl, target: "_blank", rel: "noreferrer" } }),
           createElement("a", { text: "GitHub", attrs: { href: profile.githubUrl, target: "_blank", rel: "noreferrer" } })
         ]
       }),
@@ -87,51 +81,56 @@ function renderTopbar() {
   });
 }
 
+function createMetaPill(text) {
+  return createElement("span", { className: "meta-pill", text });
+}
+
 function renderHero() {
-  const featuredCount = projects.filter((project) => project.featured).length;
   const liveCount = projects.filter((project) => project.status === "live").length;
+  const featuredCount = projects.filter((project) => project.featured).length;
 
   return createElement("section", {
     className: "hero",
     children: [
       createElement("div", {
-        className: "hero-panel",
+        className: "hero-card",
         children: [
-          createElement("div", { className: "eyebrow", text: "Developer Hub" }),
+          createElement("div", { className: "eyebrow", text: "Personal developer system" }),
           createElement("h1", {
             className: "hero-title",
-            html: `${profile.name}<span>${profile.domain}</span>`
+            html: "Useful builds.<span>Clean signals.</span>"
           }),
           createElement("p", { className: "hero-copy", text: profile.summary }),
           createElement("div", {
             className: "hero-actions",
             children: [
-              createLink("Explore Projects", "#projects", "button-primary"),
-              createLink("Open Browser Lab", profile.labUrl)
+              createLink("Explore projects", "#projects", "button-primary"),
+              createLink("Visit lab", profile.labUrl)
             ]
           }),
           createElement("div", {
-            className: "signal-list",
+            className: "meta-row",
             children: [
-              createMetric("Live", liveCount),
-              createMetric("Featured", featuredCount),
-              createMetric("Mode", "Static")
+              createMetaPill(`${liveCount} live`),
+              createMetaPill(`${featuredCount} featured`),
+              createMetaPill("static-first"),
+              createMetaPill("cloudflare-ready")
             ]
           })
         ]
       }),
       createElement("aside", {
-        className: "orbit-panel",
-        attrs: { "aria-label": "Domain map" },
+        className: "orbit-card",
+        attrs: { "aria-label": "Faysk domain map" },
         children: [
           createElement("div", {
-            className: "orbit",
+            className: "domain-map",
             children: [
-              createElement("span", { className: "orbit-core", text: "HUB" }),
-              createElement("span", { className: "orbit-node node-top", text: "lab" }),
-              createElement("span", { className: "orbit-node node-right", text: "tools" }),
-              createElement("span", { className: "orbit-node node-bottom", text: "work" }),
-              createElement("span", { className: "orbit-node node-left", text: "api" })
+              createElement("span", { className: "map-core", text: "FAYSK" }),
+              createElement("span", { className: "map-node node-top", text: "lab" }),
+              createElement("span", { className: "map-node node-right", text: "tools" }),
+              createElement("span", { className: "map-node node-bottom", text: "work" }),
+              createElement("span", { className: "map-node node-left", text: "api" })
             ]
           })
         ]
@@ -140,14 +139,47 @@ function renderHero() {
   });
 }
 
-function createMetric(label, value) {
-  return createElement("div", {
-    className: "signal",
+function renderBento() {
+  return createElement("section", {
+    className: "section",
+    attrs: { id: "system" },
     children: [
-      createElement("span", { className: "eyebrow", text: label }),
-      createElement("strong", { text: String(value) })
+      createElement("div", {
+        className: "section-heading",
+        children: [
+          createElement("div", { className: "eyebrow", text: "Operating model" }),
+          createElement("h2", { className: "section-title", text: "A hub that can grow without getting heavy." }),
+          createElement("p", {
+            className: "section-copy",
+            text: "The root site stays simple and fast. Experiments, tools and portfolio pieces can evolve independently under their own subdomains."
+          })
+        ]
+      }),
+      createElement("div", {
+        className: "bento-grid",
+        children: operatingNotes.map((note, index) => createElement("article", {
+          className: `bento-card ${index === 0 ? "large" : "small"}`,
+          children: [
+            createElement("div", { className: "eyebrow", text: note.title }),
+            createElement("strong", { className: "bento-value", text: note.value }),
+            createElement("p", { text: note.text })
+          ]
+        }))
+      })
     ]
   });
+}
+
+function matchesProject(project) {
+  const typeMatch = state.activeType === "all" || project.type === state.activeType;
+  const haystack = [
+    project.name,
+    project.type,
+    project.status,
+    project.description,
+    project.stack.join(" ")
+  ].join(" ").toLowerCase();
+  return typeMatch && haystack.includes(state.searchTerm.toLowerCase());
 }
 
 function renderFilters(onUpdate) {
@@ -167,14 +199,19 @@ function renderFilters(onUpdate) {
 
   const buttons = projectTypes.map((type) => {
     const button = createElement("button", {
-      className: `filter-button ${state.activeType === type.id ? "is-active" : ""}`,
+      className: `filter-button ${state.activeType === type.id ? "is-active" : ""}`.trim(),
       text: type.label,
-      attrs: { type: "button" }
+      attrs: {
+        type: "button",
+        "aria-pressed": state.activeType === type.id ? "true" : "false"
+      }
     });
+
     button.addEventListener("click", () => {
       state.activeType = type.id;
       onUpdate();
     });
+
     return button;
   });
 
@@ -187,21 +224,18 @@ function renderFilters(onUpdate) {
 function renderProjectCard(project) {
   return createElement("article", {
     className: "project-card",
-    attrs: { id: slug(project.name) },
     children: [
       createElement("div", {
-        className: "project-top",
+        className: "project-topline",
         children: [
-          createElement("div", {
-            children: [
-              createElement("span", { className: "project-type", text: project.type }),
-              createElement("h3", { className: "project-title", text: project.name })
-            ]
-          }),
-          createElement("span", {
-            className: `project-status status-${project.status}`,
-            text: project.status
-          })
+          createElement("span", { className: "project-type", text: project.type }),
+          createElement("span", { className: `project-status status-${project.status}`, text: project.status })
+        ]
+      }),
+      createElement("div", {
+        children: [
+          createElement("div", { className: "eyebrow", text: project.featured ? "Featured" : "Queued" }),
+          createElement("h3", { className: "project-title", text: project.name })
         ]
       }),
       createElement("p", { className: "project-description", text: project.description }),
@@ -226,10 +260,12 @@ function renderProjectsSection() {
   function updateGrid() {
     grid.replaceChildren();
     const visible = projects.filter(matchesProject);
+
     if (!visible.length) {
       grid.append(createElement("div", { className: "empty-state", text: "No projects match this filter yet." }));
       return;
     }
+
     visible.forEach((project) => grid.append(renderProjectCard(project)));
   }
 
@@ -243,15 +279,11 @@ function renderProjectsSection() {
       createElement("div", {
         className: "section-heading",
         children: [
-          createElement("div", {
-            children: [
-              createElement("div", { className: "eyebrow", text: "Index" }),
-              createElement("h2", { className: "section-title", text: "Projects and labs" }),
-              createElement("p", {
-                className: "section-copy",
-                text: "The root domain stays small and intentional. Bigger work gets its own repo, deploy and subdomain."
-              })
-            ]
+          createElement("div", { className: "eyebrow", text: "Index" }),
+          createElement("h2", { className: "section-title", text: "Projects, labs and future surfaces." }),
+          createElement("p", {
+            className: "section-copy",
+            text: "A curated map of what exists now and what can grow next."
           })
         ]
       }),
@@ -261,39 +293,34 @@ function renderProjectsSection() {
   });
 }
 
-function renderSystemSection() {
-  const items = [
+function renderStackSection() {
+  const cards = [
     {
-      title: "Independent repos",
-      text: "Major projects can ship, break, recover and evolve without touching the main hub."
+      title: "Static by default",
+      text: "Fast first load, low operational cost and fewer deployment surprises."
     },
     {
-      title: "Subdomain map",
-      text: "The hub links outward to labs, tools, case studies and future products under the faysk.dev namespace."
+      title: "Serverless when needed",
+      text: "Cloudflare Workers, Pages Functions and D1 can join only when features require backend state."
     },
     {
-      title: "Backend later",
-      text: "The current hub is static. APIs, D1 and Workers can be added only when there is a real product need."
+      title: "Independent surfaces",
+      text: "Each subdomain can keep its own repository, release cadence and visual treatment."
     }
   ];
 
   return createElement("section", {
     className: "section",
-    attrs: { id: "system" },
     children: [
-      createElement("div", { className: "eyebrow", text: "Architecture" }),
-      createElement("h2", { className: "section-title", text: "Built to split cleanly" }),
-      createElement("p", {
-        className: "section-copy",
-        text: "This keeps faysk.dev as the front door while every serious project can own its repository, versioning and Cloudflare Pages deployment."
-      }),
+      createElement("div", { className: "eyebrow", text: "Scale path" }),
+      createElement("h2", { className: "section-title", text: "Simple now, extensible later." }),
       createElement("div", {
-        className: "system-grid",
-        children: items.map((item) => createElement("article", {
-          className: "system-card",
+        className: "stack-grid",
+        children: cards.map((card) => createElement("article", {
+          className: "stack-card",
           children: [
-            createElement("h3", { text: item.title }),
-            createElement("p", { text: item.text })
+            createElement("h3", { text: card.title }),
+            createElement("p", { text: card.text })
           ]
         }))
       })
@@ -313,7 +340,7 @@ function renderFooter() {
             className: "project-links",
             children: [
               createElement("a", { className: "text-link", text: "GitHub", attrs: { href: profile.githubUrl, target: "_blank", rel: "noreferrer" } }),
-              createElement("a", { className: "text-link", text: "Lab", attrs: { href: profile.labUrl } })
+              createElement("a", { className: "text-link", text: "Lab", attrs: { href: profile.labUrl, target: "_blank", rel: "noreferrer" } })
             ]
           })
         ]
@@ -326,13 +353,14 @@ function boot() {
   const root = document.querySelector("#app");
   if (!root) return;
 
-  root.append(createElement("div", {
+  root.replaceChildren(createElement("div", {
     className: "site-shell",
     children: [
       renderTopbar(),
       renderHero(),
+      renderBento(),
       renderProjectsSection(),
-      renderSystemSection(),
+      renderStackSection(),
       renderFooter()
     ]
   }));

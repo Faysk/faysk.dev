@@ -1,62 +1,45 @@
-@media (max-width: 980px) {
+@media (max-width: 1060px) {
   .topbar,
   .hero,
-  .footer-inner {
-    align-items: stretch;
-  }
-
-  .topbar,
-  .footer-inner {
-    flex-direction: column;
-  }
-
-  .hero,
-  .project-grid,
-  .system-grid {
+  .section-grid {
     grid-template-columns: 1fr;
   }
 
-  .hero-panel,
-  .orbit-panel {
+  .nav-links {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .hero-card,
+  .orbit-card {
     min-height: auto;
   }
 
-  .nav-links {
-    flex-wrap: wrap;
+  .project-grid,
+  .stack-grid {
+    grid-template-columns: 1fr;
   }
 }
 
-@media (max-width: 680px) {
+@media (max-width: 760px) {
   .site-shell {
-    width: min(100% - 1rem, var(--max-width));
-    padding-top: var(--space-2);
+    width: 100%;
+    max-width: 100vw;
+    padding: var(--space-2);
   }
 
   .topbar {
     position: relative;
     top: 0;
+    border-radius: var(--radius-md);
+    width: calc(100vw - 1rem);
+    max-width: calc(100vw - 1rem);
   }
 
-  .hero {
-    padding-top: var(--space-6);
-  }
-
-  .hero-panel,
-  .orbit-panel,
-  .project-card,
-  .metric-card,
-  .system-card {
-    padding: var(--space-4);
-  }
-
-  .signal-list {
-    grid-template-columns: 1fr;
-  }
-
-  .hero-actions,
   .topbar-actions,
+  .hero-actions,
   .filter-row,
-  .section-heading {
+  .footer-inner {
     align-items: stretch;
     flex-direction: column;
   }
@@ -67,8 +50,61 @@
     width: 100%;
   }
 
-  .orbit-node {
-    min-width: 70px;
+  .bento-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .bento-card.large,
+  .bento-card.small {
+    grid-column: auto;
+  }
+
+  .hero {
+    padding: var(--space-8) 0;
+  }
+
+  .hero-card,
+  .orbit-card,
+  .project-card,
+  .stack-card,
+  .bento-card {
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+    width: 100%;
+    max-width: calc(100vw - 1rem);
+  }
+
+  .hero-copy,
+  .section-copy,
+  .project-description,
+  .bento-card p,
+  .stack-card p {
+    overflow-wrap: anywhere;
+    width: min(100%, 320px);
+    max-width: 320px;
+  }
+
+  .hero-title,
+  .hero-actions,
+  .meta-row {
+    max-width: 330px;
+  }
+
+  .hero-title {
+    font-size: clamp(2.9rem, 14vw, 4.2rem);
+  }
+
+  .domain-map {
+    width: min(100%, 300px);
+    max-width: calc(100vw - 3rem);
+  }
+
+  .map-node {
+    min-width: 66px;
+    min-height: 32px;
     font-size: 0.65rem;
   }
+
+  .node-left { left: 1%; }
+  .node-right { right: 1%; }
 }

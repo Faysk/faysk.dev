@@ -1,6 +1,6 @@
 # faysk.dev
 
-Personal developer hub for Faysk.
+Personal developer hub for Faysk: projects, labs, tools and future case studies.
 
 This repository owns the root domain experience:
 
@@ -8,7 +8,7 @@ This repository owns the root domain experience:
 https://faysk.dev
 ```
 
-The goal is to keep the root site focused on identity, projects, labs and links. Larger experiments live in their own repositories and subdomains.
+The root domain is intentionally focused: it introduces the ecosystem and points visitors to the right project surface. Larger experiments live in their own repositories and subdomains.
 
 ## Current Sites
 
@@ -31,6 +31,14 @@ E:\Project\
 - CSS
 - Vanilla JavaScript with ES Modules
 - Cloudflare Pages
+
+## Design Direction
+
+- clean dark interface
+- bento-style project surfaces
+- restrained neon accents
+- responsive-first layout
+- static-first architecture
 
 ## Development
 
