@@ -3,38 +3,29 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Advanced Browser Intelligence & Telemetry Interface" />
-  <meta name="theme-color" content="#050505" />
+  <meta name="description" content="Faysk developer hub: projects, labs, tools and experiments." />
+  <meta name="theme-color" content="#061015" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-
   <title>faysk.dev</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-
   <link rel="stylesheet" href="./assets/css/variables.css" />
-  <link rel="stylesheet" href="./assets/css/animations.css" />
   <link rel="stylesheet" href="./assets/css/layout.css" />
   <link rel="stylesheet" href="./assets/css/components.css" />
-  <link rel="stylesheet" href="./assets/css/terminal.css" />
   <link rel="stylesheet" href="./assets/css/responsive.css" />
   <link rel="stylesheet" href="./assets/css/style.css" />
-
   <link rel="modulepreload" href="./assets/js/app.js" />
 </head>
 <body>
-  <div id="background-grid"></div>
-  <div id="background-glow"></div>
-  <div id="particles-layer"></div>
-  <div id="noise-layer"></div>
-
+  <div id="ambient-grid" aria-hidden="true"></div>
+  <div id="ambient-glow" aria-hidden="true"></div>
   <div id="app"></div>
-  <div id="modal-root"></div>
-  <div id="notifications-root"></div>
-  <div id="scanline-overlay"></div>
-  <div id="crt-overlay"></div>
-
+  <noscript>
+    <main class="noscript-shell">
+      <h1>faysk.dev</h1>
+      <p>Developer hub, labs, projects and experiments.</p>
+      <a href="https://lab.faysk.dev">Open lab.faysk.dev</a>
+    </main>
+  </noscript>
   <script type="module" src="./assets/js/app.js"></script>
 </body>
 </html>
