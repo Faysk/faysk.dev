@@ -4,6 +4,10 @@
 /assets/*
   Cache-Control: public, max-age=86400, must-revalidate
 
+/favicon.svg
+  Content-Type: image/svg+xml; charset=utf-8
+  Cache-Control: public, max-age=86400, must-revalidate
+
 /robots.txt
   Content-Type: text/plain; charset=utf-8
   Cache-Control: public, max-age=3600, must-revalidate

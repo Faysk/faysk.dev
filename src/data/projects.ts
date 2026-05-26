@@ -19,9 +19,9 @@ export const site = {
   url: "https://faysk.dev",
   githubUrl: "https://github.com/Faysk",
   labUrl: "https://lab.faysk.dev",
-  title: "faysk.dev - Developer hub",
+  title: "faysk.dev | Projects, labs and tools",
   description:
-    "A focused home base for Faysk projects, labs, tools and future technical surfaces."
+    "Public index for Faysk projects, labs, tools and technical writing."
 };
 
 export const projectTypes: Array<{ id: "all" | ProjectType; label: string }> = [
