@@ -23,7 +23,7 @@ function createElement(tag, options = {}) {
   return element;
 }
 
-function createLink(label, href, variant = "") {
+function createLink(label, href, variant = "", ariaLabel = "") {
   const disabled = !href || href === "#";
   const external = /^https?:\/\//.test(href || "");
   return createElement("a", {
@@ -33,7 +33,8 @@ function createLink(label, href, variant = "") {
       href: disabled ? "#" : href,
       target: external ? "_blank" : "",
       rel: external ? "noreferrer" : "",
-      "aria-disabled": disabled ? "true" : ""
+      "aria-disabled": disabled ? "true" : "",
+      "aria-label": ariaLabel
     }
   });
 }
@@ -73,8 +74,8 @@ function renderTopbar() {
       createElement("div", {
         className: "topbar-actions",
         children: [
-          createLink("Open Lab", profile.labUrl),
-          createLink("GitHub", profile.githubUrl, "button-primary")
+          createLink("Open Lab", profile.labUrl, "", "Open Browser Telemetry Lab"),
+          createLink("GitHub", profile.githubUrl, "button-primary", "Open Faysk on GitHub")
         ]
       })
     ]
@@ -246,8 +247,8 @@ function renderProjectCard(project) {
       createElement("div", {
         className: "project-links",
         children: [
-          createLink("Open", project.url, "button-primary"),
-          project.repo ? createLink("Repo", project.repo) : null
+          createLink("Open", project.url, "button-primary", `Open ${project.name}`),
+          project.repo ? createLink("Repo", project.repo, "", `Open ${project.name} repository`) : null
         ]
       })
     ]
@@ -353,8 +354,9 @@ function boot() {
   const root = document.querySelector("#app");
   if (!root) return;
 
-  root.replaceChildren(createElement("div", {
+  root.replaceChildren(createElement("main", {
     className: "site-shell",
+    attrs: { id: "main-content" },
     children: [
       renderTopbar(),
       renderHero(),
