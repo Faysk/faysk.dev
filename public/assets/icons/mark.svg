@@ -1,5 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-label="Faysk mark">
-  <rect x="8" y="8" width="144" height="144" rx="30" fill="#12120f"/>
-  <path d="M42 116V40h78v21H66v17h42v21H66v17H42z" fill="#f6f1e7"/>
-  <circle cx="118" cy="116" r="14" fill="#d7ff63"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-label="Faysk DevOps mark">
+  <rect x="8" y="8" width="144" height="144" rx="32" fill="#07111f" stroke="#9cff6e" stroke-opacity=".28" stroke-width="2"/>
+  <path d="M40 110V40h58v20H63v15h30v19H63v16H40z" fill="#f4f8f2"/>
+  <path d="M93 50h19a15 15 0 0 1 0 30H93M93 82h19a15 15 0 0 1 0 30H93" fill="none" stroke="#5bdcff" stroke-width="10" stroke-linecap="round"/>
+  <circle cx="120" cy="65" r="8" fill="#9cff6e"/>
+  <circle cx="120" cy="97" r="8" fill="#9cff6e"/>
 </svg>

@@ -13,15 +13,15 @@ export interface Project {
 }
 
 export const site = {
-  name: "faysk.dev",
+  name: "Faysk DevOps",
   owner: "Faysk",
-  role: "developer hub",
+  role: "automation / infrastructure / delivery",
   url: "https://faysk.dev",
   githubUrl: "https://github.com/Faysk",
   labUrl: "https://lab.faysk.dev",
-  title: "faysk.dev | Projects, labs and tools",
+  title: "Faysk DevOps | Automation, CI/CD and Infrastructure",
   description:
-    "Public index for Faysk projects, labs, tools and technical writing."
+    "DevOps portfolio for automation, CI/CD, infrastructure, cloud operations and production-ready delivery."
 };
 
 export const projectTypes: Array<{ id: "all" | ProjectType; label: string }> = [
@@ -100,40 +100,40 @@ export const projects: Project[] = [
 
 export const operatingNotes = [
   {
-    title: "Root as hub",
-    value: "one front door",
+    title: "Delivery",
+    value: "ship reliably",
     text:
-      "The main domain stays calm, fast and focused while each serious surface keeps its own source history."
+      "Pipelines, release flow and deployment paths designed to reduce manual steps and production surprises."
   },
   {
-    title: "Static first",
-    value: "fast by default",
+    title: "Infrastructure",
+    value: "codify repeatability",
     text:
-      "Astro outputs static HTML for the hub, with client JavaScript reserved for small targeted interactions."
+      "Cloud, servers, networking and security shaped into repeatable, documented and maintainable systems."
   },
   {
-    title: "Backend later",
-    value: "when useful",
+    title: "Operations",
+    value: "observe and recover",
     text:
-      "Workers, D1 and APIs are saved for features that genuinely need state, forms, auth or automation."
+      "Monitoring, troubleshooting, backup routines and incident response patterns for stable environments."
   }
 ];
 
 export const stackPrinciples = [
   {
-    title: "Content-led",
+    title: "CI/CD and automation",
     text:
-      "Projects, cases and notes can move into typed content collections without turning the root domain into a heavy app."
+      "GitHub Actions, Azure DevOps, scripts and deployment routines that keep delivery predictable."
   },
   {
-    title: "Cloudflare-native",
+    title: "Infrastructure as Code",
     text:
-      "Pages handles the static site now; Workers and D1 can attach later without changing the public shape of the hub."
+      "Terraform, cloud configuration, environment setup and operational documentation for repeatable changes."
   },
   {
-    title: "Separate surfaces",
+    title: "Production operations",
     text:
-      "Labs, tools and products can evolve under subdomains with their own repositories, deploy cadence and risk profile."
+      "Monitoring, logs, troubleshooting, backups, access control and continuity across real environments."
   }
 ];
 
@@ -142,58 +142,41 @@ export const ecosystemSurfaces = [
     label: "root",
     domain: "faysk.dev",
     state: "live",
-    description: "Identity, index and curated direction."
+    description: "DevOps identity, project index and professional timeline."
   },
   {
     label: "lab",
     domain: "lab.faysk.dev",
     state: "experimental",
-    description: "Diagnostics, APIs and browser capability research."
+    description: "Diagnostics, browser APIs and technical experimentation."
   },
   {
     label: "tools",
     domain: "tools.faysk.dev",
     state: "planned",
-    description: "Small utilities and focused web tools."
+    description: "Operational helpers, small utilities and automation surfaces."
   },
   {
     label: "work",
     domain: "work.faysk.dev",
     state: "planned",
-    description: "Case studies, technical writing and selected builds."
+    description: "Case studies, client work and delivery notes."
   }
 ];
 
 export const careerTimeline = [
   {
-    period: "2026 - Present",
-    company: "S4U",
-    role: "IT Infrastructure Engineer",
-    focus: "Infrastructure architecture, servers, networks, security, monitoring and continuity.",
-    stack: ["Windows Server", "Linux", "Networking", "Firewall", "Backup"]
+    stage: "Support",
+    icon: "monitor",
+    period: "2011 - 2012",
+    company: "TAM",
+    role: "IT Support Technician",
+    focus: "Internal technical support, incidents, workstations and corporate infrastructure.",
+    stack: ["Windows", "Hardware", "Networks", "Support"]
   },
   {
-    period: "2025 - Present",
-    company: "LF Airport Transfers",
-    role: "DevOps & Full-Stack Engineer",
-    focus: "Production web platform, booking flow, request management and operational automation.",
-    stack: ["Next.js", "React", "TypeScript", "Cloudflare", "SEO"]
-  },
-  {
-    period: "2019 - 2026",
-    company: "SAT",
-    role: "DevOps Engineer",
-    focus: "Cloud infrastructure, automation, CI/CD, containers and production operations.",
-    stack: ["Azure", "Terraform", "Docker", "GitHub Actions", "PowerShell"]
-  },
-  {
-    period: "2016 - 2019",
-    company: "Oficina de TI",
-    role: "IT Infrastructure Support Analyst",
-    focus: "Corporate infrastructure, servers, networks, access, security and continuity.",
-    stack: ["Windows Server", "Linux", "Active Directory", "Firewall", "Backup"]
-  },
-  {
+    stage: "Build",
+    icon: "code",
     period: "2012 - 2015",
     company: "UpGlobal",
     role: "Software Developer",
@@ -201,10 +184,39 @@ export const careerTimeline = [
     stack: ["PHP", "JavaScript", "HTML5", "CSS3", "Apache"]
   },
   {
-    period: "2011 - 2012",
-    company: "TAM",
-    role: "IT Support Technician",
-    focus: "Internal technical support, incidents, workstations and corporate infrastructure.",
-    stack: ["Windows", "Hardware", "Networks", "Support"]
+    stage: "Stabilize",
+    icon: "server",
+    period: "2016 - 2019",
+    company: "Oficina de TI",
+    role: "IT Infrastructure Support Analyst",
+    focus: "Corporate infrastructure, servers, networks, access, security and continuity.",
+    stack: ["Windows Server", "Linux", "Active Directory", "Firewall", "Backup"]
+  },
+  {
+    stage: "Automate",
+    icon: "cloud",
+    period: "2019 - 2026",
+    company: "SAT",
+    role: "DevOps Engineer",
+    focus: "Cloud infrastructure, automation, CI/CD, containers and production operations.",
+    stack: ["Azure", "Terraform", "Docker", "GitHub Actions", "PowerShell"]
+  },
+  {
+    stage: "Deliver",
+    icon: "pipeline",
+    period: "2025 - Present",
+    company: "LF Airport Transfers",
+    role: "DevOps & Full-Stack Engineer",
+    focus: "Production web platform, booking flow, request management and operational automation.",
+    stack: ["Next.js", "React", "TypeScript", "Cloudflare", "SEO"]
+  },
+  {
+    stage: "Operate",
+    icon: "shield",
+    period: "2026 - Present",
+    company: "S4U",
+    role: "IT Infrastructure Engineer",
+    focus: "Infrastructure architecture, servers, networks, security, monitoring and continuity.",
+    stack: ["Windows Server", "Linux", "Networking", "Firewall", "Backup"]
   }
 ];

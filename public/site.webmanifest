@@ -1,11 +1,11 @@
 {
-  "name": "faysk.dev",
-  "short_name": "faysk",
-  "description": "Developer hub for projects, labs and tools.",
+  "name": "Faysk DevOps",
+  "short_name": "Faysk Ops",
+  "description": "DevOps portfolio for automation, CI/CD and infrastructure.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#f4f6f2",
-  "theme_color": "#f4f6f2",
+  "background_color": "#07111f",
+  "theme_color": "#07111f",
   "icons": [
     {
       "src": "/favicon.svg",

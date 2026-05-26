@@ -1,28 +1,35 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="faysk.dev preview">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="Faysk DevOps preview">
   <defs>
-    <pattern id="grid" width="42" height="42" patternUnits="userSpaceOnUse">
-      <path d="M42 0H0V42" fill="none" stroke="#12120f" stroke-opacity=".07" stroke-width="1"/>
+    <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse">
+      <path d="M48 0H0V48" fill="none" stroke="#f4f8f2" stroke-opacity=".08" stroke-width="1"/>
     </pattern>
+    <linearGradient id="pipeline" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#9cff6e"/>
+      <stop offset=".5" stop-color="#5bdcff"/>
+      <stop offset="1" stop-color="#6b8cff"/>
+    </linearGradient>
   </defs>
-  <rect width="1200" height="630" fill="#f4f6f2"/>
+  <rect width="1200" height="630" fill="#07111f"/>
   <rect width="1200" height="630" fill="url(#grid)"/>
-  <path d="M0 0h900L520 630H0z" fill="#dff6f5"/>
-  <path d="M870 630h330V340z" fill="#e8ffc1"/>
-  <rect x="74" y="78" width="1052" height="474" rx="18" fill="#fff" stroke="#12120f" stroke-opacity=".18"/>
-  <rect x="104" y="108" width="84" height="84" rx="18" fill="#12120f"/>
-  <path d="M126 168v-42h42v12h-27v10h21v12h-21v8z" fill="#f6f1e7"/>
-  <circle cx="171" cy="169" r="7" fill="#d7ff63"/>
-  <text x="224" y="138" fill="#198f59" font-family="Consolas, monospace" font-size="22" font-weight="700">ROOT DOMAIN / PUBLIC INDEX</text>
-  <text x="104" y="322" fill="#12120f" font-family="Arial, sans-serif" font-size="110" font-weight="900">faysk.dev</text>
-  <text x="110" y="384" fill="#657069" font-family="Arial, sans-serif" font-size="32">projects, labs, tools and technical writing</text>
-  <rect x="820" y="118" width="244" height="72" rx="36" fill="#d7ff63"/>
-  <text x="860" y="164" fill="#12120f" font-family="Arial, sans-serif" font-size="28" font-weight="800">static first</text>
-  <g transform="translate(108 444)">
-    <rect width="146" height="62" rx="10" fill="#12120f"/>
-    <text x="24" y="39" fill="#fff" font-family="Arial, sans-serif" font-size="24" font-weight="800">hub</text>
-    <rect x="168" width="146" height="62" rx="10" fill="#74e2ef"/>
-    <text x="192" y="39" fill="#12120f" font-family="Arial, sans-serif" font-size="24" font-weight="800">lab</text>
-    <rect x="336" width="146" height="62" rx="10" fill="#c8b9ff"/>
-    <text x="360" y="39" fill="#12120f" font-family="Arial, sans-serif" font-size="24" font-weight="800">tools</text>
+  <circle cx="1000" cy="80" r="240" fill="#5bdcff" opacity=".12"/>
+  <circle cx="160" cy="560" r="250" fill="#9cff6e" opacity=".10"/>
+  <rect x="76" y="76" width="1048" height="478" rx="26" fill="#0f1f32" stroke="#d4e9f0" stroke-opacity=".18"/>
+  <rect x="118" y="118" width="96" height="96" rx="22" fill="#07111f" stroke="#9cff6e" stroke-opacity=".28"/>
+  <path d="M143 184v-42h35v12h-21v9h18v11h-18v10h-14z" fill="#f4f8f2"/>
+  <path d="M177 146h14a9 9 0 0 1 0 18h-14M177 168h14a9 9 0 0 1 0 18h-14" fill="none" stroke="#5bdcff" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="194" cy="155" r="5" fill="#9cff6e"/>
+  <circle cx="194" cy="177" r="5" fill="#9cff6e"/>
+  <text x="246" y="154" fill="#9cff6e" font-family="Consolas, monospace" font-size="28" font-weight="700">DEVOPS / AUTOMATION / INFRASTRUCTURE</text>
+  <text x="118" y="318" fill="#f4f8f2" font-family="Arial, sans-serif" font-size="96" font-weight="900">Faysk DevOps</text>
+  <text x="124" y="384" fill="#91a7b6" font-family="Arial, sans-serif" font-size="34">CI/CD, cloud operations, infrastructure and production delivery</text>
+  <g transform="translate(124 454)">
+    <path d="M20 38H850" stroke="url(#pipeline)" stroke-width="8" stroke-linecap="round"/>
+    <g font-family="Consolas, monospace" font-size="20" font-weight="700">
+      <g transform="translate(0 0)"><circle cx="20" cy="38" r="18" fill="#9cff6e"/><text x="50" y="45" fill="#f4f8f2">PLAN</text></g>
+      <g transform="translate(165 0)"><circle cx="20" cy="38" r="18" fill="#5bdcff"/><text x="50" y="45" fill="#f4f8f2">BUILD</text></g>
+      <g transform="translate(345 0)"><circle cx="20" cy="38" r="18" fill="#6b8cff"/><text x="50" y="45" fill="#f4f8f2">TEST</text></g>
+      <g transform="translate(515 0)"><circle cx="20" cy="38" r="18" fill="#9cff6e"/><text x="50" y="45" fill="#f4f8f2">DEPLOY</text></g>
+      <g transform="translate(720 0)"><circle cx="20" cy="38" r="18" fill="#5bdcff"/><text x="50" y="45" fill="#f4f8f2">OBSERVE</text></g>
+    </g>
   </g>
 </svg>

@@ -1,6 +1,6 @@
-# faysk.dev
+# Faysk DevOps
 
-Hub pessoal do ecossistema Faysk: uma porta de entrada limpa para projetos, labs, ferramentas, estudos de caso e futuras superficies publicas.
+Portfolio DevOps para automacao, CI/CD, infraestrutura, operacao cloud e entregas prontas para producao. O dominio continua sendo `faysk.dev`, mas a marca publica agora aponta para Faysk DevOps.
 
 Site em producao:
 
@@ -16,18 +16,18 @@ https://github.com/Faysk/faysk.dev
 
 ## Visao
 
-O `faysk.dev` e o dominio principal. Ele funciona como um hub leve, rapido e facil de manter, sem carregar a responsabilidade tecnica de todos os projetos dentro dele.
+O `faysk.dev` e o dominio principal. Ele funciona como uma vitrine leve, rapida e facil de manter para mostrar experiencia real em infraestrutura, suporte, automacao, CI/CD, cloud, troubleshooting e entrega de projetos.
 
-A ideia central continua sendo:
+A ideia central continua sendo simples:
 
 ```txt
-faysk.dev           -> apresentacao, identidade e indice
+faysk.dev           -> marca DevOps, portfolio, timeline e indice
 lab.faysk.dev       -> browser diagnostics lab
 tools.faysk.dev     -> ferramentas pequenas no futuro
 work.faysk.dev      -> estudos de caso e escrita tecnica no futuro
 ```
 
-O root domain nao deve virar um app pesado. Ele deve mostrar quem e Faysk, o que existe, o que esta em andamento e para onde o visitante deve ir.
+O root domain nao deve virar um app pesado. Ele deve mostrar a marca profissional, o que ja foi entregue, quais areas tecnicas sustentam esse trabalho e para onde o visitante deve ir.
 
 ## Estado Atual
 
@@ -35,14 +35,15 @@ O hub agora e um site estatico gerado com Astro e TypeScript.
 
 Ele renderiza:
 
-- hero principal com o dominio como sinal de primeira dobra;
-- mapa visual do ecossistema;
-- secao de modelo operacional;
-- grid de projetos/labs;
+- hero principal com identidade Faysk DevOps e pipeline visual;
+- mapa visual de superficies publicas e entregas;
+- timeline profissional em formato de esteira DevOps;
+- secao de modelo operacional focada em delivery, infraestrutura e operacao;
+- grid de projetos, labs e trabalhos de cliente;
 - filtros por tipo;
 - busca simples por texto;
 - links para GitHub e `lab.faysk.dev`;
-- manifesto, favicon, OG card, sitemap e headers para Cloudflare Pages.
+- manifesto, favicon, marca SVG, OG card, sitemap e headers para Cloudflare Pages.
 
 ## Arquitetura
 
@@ -86,6 +87,7 @@ Esse arquivo concentra:
 - `site`: metadados do dominio, URLs principais e descricao;
 - `projectTypes`: tipos usados pelos filtros;
 - `projects`: lista de projetos exibidos no grid;
+- `careerTimeline`: linha do tempo profissional usada pela esteira DevOps;
 - `operatingNotes`: cards do modelo operacional;
 - `stackPrinciples`: principios de evolucao tecnica;
 - `ecosystemSurfaces`: mapa de subdominios atuais e planejados.
@@ -183,23 +185,22 @@ Essa separacao evita que um experimento quebre o dominio principal, melhora o ve
 
 ## Direcao Visual
 
-O hub deve ser:
+O site deve ter cara de DevOps:
 
-- limpo;
-- moderno;
-- legivel;
-- rapido;
-- responsivo;
-- com identidade propria;
-- menos "dashboard tecnico" e mais "home base".
+- marca escura, tecnica e confiavel;
+- sinais visuais de pipeline, automacao e operacao;
+- verde/ciano/azul como acentos de terminal, observabilidade e cloud;
+- leitura rapida em desktop e mobile;
+- logo, favicon e OG card alinhados com automacao e infraestrutura;
+- conteudo objetivo, sem parecer landing page generica.
 
-O lab pode ser mais experimental. O hub precisa ser mais calmo e objetivo.
+O lab pode ser mais experimental. O dominio principal precisa transmitir presenca profissional, clareza e maturidade operacional.
 
 ## Roadmap
 
 ### Curto Prazo
 
-- Refinar textos de apresentacao pessoal.
+- Refinar textos finais de apresentacao pessoal.
 - Adicionar links reais de contato quando estiverem definidos.
 - Adicionar screenshots ou preview cards dos projetos principais.
 - Melhorar metadados sociais com uma imagem OG rasterizada, se necessario.
@@ -207,7 +208,7 @@ O lab pode ser mais experimental. O hub precisa ser mais calmo e objetivo.
 ### Medio Prazo
 
 - Criar secoes de estudos de caso.
-- Adicionar timeline de projetos.
+- Evoluir a timeline para estudos de caso por etapa da esteira DevOps.
 - Criar content collections para escrita tecnica.
 - Criar padrao visual reutilizavel para futuros subdominios.
 - Adicionar analytics privacy-friendly, se fizer sentido.
