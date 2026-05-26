@@ -1,0 +1,33 @@
+---
+import { careerTimeline } from "@data/projects";
+---
+
+<section class="section experience-section" id="experience" aria-labelledby="experience-title">
+  <div class="section-heading">
+    <p class="eyebrow">Experience</p>
+    <h2 class="section-title" id="experience-title">A practical timeline across software, DevOps and infrastructure.</h2>
+    <p class="section-copy">
+      A compact view of companies, client work and roles behind the public projects.
+    </p>
+  </div>
+
+  <div class="timeline-list">
+    {
+      careerTimeline.map((item) => (
+        <article class="timeline-item">
+          <span class="timeline-period">{item.period}</span>
+          <div class="timeline-body">
+            <div>
+              <h3>{item.company}</h3>
+              <p class="timeline-role">{item.role}</p>
+            </div>
+            <p>{item.focus}</p>
+            <ul class="tag-list" aria-label={`${item.company} stack`}>
+              {item.stack.map((skill) => <li class="tag">{skill}</li>)}
+            </ul>
+          </div>
+        </article>
+      ))
+    }
+  </div>
+</section>

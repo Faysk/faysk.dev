@@ -536,6 +536,7 @@ input:focus-visible {
 
 .surface-grid,
 .bento-grid,
+.timeline-list,
 .project-grid,
 .stack-grid {
   display: grid;
@@ -545,6 +546,60 @@ input:focus-visible {
 
 .surface-grid {
   grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.timeline-list {
+  gap: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.74);
+  overflow: hidden;
+}
+
+.timeline-item {
+  display: grid;
+  grid-template-columns: 160px minmax(0, 1fr);
+  gap: var(--space-5);
+  padding: var(--space-5);
+  border-bottom: 1px solid var(--line);
+}
+
+.timeline-item:last-child {
+  border-bottom: 0;
+}
+
+.timeline-period {
+  color: var(--green);
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.timeline-body {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.timeline-body h3 {
+  margin: 0;
+  font-size: 1.28rem;
+}
+
+.timeline-role,
+.timeline-body p {
+  margin: 0;
+}
+
+.timeline-role {
+  color: var(--ink-soft);
+  font-weight: 800;
+}
+
+.timeline-body > p:not(.timeline-role) {
+  max-width: 760px;
+  color: var(--muted);
+  line-height: 1.62;
 }
 
 .bento-grid {
@@ -926,6 +981,7 @@ input:focus-visible {
   }
 
   .surface-grid,
+  .timeline-list,
   .bento-grid,
   .project-grid,
   .stack-grid {
@@ -935,6 +991,12 @@ input:focus-visible {
   .bento-card.large,
   .bento-card.small {
     grid-column: auto;
+  }
+
+  .timeline-item {
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+    padding: var(--space-4);
   }
 
   .bento-value {
