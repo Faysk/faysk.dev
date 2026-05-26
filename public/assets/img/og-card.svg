@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="faysk.dev preview">
+  <defs>
+    <pattern id="grid" width="42" height="42" patternUnits="userSpaceOnUse">
+      <path d="M42 0H0V42" fill="none" stroke="#12120f" stroke-opacity=".07" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="630" fill="#f4f6f2"/>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+  <path d="M0 0h900L520 630H0z" fill="#dff6f5"/>
+  <path d="M870 630h330V340z" fill="#e8ffc1"/>
+  <rect x="74" y="78" width="1052" height="474" rx="18" fill="#fff" stroke="#12120f" stroke-opacity=".18"/>
+  <rect x="104" y="108" width="84" height="84" rx="18" fill="#12120f"/>
+  <path d="M126 168v-42h42v12h-27v10h21v12h-21v8z" fill="#f6f1e7"/>
+  <circle cx="171" cy="169" r="7" fill="#d7ff63"/>
+  <text x="224" y="138" fill="#198f59" font-family="Consolas, monospace" font-size="22" font-weight="700">ROOT DOMAIN / PUBLIC INDEX</text>
+  <text x="104" y="322" fill="#12120f" font-family="Arial, sans-serif" font-size="110" font-weight="900">faysk.dev</text>
+  <text x="110" y="384" fill="#657069" font-family="Arial, sans-serif" font-size="32">projects, labs, tools and technical writing</text>
+  <rect x="820" y="118" width="244" height="72" rx="36" fill="#d7ff63"/>
+  <text x="860" y="164" fill="#12120f" font-family="Arial, sans-serif" font-size="28" font-weight="800">static first</text>
+  <g transform="translate(108 444)">
+    <rect width="146" height="62" rx="10" fill="#12120f"/>
+    <text x="24" y="39" fill="#fff" font-family="Arial, sans-serif" font-size="24" font-weight="800">hub</text>
+    <rect x="168" width="146" height="62" rx="10" fill="#74e2ef"/>
+    <text x="192" y="39" fill="#12120f" font-family="Arial, sans-serif" font-size="24" font-weight="800">lab</text>
+    <rect x="336" width="146" height="62" rx="10" fill="#c8b9ff"/>
+    <text x="360" y="39" fill="#12120f" font-family="Arial, sans-serif" font-size="24" font-weight="800">tools</text>
+  </g>
+</svg>

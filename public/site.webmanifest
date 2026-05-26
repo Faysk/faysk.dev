@@ -4,8 +4,8 @@
   "description": "Developer hub for projects, labs and tools.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#080b0f",
-  "theme_color": "#080b0f",
+  "background_color": "#f4f6f2",
+  "theme_color": "#f4f6f2",
   "icons": [
     {
       "src": "/assets/icons/favicon.svg",

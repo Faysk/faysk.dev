@@ -1,0 +1,46 @@
+---
+import type { Project } from "@data/projects";
+import ButtonLink from "./ButtonLink.astro";
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+const searchValue = [
+  project.name,
+  project.type,
+  project.status,
+  project.description,
+  project.stack.join(" ")
+].join(" ").toLowerCase();
+---
+
+<article
+  class="project-card"
+  data-project-card
+  data-project-type={project.type}
+  data-project-search={searchValue}
+>
+  <span class="project-accent" aria-hidden="true"></span>
+  <div class="project-topline">
+    <span class="project-type">{project.type}</span>
+    <span class={`project-status status-${project.status}`}>{project.status}</span>
+  </div>
+
+  <div>
+    <p class="eyebrow">{project.featured ? "Featured" : "Queued"}</p>
+    <h3 class="project-title">{project.name}</h3>
+  </div>
+
+  <p class="project-description">{project.description}</p>
+
+  <ul class="tag-list" aria-label={`${project.name} stack`}>
+    {project.stack.map((item) => <li class="tag">{item}</li>)}
+  </ul>
+
+  <div class="project-links">
+    <ButtonLink href={project.url} label={project.url === "#" ? "Queued" : "Open"} ariaLabel={`Open ${project.name}`} variant="primary" />
+    {project.repo ? <ButtonLink href={project.repo} label="Repo" ariaLabel={`Open ${project.name} repository`} /> : null}
+  </div>
+</article>

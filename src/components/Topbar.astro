@@ -1,0 +1,26 @@
+---
+import { site } from "@data/projects";
+import ButtonLink from "./ButtonLink.astro";
+---
+
+<header class="topbar">
+  <a class="brand" href="/" aria-label="faysk.dev home">
+    <img class="brand-mark" src="/assets/icons/mark.svg" alt="" width="40" height="40" />
+    <span class="brand-copy">
+      <strong>{site.name}</strong>
+      <span>{site.role}</span>
+    </span>
+  </a>
+
+  <nav class="nav-links" aria-label="Primary navigation">
+    <a href="#ecosystem">Ecosystem</a>
+    <a href="#system">System</a>
+    <a href="#projects">Projects</a>
+    <a href={site.labUrl} target="_blank" rel="noreferrer">Lab</a>
+  </nav>
+
+  <div class="topbar-actions" aria-label="Primary actions">
+    <ButtonLink href={site.labUrl} label="Open Lab" ariaLabel="Open lab.faysk.dev" />
+    <ButtonLink href={site.githubUrl} label="GitHub" ariaLabel="Open Faysk on GitHub" variant="primary" />
+  </div>
+</header>

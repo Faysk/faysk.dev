@@ -1,0 +1,29 @@
+---
+import { ecosystemSurfaces } from "@data/projects";
+---
+
+<section class="section ecosystem-section" id="ecosystem" aria-labelledby="ecosystem-title">
+  <div class="section-heading">
+    <p class="eyebrow">Ecosystem map</p>
+    <h2 class="section-title" id="ecosystem-title">One calm root, several independent surfaces.</h2>
+    <p class="section-copy">
+      The main domain points people in the right direction. Labs, tools and portfolio surfaces
+      can move at their own speed without making the root fragile.
+    </p>
+  </div>
+
+  <div class="surface-grid">
+    {
+      ecosystemSurfaces.map((surface, index) => (
+        <article class="surface-card" style={`--surface-index: "${String(index + 1).padStart(2, "0")}"`}>
+          <div class="surface-topline">
+            <span class="surface-label">{surface.label}</span>
+            <span class={`surface-state status-${surface.state}`}>{surface.state}</span>
+          </div>
+          <h3>{surface.domain}</h3>
+          <p>{surface.description}</p>
+        </article>
+      ))
+    }
+  </div>
+</section>

@@ -1,0 +1,25 @@
+---
+import { stackPrinciples } from "@data/projects";
+---
+
+<section class="section stack-section" aria-labelledby="stack-title">
+  <div class="section-heading">
+    <p class="eyebrow">Scale path</p>
+    <h2 class="section-title" id="stack-title">Simple now, extensible later.</h2>
+    <p class="section-copy">
+      The current stack is intentionally narrow: Astro, TypeScript and Cloudflare Pages.
+      Workers, D1 and richer tooling stay available without becoming default complexity.
+    </p>
+  </div>
+
+  <div class="stack-grid">
+    {
+      stackPrinciples.map((card) => (
+        <article class="stack-card">
+          <h3>{card.title}</h3>
+          <p>{card.text}</p>
+        </article>
+      ))
+    }
+  </div>
+</section>

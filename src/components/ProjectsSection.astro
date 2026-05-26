@@ -1,0 +1,49 @@
+---
+import { projects, projectTypes } from "@data/projects";
+import ProjectCard from "./ProjectCard.astro";
+---
+
+<section class="section" id="projects" aria-labelledby="projects-title">
+  <div class="section-heading">
+    <p class="eyebrow">Index</p>
+    <h2 class="section-title" id="projects-title">Projects, labs and future surfaces.</h2>
+    <p class="section-copy">
+      A curated map of what exists now and what is intentionally queued for later.
+    </p>
+  </div>
+
+  <div class="filter-row" data-project-controls>
+    <label class="sr-only" for="project-search">Search projects</label>
+    <input
+      class="search-input"
+      id="project-search"
+      data-project-search-input
+      type="search"
+      placeholder="Search projects..."
+      autocomplete="off"
+    />
+    <div class="filter-buttons" role="group" aria-label="Filter projects by type">
+      {
+        projectTypes.map((type) => (
+          <button
+            class={`filter-button ${type.id === "all" ? "is-active" : ""}`}
+            type="button"
+            data-project-filter={type.id}
+            aria-pressed={type.id === "all" ? "true" : "false"}
+          >
+            {type.label}
+          </button>
+        ))
+      }
+    </div>
+  </div>
+
+  <div class="project-grid" data-project-grid>
+    {projects.map((project) => <ProjectCard project={project} />)}
+    <p class="empty-state" data-project-empty hidden>No projects match this filter yet.</p>
+  </div>
+</section>
+
+<script>
+  import "../scripts/project-filter";
+</script>

@@ -1,0 +1,82 @@
+---
+import { projects, site } from "@data/projects";
+import ButtonLink from "./ButtonLink.astro";
+
+const liveCount = projects.filter((project) => project.status === "live").length;
+const featuredCount = projects.filter((project) => project.featured).length;
+const plannedCount = projects.filter((project) => project.status === "planned").length;
+---
+
+<section class="hero" aria-labelledby="hero-title">
+  <div class="hero-content">
+    <p class="eyebrow">Root domain / public index</p>
+    <h1 class="hero-title" id="hero-title">{site.name}</h1>
+    <p class="hero-copy">
+      A calm index for projects, labs, tools and technical writing. Built to feel light,
+      deliberate and easy to trust before the experimental surfaces branch out.
+    </p>
+    <div class="hero-actions">
+      <ButtonLink href="#projects" label="Explore projects" variant="primary" />
+      <ButtonLink href={site.labUrl} label="Visit lab" ariaLabel="Visit lab.faysk.dev" />
+    </div>
+    <ul class="hero-stack" aria-label="Current root stack">
+      <li>Astro</li>
+      <li>TypeScript</li>
+      <li>Cloudflare Pages</li>
+      <li>Static-first</li>
+    </ul>
+    <dl class="metric-row" aria-label="Current ecosystem summary">
+      <div>
+        <dt>{liveCount}</dt>
+        <dd>live</dd>
+      </div>
+      <div>
+        <dt>{featuredCount}</dt>
+        <dd>featured</dd>
+      </div>
+      <div>
+        <dt>{plannedCount}</dt>
+        <dd>queued</dd>
+      </div>
+    </dl>
+  </div>
+
+  <aside class="hero-board" aria-label="Faysk ecosystem index card">
+    <div class="board-header">
+      <img src="/assets/icons/mark.svg" alt="" width="54" height="54" />
+      <div>
+        <span>Faysk index</span>
+        <strong>public system map</strong>
+      </div>
+      <small>2026</small>
+    </div>
+
+    <div class="board-feature">
+      <p class="eyebrow">Current surface</p>
+      <h2>Identity, direction and selected work.</h2>
+      <p>
+        The root stays quiet and readable. Labs and tools can be louder in their own spaces.
+      </p>
+    </div>
+
+    <div class="route-list" aria-label="Current routing model">
+      <div class="route-row is-active">
+        <span>faysk.dev</span>
+        <strong>identity + index</strong>
+      </div>
+      <div class="route-row">
+        <span>lab.faysk.dev</span>
+        <strong>browser diagnostics</strong>
+      </div>
+      <div class="route-row">
+        <span>tools.faysk.dev</span>
+        <strong>planned utilities</strong>
+      </div>
+    </div>
+
+    <div class="board-footer">
+      <span>static first</span>
+      <span>cloudflare ready</span>
+    </div>
+  </aside>
+</section>

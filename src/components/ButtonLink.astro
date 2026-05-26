@@ -1,0 +1,29 @@
+---
+interface Props {
+  href: string;
+  label: string;
+  ariaLabel?: string;
+  variant?: "primary" | "quiet";
+}
+
+const { href, label, ariaLabel = label, variant = "quiet" } = Astro.props;
+const disabled = !href || href === "#";
+const isExternal = /^https?:\/\//.test(href || "");
+const className = `button ${variant === "primary" ? "button-primary" : ""}`.trim();
+---
+
+{
+  disabled ? (
+    <span class={`${className} is-disabled`} aria-disabled="true">{label}</span>
+  ) : (
+    <a
+      class={className}
+      href={href}
+      aria-label={ariaLabel}
+      target={isExternal ? "_blank" : undefined}
+      rel={isExternal ? "noreferrer" : undefined}
+    >
+      {label}
+    </a>
+  )
+}
