@@ -1,5 +1,5 @@
-export type ProjectType = "hub" | "portfolio" | "lab" | "tool" | "project";
-export type ProjectStatus = "live" | "experimental" | "planned";
+export type ProjectType = "client work" | "lab" | "product";
+export type ProjectStatus = "live" | "experiment" | "private";
 
 export interface Project {
   name: string;
@@ -10,213 +10,149 @@ export interface Project {
   description: string;
   stack: string[];
   featured: boolean;
+  image: string;
+  imageAlt: string;
 }
 
 export const site = {
-  name: "Faysk DevOps",
+  name: "Faysk",
   owner: "Faysk",
-  role: "automation / infrastructure / delivery",
+  role: "DevOps Engineer",
   url: "https://faysk.dev",
   githubUrl: "https://github.com/Faysk",
   labUrl: "https://lab.faysk.dev",
-  title: "Faysk DevOps | Automation, CI/CD and Infrastructure",
+  contactEmail: "contato@faysk.dev",
+  title: "Faysk — DevOps Engineer | Infrastructure & CI/CD",
   description:
-    "DevOps portfolio for automation, CI/CD, infrastructure, cloud operations and production-ready delivery."
+    "I design, automate and operate reliable infrastructure, CI/CD pipelines and production systems."
 };
-
-export const projectTypes: Array<{ id: "all" | ProjectType; label: string }> = [
-  { id: "all", label: "All" },
-  { id: "hub", label: "Hub" },
-  { id: "portfolio", label: "Portfolio" },
-  { id: "lab", label: "Labs" },
-  { id: "tool", label: "Tools" },
-  { id: "project", label: "Projects" }
-];
 
 export const projects: Project[] = [
   {
-    name: "faysk.dev",
-    type: "hub",
-    status: "live",
-    url: "https://faysk.dev",
-    repo: "https://github.com/Faysk/faysk.dev",
-    description:
-      "The root domain: identity, selected work, project index and the launch point for the wider Faysk ecosystem.",
-    stack: ["Astro", "TypeScript", "Cloudflare Pages"],
-    featured: true
-  },
-  {
     name: "LF Airport Transfers",
-    type: "portfolio",
+    type: "client work",
     status: "live",
     url: "https://www.lfairporttransfers.co.uk/",
+    image: "/assets/img/projects/lf-airport-transfers.jpg",
+    imageAlt: "LF Airport Transfers homepage showing its London chauffeur service",
     description:
-      "Client website for a London private chauffeur and airport transfer service, focused on premium positioning, airport routes, Mercedes fleet clarity and a direct quote flow.",
-    stack: ["Client Website", "Responsive UI", "SEO", "Lead Flow"],
+      "A production website and direct quote journey for a London chauffeur service, built around clear routes, fleet positioning and qualified enquiries.",
+    stack: ["Next.js", "TypeScript", "Cloudflare", "SEO"],
     featured: true
   },
   {
-    name: "Thayná Portfolio",
-    type: "portfolio",
+    name: "LaBolita",
+    type: "product",
     status: "live",
-    url: "https://thayna.faysk.dev/",
+    url: "https://labolita.faysk.dev/",
+    image: "/assets/img/projects/labolita.jpg",
+    imageAlt: "LaBolita World Cup dashboard with fixtures, pool ranking and prediction features",
     description:
-      "Published client portfolio surface focused on a simple online presence, responsive layout and clean public presentation.",
-    stack: ["Client Website", "Portfolio", "Responsive UI"],
-    featured: false
+      "A World Cup companion for fixtures, predictions, private pools and live standings, including a replay of how rankings changed across completed matches.",
+    stack: ["Next.js", "Data visualisation", "Responsive UX"],
+    featured: true
   },
   {
     name: "Browser Telemetry Lab",
     type: "lab",
-    status: "experimental",
+    status: "experiment",
     url: "https://lab.faysk.dev",
     repo: "https://github.com/Faysk/faysk-lab",
+    image: "/assets/img/projects/browser-telemetry-lab.jpg",
+    imageAlt: "Browser Telemetry Lab privacy-aware diagnostics interface",
     description:
-      "A privacy-aware diagnostics interface exploring browser APIs, device capability signals and passive telemetry.",
-    stack: ["Browser APIs", "ES Modules", "Safe mode"],
+      "A privacy-aware diagnostics workspace for exploring browser APIs, device capabilities and passive telemetry without collecting personal data.",
+    stack: ["Browser APIs", "ES Modules", "Privacy"],
     featured: true
   },
   {
-    name: "Tools Surface",
-    type: "tool",
-    status: "planned",
-    url: "#",
+    name: "DnD Scribe",
+    type: "product",
+    status: "private",
+    url: "https://dnd.faysk.dev/",
+    image: "/assets/img/projects/dnd-scribe.jpg",
+    imageAlt: "DnD Scribe private campaign workspace sign-in screen",
     description:
-      "A future collection of small utilities, internal helpers and polished single-purpose web tools.",
-    stack: ["Workers", "D1", "Utilities"],
+      "A private operations workspace for D&D campaigns, combining session notes, Roll20, audio and review workflows behind role-based authentication.",
+    stack: ["Supabase", "OAuth", "Operations UI"],
     featured: false
   },
   {
-    name: "Case Studies",
-    type: "project",
-    status: "planned",
-    url: "#",
+    name: "Thayná Portfolio",
+    type: "client work",
+    status: "live",
+    url: "https://thayna.faysk.dev/",
+    image: "/assets/img/projects/thayna-portfolio.jpg",
+    imageAlt: "Thayná Borges psychology portfolio homepage",
     description:
-      "Selected builds, technical notes, deployment writeups and before-and-after project stories.",
-    stack: ["Writing", "Portfolio", "Process"],
+      "A compact, responsive portfolio that gives a personal brand a focused and easy-to-maintain online presence.",
+    stack: ["Responsive UI", "Portfolio", "Cloudflare"],
     featured: false
   }
 ];
 
-export const operatingNotes = [
+export const capabilities = [
   {
-    title: "Delivery",
-    value: "ship reliably",
+    title: "Delivery automation",
     text:
-      "Pipelines, release flow and deployment paths designed to reduce manual steps and production surprises."
-  },
-  {
-    title: "Infrastructure",
-    value: "codify repeatability",
-    text:
-      "Cloud, servers, networking and security shaped into repeatable, documented and maintainable systems."
-  },
-  {
-    title: "Operations",
-    value: "observe and recover",
-    text:
-      "Monitoring, troubleshooting, backup routines and incident response patterns for stable environments."
-  }
-];
-
-export const stackPrinciples = [
-  {
-    title: "CI/CD and automation",
-    text:
-      "GitHub Actions, Azure DevOps, scripts and deployment routines that keep delivery predictable."
+      "CI/CD, release paths and scripts that remove manual work while keeping deployments understandable.",
+    stack: ["GitHub Actions", "Azure DevOps", "PowerShell"]
   },
   {
     title: "Infrastructure as Code",
     text:
-      "Terraform, cloud configuration, environment setup and operational documentation for repeatable changes."
+      "Cloud, servers, networking and security shaped into repeatable, documented environments.",
+    stack: ["Terraform", "Azure", "Docker"]
   },
   {
     title: "Production operations",
     text:
-      "Monitoring, logs, troubleshooting, backups, access control and continuity across real environments."
-  }
-];
-
-export const ecosystemSurfaces = [
-  {
-    label: "root",
-    domain: "faysk.dev",
-    state: "live",
-    description: "DevOps identity, project index and professional timeline."
-  },
-  {
-    label: "lab",
-    domain: "lab.faysk.dev",
-    state: "experimental",
-    description: "Diagnostics, browser APIs and technical experimentation."
-  },
-  {
-    label: "tools",
-    domain: "tools.faysk.dev",
-    state: "planned",
-    description: "Operational helpers, small utilities and automation surfaces."
-  },
-  {
-    label: "work",
-    domain: "work.faysk.dev",
-    state: "planned",
-    description: "Case studies, client work and delivery notes."
+      "Monitoring, troubleshooting, backups and recovery practices designed for calm, stable operations.",
+    stack: ["Observability", "Linux", "Windows Server"]
   }
 ];
 
 export const careerTimeline = [
   {
-    stage: "Support",
-    icon: "monitor",
-    period: "2011 - 2012",
-    company: "TAM",
-    role: "IT Support Technician",
-    focus: "Internal technical support, incidents, workstations and corporate infrastructure.",
-    stack: ["Windows", "Hardware", "Networks", "Support"]
+    period: "2026 — Present",
+    company: "S4U",
+    role: "IT Infrastructure Engineer",
+    focus: "Infrastructure architecture, servers, networks, security, monitoring and continuity.",
+    stack: ["Windows Server", "Linux", "Networking", "Security"]
   },
   {
-    stage: "Build",
-    icon: "code",
-    period: "2012 - 2015",
-    company: "UpGlobal",
-    role: "Software Developer",
-    focus: "Web applications, system maintenance, environments and deployment support.",
-    stack: ["PHP", "JavaScript", "HTML5", "CSS3", "Apache"]
+    period: "2025 — Present",
+    company: "LF Airport Transfers",
+    role: "DevOps & Full-Stack Engineer",
+    focus: "Production web platform, booking flow, request management and operational automation.",
+    stack: ["Next.js", "TypeScript", "Cloudflare", "SEO"]
   },
   {
-    stage: "Stabilize",
-    icon: "server",
-    period: "2016 - 2019",
-    company: "Oficina de TI",
-    role: "IT Infrastructure Support Analyst",
-    focus: "Corporate infrastructure, servers, networks, access, security and continuity.",
-    stack: ["Windows Server", "Linux", "Active Directory", "Firewall", "Backup"]
-  },
-  {
-    stage: "Automate",
-    icon: "cloud",
-    period: "2019 - 2026",
+    period: "2019 — 2026",
     company: "SAT",
     role: "DevOps Engineer",
     focus: "Cloud infrastructure, automation, CI/CD, containers and production operations.",
     stack: ["Azure", "Terraform", "Docker", "GitHub Actions", "PowerShell"]
   },
   {
-    stage: "Deliver",
-    icon: "pipeline",
-    period: "2025 - Present",
-    company: "LF Airport Transfers",
-    role: "DevOps & Full-Stack Engineer",
-    focus: "Production web platform, booking flow, request management and operational automation.",
-    stack: ["Next.js", "React", "TypeScript", "Cloudflare", "SEO"]
+    period: "2016 — 2019",
+    company: "Oficina de TI",
+    role: "IT Infrastructure Support Analyst",
+    focus: "Corporate infrastructure, servers, networks, access, security and continuity.",
+    stack: ["Windows Server", "Linux", "Active Directory", "Backup"]
   },
   {
-    stage: "Operate",
-    icon: "shield",
-    period: "2026 - Present",
-    company: "S4U",
-    role: "IT Infrastructure Engineer",
-    focus: "Infrastructure architecture, servers, networks, security, monitoring and continuity.",
-    stack: ["Windows Server", "Linux", "Networking", "Firewall", "Backup"]
+    period: "2012 — 2015",
+    company: "UpGlobal",
+    role: "Software Developer",
+    focus: "Web applications, system maintenance, environments and deployment support.",
+    stack: ["PHP", "JavaScript", "HTML", "CSS", "Apache"]
+  },
+  {
+    period: "2011 — 2012",
+    company: "TAM",
+    role: "IT Support Technician",
+    focus: "Internal support, incident handling, workstations and corporate infrastructure.",
+    stack: ["Windows", "Hardware", "Networks", "Support"]
   }
 ];

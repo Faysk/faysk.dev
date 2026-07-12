@@ -1,23 +1,28 @@
 ---
-import { operatingNotes } from "@data/projects";
+import { capabilities } from "@data/projects";
 ---
 
-<section class="section" id="system" aria-labelledby="system-title">
+<section class="section" id="approach" aria-labelledby="approach-title">
   <div class="section-heading">
-    <p class="eyebrow">Operating model</p>
-    <h2 class="section-title" id="system-title">The work is DevOps: automate delivery and keep systems stable.</h2>
+    <p class="eyebrow">How I work</p>
+    <h2 class="section-title" id="approach-title">Automate the repeatable. Make the critical observable.</h2>
     <p class="section-copy">
-      The site is the public layer; the story behind it is infrastructure, CI/CD, cloud operations, monitoring, troubleshooting and repeatable delivery.
+      Good operations should reduce cognitive load: clear ownership, documented systems and predictable recovery when something goes wrong.
     </p>
   </div>
 
-  <div class="bento-grid">
+  <div class="capability-list">
     {
-      operatingNotes.map((note, index) => (
-        <article class={`bento-card ${index === 0 ? "large" : "small"}`}>
-          <p class="eyebrow">{note.title}</p>
-          <strong class="bento-value">{note.value}</strong>
-          <p>{note.text}</p>
+      capabilities.map((capability, index) => (
+        <article class="capability-row">
+          <span class="capability-number" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+          <div>
+            <h3>{capability.title}</h3>
+            <p>{capability.text}</p>
+            <ul class="tag-list" aria-label={capability.title + " tools"}>
+              {capability.stack.map((item) => <li>{item}</li>)}
+            </ul>
+          </div>
         </article>
       ))
     }

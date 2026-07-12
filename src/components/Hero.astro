@@ -1,95 +1,28 @@
 ---
-import { projects, site } from "@data/projects";
+import { site } from "@data/projects";
 import ButtonLink from "./ButtonLink.astro";
-
-const liveCount = projects.filter((project) => project.status === "live").length;
-const featuredCount = projects.filter((project) => project.featured).length;
-const plannedCount = projects.filter((project) => project.status === "planned").length;
-
-const pipelineStages = [
-  { label: "Plan", detail: "scope" },
-  { label: "Code", detail: "git" },
-  { label: "Build", detail: "ci" },
-  { label: "Test", detail: "quality" },
-  { label: "Deploy", detail: "release" },
-  { label: "Observe", detail: "ops" }
-];
 ---
 
 <section class="hero" aria-labelledby="hero-title">
   <div class="hero-content">
-    <p class="eyebrow">DevOps / automation / infrastructure</p>
-    <h1 class="hero-title" id="hero-title">{site.name}</h1>
+    <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span>{site.name} / {site.role}</p>
+    <h1 class="hero-title" id="hero-title">Reliable systems.<br /><span>Repeatable delivery.</span></h1>
     <p class="hero-copy">
-      I build and operate delivery paths: infrastructure, CI/CD, automation, monitoring
-      and production-ready web surfaces that can move from idea to stable release.
+      I design, automate and operate the infrastructure behind dependable software — from code and CI/CD to cloud environments and production support.
     </p>
     <div class="hero-actions">
-      <ButtonLink href="#experience" label="View pipeline" variant="primary" />
-      <ButtonLink href="#projects" label="Client work" ariaLabel="View portfolio and projects" />
+      <ButtonLink href="#projects" label="Explore selected work" variant="primary" />
+      <ButtonLink href={site.githubUrl} label="View GitHub ↗" ariaLabel="Open Faysk on GitHub" />
     </div>
-    <ul class="hero-stack" aria-label="Current root stack">
-      <li>CI/CD</li>
-      <li>Cloud</li>
-      <li>Terraform</li>
-      <li>Docker</li>
-      <li>Monitoring</li>
-    </ul>
-    <dl class="metric-row" aria-label="Current ecosystem summary">
-      <div>
-        <dt>{liveCount}</dt>
-        <dd>live</dd>
-      </div>
-      <div>
-        <dt>{featuredCount}</dt>
-        <dd>featured</dd>
-      </div>
-      <div>
-        <dt>{plannedCount}</dt>
-        <dd>queued</dd>
-      </div>
-    </dl>
   </div>
 
-  <aside class="hero-board" aria-label="DevOps delivery pipeline">
-    <div class="board-header">
-      <img src="/assets/icons/mark.svg" alt="" width="54" height="54" />
-      <div>
-        <span>Faysk DevOps</span>
-        <strong>delivery control plane</strong>
-      </div>
-      <small>2026</small>
-    </div>
-
-    <div class="pipeline-board">
-      {
-        pipelineStages.map((stage) => (
-          <div class="pipeline-stage">
-            <span>{stage.label}</span>
-            <strong>{stage.detail}</strong>
-          </div>
-        ))
-      }
-    </div>
-
-    <div class="route-list" aria-label="DevOps focus areas">
-      <div class="route-row is-active">
-        <span>automation</span>
-        <strong>scripts, pipelines and repeatable release flow</strong>
-      </div>
-      <div class="route-row">
-        <span>infrastructure</span>
-        <strong>cloud, servers, networks and environments</strong>
-      </div>
-      <div class="route-row">
-        <span>operations</span>
-        <strong>monitoring, backup, incident analysis and stability</strong>
-      </div>
-    </div>
-
-    <div class="board-footer">
-      <span>infrastructure as code</span>
-      <span>production operations</span>
-    </div>
+  <aside class="hero-note" aria-label="Core focus">
+    <p class="hero-note-label">Core focus</p>
+    <ol>
+      <li><span>01</span>Automate the path from commit to production.</li>
+      <li><span>02</span>Make infrastructure repeatable and documented.</li>
+      <li><span>03</span>Keep critical systems observable and recoverable.</li>
+    </ol>
+    <p class="hero-note-footer">Infrastructure · CI/CD · Cloud operations</p>
   </aside>
 </section>

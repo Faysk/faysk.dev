@@ -1,11 +1,11 @@
 {
-  "name": "Faysk DevOps",
-  "short_name": "Faysk Ops",
-  "description": "DevOps portfolio for automation, CI/CD and infrastructure.",
+  "name": "Faysk",
+  "short_name": "Faysk",
+  "description": "DevOps engineering for reliable infrastructure, CI/CD and production operations.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#07111f",
-  "theme_color": "#07111f",
+  "background_color": "#0b0d0c",
+  "theme_color": "#0b0d0c",
   "icons": [
     {
       "src": "/favicon.svg",

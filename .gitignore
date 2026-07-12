@@ -14,7 +14,7 @@ desktop.ini
 # Environment and local overrides
 .env
 .env.*
-!.env.example
+!.dev.vars.example
 *.local
 
 # Logs

@@ -21,7 +21,8 @@ const className = `button ${variant === "primary" ? "button-primary" : ""}`.trim
       href={href}
       aria-label={ariaLabel}
       target={isExternal ? "_blank" : undefined}
-      rel={isExternal ? "noreferrer" : undefined}
+      rel={isExternal ? "noopener noreferrer" : undefined}
+      data-external={isExternal ? "true" : undefined}
     >
       {label}
     </a>

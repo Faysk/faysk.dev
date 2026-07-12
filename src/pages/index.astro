@@ -1,24 +1,22 @@
 ---
-import EcosystemMap from "@components/EcosystemMap.astro";
 import ExperienceTimeline from "@components/ExperienceTimeline.astro";
 import Footer from "@components/Footer.astro";
 import Hero from "@components/Hero.astro";
 import OperatingModel from "@components/OperatingModel.astro";
 import ProjectsSection from "@components/ProjectsSection.astro";
-import StackSection from "@components/StackSection.astro";
 import Topbar from "@components/Topbar.astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
 ---
 
 <BaseLayout>
-  <main class="site-shell" id="main-content">
+  <div class="site-shell">
     <Topbar />
-    <Hero />
-    <EcosystemMap />
-    <ExperienceTimeline />
-    <OperatingModel />
-    <ProjectsSection />
-    <StackSection />
+    <main id="main-content" tabindex="-1">
+      <Hero />
+      <ProjectsSection />
+      <ExperienceTimeline />
+      <OperatingModel />
+    </main>
     <Footer />
-  </main>
+  </div>
 </BaseLayout>

@@ -1,0 +1,84 @@
+---
+import { site } from "@data/projects";
+---
+
+<div class="contact-form-shell">
+  <form class="contact-form" data-email-composer data-contact-email={site.contactEmail}>
+    <div class="contact-field-grid">
+      <label class="contact-field">
+        <span>Name</span>
+        <input name="name" type="text" autocomplete="name" minlength="2" maxlength="100" required />
+      </label>
+
+      <label class="contact-field">
+        <span>Email</span>
+        <input name="email" type="email" inputmode="email" autocomplete="email" maxlength="254" required />
+      </label>
+    </div>
+
+    <label class="contact-field">
+      <span>Subject</span>
+      <input name="subject" type="text" minlength="3" maxlength="140" required />
+    </label>
+
+    <label class="contact-field">
+      <span>Message</span>
+      <textarea name="message" rows="7" minlength="10" maxlength="4000" required></textarea>
+    </label>
+
+    <div class="contact-submit-row">
+      <button class="button button-primary" type="submit">Open email app ↗</button>
+      <p class="contact-status" role="status" aria-live="polite" data-contact-status></p>
+    </div>
+
+    <p class="contact-privacy">
+      Nothing is stored or sent by this site. Your email app opens with a draft for you to review and send.
+    </p>
+  </form>
+
+  <p class="contact-direct">
+    Prefer to start directly?
+    <a href={"mailto:" + site.contactEmail}>{site.contactEmail}</a>
+  </p>
+</div>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>("[data-email-composer]");
+  const status = form?.querySelector<HTMLElement>("[data-contact-status]");
+
+  if (form && status) {
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      if (!form.reportValidity()) return;
+
+      const data = new FormData(form);
+      const name = String(data.get("name") ?? "").trim();
+      const replyEmail = String(data.get("email") ?? "").trim();
+      const subject = String(data.get("subject") ?? "").trim();
+      const message = String(data.get("message") ?? "").trim();
+      const recipient = form.dataset.contactEmail?.trim();
+
+      if (!recipient) {
+        status.textContent = "Email address unavailable. Please use the direct email link below.";
+        return;
+      }
+
+      const body = [
+        `Name: ${name}`,
+        `Reply email: ${replyEmail}`,
+        "",
+        message
+      ].join("\n");
+
+      const query = new URLSearchParams({ subject, body });
+      const draftUrl = `mailto:${recipient}?${query.toString()}`;
+
+      form.dataset.state = "ready";
+      form.dataset.draftReady = "true";
+      form.dataset.draftUrl = draftUrl;
+      status.textContent = "Draft prepared. Review it and press Send in your email app.";
+      window.location.assign(draftUrl);
+    });
+  }
+</script>
+

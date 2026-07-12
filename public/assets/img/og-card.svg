@@ -1,35 +1,35 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="Faysk DevOps preview">
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Faysk DevOps Engineer preview">
   <defs>
-    <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse">
-      <path d="M48 0H0V48" fill="none" stroke="#f4f8f2" stroke-opacity=".08" stroke-width="1"/>
-    </pattern>
-    <linearGradient id="pipeline" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0" stop-color="#9cff6e"/>
-      <stop offset=".5" stop-color="#5bdcff"/>
-      <stop offset="1" stop-color="#6b8cff"/>
-    </linearGradient>
+    <radialGradient id="glow" cx="88%" cy="8%" r="58%">
+      <stop offset="0" stop-color="#b8f36b" stop-opacity=".12"/>
+      <stop offset="1" stop-color="#b8f36b" stop-opacity="0"/>
+    </radialGradient>
   </defs>
-  <rect width="1200" height="630" fill="#07111f"/>
-  <rect width="1200" height="630" fill="url(#grid)"/>
-  <circle cx="1000" cy="80" r="240" fill="#5bdcff" opacity=".12"/>
-  <circle cx="160" cy="560" r="250" fill="#9cff6e" opacity=".10"/>
-  <rect x="76" y="76" width="1048" height="478" rx="26" fill="#0f1f32" stroke="#d4e9f0" stroke-opacity=".18"/>
-  <rect x="118" y="118" width="96" height="96" rx="22" fill="#07111f" stroke="#9cff6e" stroke-opacity=".28"/>
-  <path d="M143 184v-42h35v12h-21v9h18v11h-18v10h-14z" fill="#f4f8f2"/>
-  <path d="M177 146h14a9 9 0 0 1 0 18h-14M177 168h14a9 9 0 0 1 0 18h-14" fill="none" stroke="#5bdcff" stroke-width="6" stroke-linecap="round"/>
-  <circle cx="194" cy="155" r="5" fill="#9cff6e"/>
-  <circle cx="194" cy="177" r="5" fill="#9cff6e"/>
-  <text x="246" y="154" fill="#9cff6e" font-family="Consolas, monospace" font-size="28" font-weight="700">DEVOPS / AUTOMATION / INFRASTRUCTURE</text>
-  <text x="118" y="318" fill="#f4f8f2" font-family="Arial, sans-serif" font-size="96" font-weight="900">Faysk DevOps</text>
-  <text x="124" y="384" fill="#91a7b6" font-family="Arial, sans-serif" font-size="34">CI/CD, cloud operations, infrastructure and production delivery</text>
-  <g transform="translate(124 454)">
-    <path d="M20 38H850" stroke="url(#pipeline)" stroke-width="8" stroke-linecap="round"/>
-    <g font-family="Consolas, monospace" font-size="20" font-weight="700">
-      <g transform="translate(0 0)"><circle cx="20" cy="38" r="18" fill="#9cff6e"/><text x="50" y="45" fill="#f4f8f2">PLAN</text></g>
-      <g transform="translate(165 0)"><circle cx="20" cy="38" r="18" fill="#5bdcff"/><text x="50" y="45" fill="#f4f8f2">BUILD</text></g>
-      <g transform="translate(345 0)"><circle cx="20" cy="38" r="18" fill="#6b8cff"/><text x="50" y="45" fill="#f4f8f2">TEST</text></g>
-      <g transform="translate(515 0)"><circle cx="20" cy="38" r="18" fill="#9cff6e"/><text x="50" y="45" fill="#f4f8f2">DEPLOY</text></g>
-      <g transform="translate(720 0)"><circle cx="20" cy="38" r="18" fill="#5bdcff"/><text x="50" y="45" fill="#f4f8f2">OBSERVE</text></g>
-    </g>
+  <rect width="1200" height="630" fill="#0b0d0c"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+  <path d="M72 64H1128" stroke="#f3f2e9" stroke-opacity=".14"/>
+  <path d="M72 566H1128" stroke="#f3f2e9" stroke-opacity=".14"/>
+
+  <g transform="translate(72 98)">
+    <rect width="54" height="54" rx="13" fill="#11150f" stroke="#b8f36b" stroke-opacity=".28"/>
+    <path d="M13 41V13h23v8H22v6h12v7H22v7h-9z" fill="#f3f2e9"/>
+    <path d="M35 16h8a5 5 0 0 1 0 10h-8M35 30h8a5 5 0 0 1 0 10h-8" fill="none" stroke="#b8f36b" stroke-width="4" stroke-linecap="round"/>
   </g>
+
+  <circle cx="157" cy="111" r="5" fill="#b8f36b"/>
+  <text x="174" y="119" fill="#b8f36b" font-family="Consolas, monospace" font-size="20" font-weight="700" letter-spacing="2">FAYSK / DEVOPS ENGINEER</text>
+
+  <text x="72" y="292" fill="#f3f2e9" font-family="Arial, sans-serif" font-size="86" font-weight="800" letter-spacing="-4">Reliable systems.</text>
+  <text x="72" y="388" fill="#7c857f" font-family="Arial, sans-serif" font-size="86" font-weight="800" letter-spacing="-4">Repeatable delivery.</text>
+
+  <text x="76" y="468" fill="#d8dbd3" font-family="Arial, sans-serif" font-size="27">Infrastructure behind dependable software — from commit to production.</text>
+
+  <g fill="#a6afa8" font-family="Consolas, monospace" font-size="17" font-weight="700" letter-spacing="1">
+    <text x="72" y="603">INFRASTRUCTURE</text>
+    <text x="280" y="603">/</text>
+    <text x="318" y="603">CI/CD</text>
+    <text x="410" y="603">/</text>
+    <text x="448" y="603">CLOUD OPERATIONS</text>
+  </g>
+  <text x="1128" y="603" text-anchor="end" fill="#7c857f" font-family="Consolas, monospace" font-size="17">FAYSK.DEV</text>
 </svg>

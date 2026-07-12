@@ -1,49 +1,63 @@
 ---
-import { projects, projectTypes } from "@data/projects";
+import { projects } from "@data/projects";
 import ProjectCard from "./ProjectCard.astro";
+
+const proofPoints = [
+  { value: "0", label: "paid runtime services", detail: "The contact flow prepares a local email draft without storing visitor data." },
+  { value: "1", label: "static route", detail: "A deliberately small deploy surface." },
+  { value: String(projects.length), label: "shipped projects", detail: "Public work and private systems are clearly identified." }
+];
 ---
 
 <section class="section" id="projects" aria-labelledby="projects-title">
   <div class="section-heading">
-    <p class="eyebrow">Index</p>
-    <h2 class="section-title" id="projects-title">Projects, labs and delivery surfaces.</h2>
+    <p class="eyebrow">Selected work</p>
+    <h2 class="section-title" id="projects-title">Useful work, shipped.</h2>
     <p class="section-copy">
-      Public work, client delivery and experimental surfaces connected to the DevOps profile.
+      A focused selection of client delivery, technical experiments and the infrastructure behind them.
     </p>
   </div>
 
-  <div class="filter-row" data-project-controls>
-    <label class="sr-only" for="project-search">Search projects</label>
-    <input
-      class="search-input"
-      id="project-search"
-      data-project-search-input
-      type="search"
-      placeholder="Search projects..."
-      autocomplete="off"
-    />
-    <div class="filter-buttons" role="group" aria-label="Filter projects by type">
+  <div class="project-list">
+    {projects.map((project, index) => <ProjectCard project={project} index={index} />)}
+  </div>
+
+  <article class="delivery-note" aria-labelledby="delivery-note-title">
+    <div class="delivery-note-heading">
+      <p class="eyebrow">Delivery note / faysk.dev</p>
+      <h3 id="delivery-note-title">The portfolio follows the same operating principles it describes.</h3>
+      <p>
+        The redesign treated the site as a production system: remove unnecessary moving parts, make the important path obvious and keep the output easy to verify.
+      </p>
+    </div>
+
+    <dl class="proof-grid" aria-label="Portfolio delivery proof points">
       {
-        projectTypes.map((type) => (
-          <button
-            class={`filter-button ${type.id === "all" ? "is-active" : ""}`}
-            type="button"
-            data-project-filter={type.id}
-            aria-pressed={type.id === "all" ? "true" : "false"}
-          >
-            {type.label}
-          </button>
+        proofPoints.map((point) => (
+          <div>
+            <dt>{point.value}</dt>
+            <dd>
+              <strong>{point.label}</strong>
+              <span>{point.detail}</span>
+            </dd>
+          </div>
         ))
       }
+    </dl>
+
+    <div class="decision-list">
+      <div>
+        <p><span>01</span> Problem</p>
+        <h4>Real work was competing with dashboard decoration and repeated sections.</h4>
+      </div>
+      <div>
+        <p><span>02</span> Decision</p>
+        <h4>Use a text-led hero, editorial rows, one accent and static Astro output.</h4>
+      </div>
+      <div>
+        <p><span>03</span> Result</p>
+        <h4>{projects.length} real projects, authentic previews and no placeholder inventory.</h4>
+      </div>
     </div>
-  </div>
-
-  <div class="project-grid" data-project-grid>
-    {projects.map((project) => <ProjectCard project={project} />)}
-    <p class="empty-state" data-project-empty hidden>No projects match this filter yet.</p>
-  </div>
+  </article>
 </section>
-
-<script>
-  import "../scripts/project-filter";
-</script>
