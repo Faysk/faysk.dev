@@ -25,6 +25,23 @@ for (const field of ["Contact:", "Canonical:", "Policy:", "Expires:", "Preferred
     throw new Error("security.txt is missing " + field);
   }
 }
+if (!security.includes("Canonical: https://faysk.dev/.well-known/security.txt")) {
+  throw new Error("security.txt canonical URL is incorrect");
+}
+
+const expiresMatch = security.match(/^Expires:\s*(.+)$/mi);
+if (!expiresMatch) {
+  throw new Error("security.txt has no parseable expiry");
+}
+const expiresAt = Date.parse(expiresMatch[1].trim());
+if (!Number.isFinite(expiresAt)) {
+  throw new Error("security.txt expiry is invalid");
+}
+const minimumValidity = 30 * 24 * 60 * 60 * 1000;
+if (expiresAt - Date.now() < minimumValidity) {
+  throw new Error("security.txt expires in less than 30 days");
+}
+
 
 const sitemap = await readFile(join(root, "sitemap.xml"), "utf8");
 if (sitemap.includes("<loc>https://faysk.dev/</loc>")) {

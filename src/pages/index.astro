@@ -15,7 +15,7 @@
           else if ((navigator.languages || [navigator.language]).some((item) => String(item).toLowerCase().startsWith("pt"))) locale = "pt";
           localStorage.setItem("faysk-locale", locale);
         } catch {}
-        location.replace("/" + locale + "/");
+        location.replace("/" + locale + "/" + location.search + location.hash);
       })();
     </script>
   </head>

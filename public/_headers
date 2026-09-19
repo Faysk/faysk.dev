@@ -24,6 +24,12 @@
   Content-Type: text/plain; charset=utf-8
   Cache-Control: public, max-age=3600, must-revalidate
 
+/en/*
+  Content-Language: en
+
+/pt/*
+  Content-Language: pt
+
 https://faysk-dev.pages.dev/*
   X-Robots-Tag: noindex
 

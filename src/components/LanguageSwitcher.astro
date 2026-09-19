@@ -19,6 +19,13 @@ const targetPath = pathname.startsWith("/en/")
 
 <script>
   document.querySelectorAll("[data-language-target]").forEach((link) => {
+    if (link instanceof HTMLAnchorElement) {
+      const target = new URL(link.href);
+      target.search = window.location.search;
+      target.hash = window.location.hash;
+      link.href = target.pathname + target.search + target.hash;
+    }
+
     link.addEventListener("click", () => {
       const locale = link.getAttribute("data-language-target");
       if (locale === "en" || locale === "pt") localStorage.setItem("faysk-locale", locale);
