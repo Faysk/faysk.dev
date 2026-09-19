@@ -1,0 +1,10 @@
+/* TEAM */
+Name: Renan Silva / Faysk
+Site: https://faysk.dev
+GitHub: https://github.com/Faysk
+LinkedIn: https://www.linkedin.com/in/-renansilva/
+
+/* SITE */
+Stack: Astro, TypeScript, CSS, Cloudflare
+Languages: English, Português
+Source: https://github.com/Faysk/faysk.dev

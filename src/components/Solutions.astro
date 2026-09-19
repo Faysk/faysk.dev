@@ -1,0 +1,19 @@
+---
+import type { Locale } from "@data/site";
+import { getCopy } from "@i18n/index";
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+const copy = getCopy(locale);
+---
+
+<section class="section" id="solutions" aria-labelledby="solutions-title">
+  <div class="section-heading split-heading">
+    <div><p class="eyebrow">{copy.solutions.eyebrow}</p><h2 id="solutions-title">{copy.solutions.title}</h2></div>
+    <p>{copy.solutions.copy}</p>
+  </div>
+  <div class="solution-grid">
+    {copy.solutions.items.map(([title, text], index) => (
+      <article class="solution-item"><span>{String(index + 1).padStart(2, "0")}</span><h3>{title}</h3><p>{text}</p></article>
+    ))}
+  </div>
+</section>

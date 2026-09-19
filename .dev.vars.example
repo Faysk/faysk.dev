@@ -1,0 +1,6 @@
+# Cloudflare Pages Functions local variables.
+# Copy to .dev.vars and never commit the real file.
+
+RESEND_API_KEY=
+CONTACT_FROM=Faysk <contact@your-verified-domain.example>
+CONTACT_TO=contato@faysk.dev

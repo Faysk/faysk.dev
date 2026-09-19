@@ -1,0 +1,5 @@
+Contact: mailto:contato@faysk.dev
+Canonical: https://faysk.dev/.well-known/security.txt
+Policy: https://github.com/Faysk/faysk.dev/security/policy
+Expires: 2027-09-19T00:00:00Z
+Preferred-Languages: en, pt

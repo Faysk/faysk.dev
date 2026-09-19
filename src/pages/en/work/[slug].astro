@@ -1,0 +1,47 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Header from "@components/Header.astro";
+import Footer from "@components/Footer.astro";
+import ProjectPage from "@components/ProjectPage.astro";
+import { projects } from "@data/projects";
+import { site } from "@data/site";
+
+export function getStaticPaths() {
+  return projects.map((project) => ({ params: { slug: project.slug }, props: { project } }));
+}
+
+const { project } = Astro.props;
+const canonicalPath = "/en/work/" + project.slug + "/";
+const projectSchema = {
+  "@context": "https://schema.org",
+  "@type": "CreativeWork",
+  name: project.name,
+  description: project.summary.en,
+  url: new URL(canonicalPath, site.url).toString(),
+  image: new URL(project.image, site.url).toString(),
+  inLanguage: "en",
+  creator: {
+    "@type": "Person",
+    name: site.personName,
+    url: site.url
+  },
+  keywords: [...project.stack, ...project.disciplines].join(", "),
+  sameAs: [project.url, project.repo].filter(Boolean)
+};
+---
+<BaseLayout
+  locale="en"
+  title={project.name + " — Case Study | Faysk"}
+  description={project.summary.en}
+  image={project.image}
+  imageAlt={project.imageAlt.en}
+  canonicalPath={canonicalPath}
+  type="article"
+  structuredData={projectSchema}
+>
+  <div class="site-shell">
+    <Header locale="en" />
+    <main id="main-content" tabindex="-1"><ProjectPage locale="en" project={project} /></main>
+    <Footer locale="en" />
+  </div>
+</BaseLayout>

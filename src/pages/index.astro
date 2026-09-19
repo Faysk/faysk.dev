@@ -1,22 +1,28 @@
----
-import ExperienceTimeline from "@components/ExperienceTimeline.astro";
-import Footer from "@components/Footer.astro";
-import Hero from "@components/Hero.astro";
-import OperatingModel from "@components/OperatingModel.astro";
-import ProjectsSection from "@components/ProjectsSection.astro";
-import Topbar from "@components/Topbar.astro";
-import BaseLayout from "@layouts/BaseLayout.astro";
----
-
-<BaseLayout>
-  <div class="site-shell">
-    <Topbar />
-    <main id="main-content" tabindex="-1">
-      <Hero />
-      <ProjectsSection />
-      <ExperienceTimeline />
-      <OperatingModel />
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, follow" />
+    <meta name="color-scheme" content="dark light" />
+    <title>Faysk</title>
+    <script is:inline>
+      (() => {
+        let locale = "en";
+        try {
+          const saved = localStorage.getItem("faysk-locale");
+          if (saved === "en" || saved === "pt") locale = saved;
+          else if ((navigator.languages || [navigator.language]).some((item) => String(item).toLowerCase().startsWith("pt"))) locale = "pt";
+          localStorage.setItem("faysk-locale", locale);
+        } catch {}
+        location.replace("/" + locale + "/" + location.search + location.hash);
+      })();
+    </script>
+  </head>
+  <body>
+    <main>
+      <h1>Faysk</h1>
+      <p><a href="/en/">English</a> · <a href="/pt/">Português</a></p>
     </main>
-    <Footer />
-  </div>
-</BaseLayout>
+  </body>
+</html>

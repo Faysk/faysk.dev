@@ -1,84 +1,91 @@
 ---
-import { site } from "@data/projects";
+import type { Locale } from "@data/site";
+import { site } from "@data/site";
+import { getCopy } from "@i18n/index";
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+const copy = getCopy(locale);
+const state = locale === "pt"
+  ? {
+      sending: "Enviando…",
+      sent: "Mensagem enviada. Valeu — eu respondo pelo email informado.",
+      fallback: "O envio direto ainda não está disponível aqui. Abri um rascunho no seu email para você não perder a mensagem."
+    }
+  : {
+      sending: "Sending…",
+      sent: "Message sent. Thanks — I will reply to the email you provided.",
+      fallback: "Direct delivery is not available here yet. I opened an email draft so your message is not lost."
+    };
 ---
 
-<div class="contact-form-shell">
-  <form class="contact-form" data-email-composer data-contact-email={site.contactEmail}>
-    <div class="contact-field-grid">
-      <label class="contact-field">
-        <span>Name</span>
-        <input name="name" type="text" autocomplete="name" minlength="2" maxlength="100" required />
-      </label>
+<form class="contact-form" data-contact-form data-contact-email={site.email} data-locale={locale}>
+  <div class="field-grid">
+    <label><span>{copy.contact.name}</span><input name="name" type="text" autocomplete="name" minlength="2" maxlength="100" required /></label>
+    <label><span>{copy.contact.email}</span><input name="email" type="email" autocomplete="email" inputmode="email" maxlength="254" required /></label>
+  </div>
+  <label><span>{copy.contact.subject}</span><input name="subject" type="text" minlength="3" maxlength="140" required /></label>
+  <label><span>{copy.contact.message}</span><textarea name="message" rows="7" minlength="10" maxlength="4000" required></textarea></label>
+  <label class="hp-field" aria-hidden="true">Website<input name="website" type="text" tabindex="-1" autocomplete="off" /></label>
+  <div class="contact-submit"><button class="button button-primary" type="submit">{copy.contact.send} ↗</button><p role="status" aria-live="polite" data-contact-status></p></div>
+  <p class="form-note">{copy.contact.privacy}</p>
+</form>
 
-      <label class="contact-field">
-        <span>Email</span>
-        <input name="email" type="email" inputmode="email" autocomplete="email" maxlength="254" required />
-      </label>
-    </div>
+<script is:inline define:vars={{ sendingMessage: state.sending, sentMessage: state.sent, fallbackMessage: state.fallback }}>
+  const form = document.querySelector("[data-contact-form]");
+  const status = form?.querySelector("[data-contact-status]");
 
-    <label class="contact-field">
-      <span>Subject</span>
-      <input name="subject" type="text" minlength="3" maxlength="140" required />
-    </label>
-
-    <label class="contact-field">
-      <span>Message</span>
-      <textarea name="message" rows="7" minlength="10" maxlength="4000" required></textarea>
-    </label>
-
-    <div class="contact-submit-row">
-      <button class="button button-primary" type="submit">Open email app ↗</button>
-      <p class="contact-status" role="status" aria-live="polite" data-contact-status></p>
-    </div>
-
-    <p class="contact-privacy">
-      Nothing is stored or sent by this site. Your email app opens with a draft for you to review and send.
-    </p>
-  </form>
-
-  <p class="contact-direct">
-    Prefer to start directly?
-    <a href={"mailto:" + site.contactEmail}>{site.contactEmail}</a>
-  </p>
-</div>
-
-<script>
-  const form = document.querySelector<HTMLFormElement>("[data-email-composer]");
-  const status = form?.querySelector<HTMLElement>("[data-contact-status]");
-
-  if (form && status) {
-    form.addEventListener("submit", (event) => {
-      event.preventDefault();
-      if (!form.reportValidity()) return;
-
-      const data = new FormData(form);
-      const name = String(data.get("name") ?? "").trim();
-      const replyEmail = String(data.get("email") ?? "").trim();
-      const subject = String(data.get("subject") ?? "").trim();
-      const message = String(data.get("message") ?? "").trim();
-      const recipient = form.dataset.contactEmail?.trim();
-
-      if (!recipient) {
-        status.textContent = "Email address unavailable. Please use the direct email link below.";
-        return;
-      }
-
-      const body = [
-        `Name: ${name}`,
-        `Reply email: ${replyEmail}`,
-        "",
-        message
-      ].join("\n");
-
-      const query = new URLSearchParams({ subject, body });
-      const draftUrl = `mailto:${recipient}?${query.toString()}`;
-
-      form.dataset.state = "ready";
-      form.dataset.draftReady = "true";
-      form.dataset.draftUrl = draftUrl;
-      status.textContent = "Draft prepared. Review it and press Send in your email app.";
-      window.location.assign(draftUrl);
-    });
+  function openFallback(data, recipient) {
+    const name = String(data.get("name") || "").trim();
+    const email = String(data.get("email") || "").trim();
+    const subject = String(data.get("subject") || "").trim();
+    const message = String(data.get("message") || "").trim();
+    const body = ["Name: " + name, "Reply email: " + email, "", message].join("\n");
+    const query = new URLSearchParams({ subject, body });
+    if (status) status.textContent = fallbackMessage;
+    window.location.href = "mailto:" + recipient + "?" + query.toString();
   }
-</script>
 
+  function makeRequestId() {
+    if (globalThis.crypto?.randomUUID) return globalThis.crypto.randomUUID();
+    const values = new Uint32Array(4);
+    globalThis.crypto?.getRandomValues?.(values);
+    return Array.from(values, (value) => value.toString(16).padStart(8, "0")).join("");
+  }
+
+  form?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    if (!(form instanceof HTMLFormElement) || !form.reportValidity()) return;
+
+    const data = new FormData(form);
+    const recipient = form.dataset.contactEmail || "";
+    const button = form.querySelector('button[type="submit"]');
+    if (status) status.textContent = sendingMessage;
+    if (button instanceof HTMLButtonElement) button.disabled = true;
+
+    const payload = {
+      name: String(data.get("name") || "").trim(),
+      email: String(data.get("email") || "").trim(),
+      subject: String(data.get("subject") || "").trim(),
+      message: String(data.get("message") || "").trim(),
+      website: String(data.get("website") || "").trim(),
+      locale: form.dataset.locale || "en",
+      requestId: makeRequestId()
+    };
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+
+      if (!response.ok) throw new Error("contact unavailable");
+      form.reset();
+      if (status) status.textContent = sentMessage;
+    } catch {
+      openFallback(data, recipient);
+    } finally {
+      if (button instanceof HTMLButtonElement) button.disabled = false;
+    }
+  });
+</script>

@@ -1,16 +1,16 @@
 {
-  "name": "Faysk",
+  "name": "Faysk — DevOps, Cloud & Automation",
   "short_name": "Faysk",
-  "description": "DevOps engineering for reliable infrastructure, CI/CD and production operations.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#0b0d0c",
-  "theme_color": "#0b0d0c",
+  "background_color": "#0b0e0c",
+  "theme_color": "#0b0e0c",
   "icons": [
     {
       "src": "/favicon.svg",
       "sizes": "any",
-      "type": "image/svg+xml"
+      "type": "image/svg+xml",
+      "purpose": "any"
     }
   ]
 }

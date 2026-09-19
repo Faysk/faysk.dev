@@ -1,0 +1,26 @@
+---
+import type { Locale } from "@data/site";
+import Header from "./Header.astro";
+import Hero from "./Hero.astro";
+import ProofStrip from "./ProofStrip.astro";
+import ProjectsSection from "./ProjectsSection.astro";
+import Solutions from "./Solutions.astro";
+import ExperienceTimeline from "./ExperienceTimeline.astro";
+import Capabilities from "./Capabilities.astro";
+import Footer from "./Footer.astro";
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+---
+
+<div class="site-shell">
+  <Header locale={locale} />
+  <main id="main-content" tabindex="-1">
+    <Hero locale={locale} />
+    <ProofStrip locale={locale} />
+    <ProjectsSection locale={locale} />
+    <Solutions locale={locale} />
+    <ExperienceTimeline locale={locale} />
+    <Capabilities locale={locale} />
+  </main>
+  <Footer locale={locale} />
+</div>
