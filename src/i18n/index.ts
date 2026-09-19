@@ -11,7 +11,16 @@ const content = {
       skip: "Skip to content",
       theme: { system: "System", light: "Light", dark: "Dark" },
       status: { live: "Live", private: "Private", experiment: "Experiment" },
-      systemView: "System view"
+      systemView: "System view",
+      home: "Faysk home",
+      primaryNav: "Primary navigation",
+      mobileNav: "Mobile navigation",
+      openNav: "Open navigation",
+      closeNav: "Close navigation",
+      footerNav: "Footer navigation",
+      professionalContext: "Professional context",
+      technologies: "technologies",
+      architectureFlow: "Source to production architecture"
     },
     hero: {
       eyebrow: "DevOps · Cloud · Automation · Product Engineering",
@@ -90,7 +99,16 @@ const content = {
       skip: "Pular para o conteúdo",
       theme: { system: "Sistema", light: "Claro", dark: "Escuro" },
       status: { live: "Online", private: "Privado", experiment: "Experimento" },
-      systemView: "Visão do sistema"
+      systemView: "Visão do sistema",
+      home: "Página inicial Faysk",
+      primaryNav: "Navegação principal",
+      mobileNav: "Navegação móvel",
+      openNav: "Abrir navegação",
+      closeNav: "Fechar navegação",
+      footerNav: "Navegação do rodapé",
+      professionalContext: "Contexto profissional",
+      technologies: "tecnologias",
+      architectureFlow: "Fluxo da origem até produção"
     },
     hero: {
       eyebrow: "DevOps · Cloud · Automação · Product Engineering",
@@ -118,7 +136,7 @@ const content = {
       more: "Mais projetos",
       live: "Ver online",
       source: "Código",
-      caseStudy: "Case study",
+      caseStudy: "Estudo de caso",
       private: "Sistema privado"
     },
     solutions: {

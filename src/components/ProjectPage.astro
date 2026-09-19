@@ -55,7 +55,7 @@ const labels = locale === "pt"
       <h2 id="architecture-title">{labels.architecture}</h2>
       <p>{labels.architectureCopy}</p>
     </div>
-    <div class="architecture-flow" aria-label="Source to production architecture">
+    <div class="architecture-flow" aria-label={copy.common.architectureFlow}>
       <div><span>01</span><strong>GitHub</strong><small>source</small></div><i aria-hidden="true">→</i>
       <div><span>02</span><strong>Astro</strong><small>static build</small></div><i aria-hidden="true">→</i>
       <div><span>03</span><strong>Cloudflare</strong><small>delivery</small></div><i aria-hidden="true">→</i>

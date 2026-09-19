@@ -20,7 +20,7 @@ const copy = getCopy(locale);
         <div class="experience-main">
           <div class="experience-title"><h3>{item.role}</h3><span>{item.company}</span></div>
           <p>{item.focus[locale]}</p>
-          <ul class="tag-list" aria-label={item.company + " technologies"}>{item.stack.map((skill) => <li>{skill}</li>)}</ul>
+          <ul class="tag-list" aria-label={item.company + " " + copy.common.technologies}>{item.stack.map((skill) => <li>{skill}</li>)}</ul>
         </div>
       </article>
     ))}

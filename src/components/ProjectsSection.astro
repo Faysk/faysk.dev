@@ -26,7 +26,7 @@ const more = projects.filter((project) => !project.featured);
           <p class="project-kicker">{project.category[locale]} <span aria-hidden="true">/</span> {copy.common.status[project.status]}</p>
           <h3>{project.name}</h3>
           <p class="project-summary">{project.summary[locale]}</p>
-          <ul class="tag-list" aria-label={project.name + " technologies"}>{project.stack.map((item) => <li>{item}</li>)}</ul>
+          <ul class="tag-list" aria-label={project.name + " " + copy.common.technologies}>{project.stack.map((item) => <li>{item}</li>)}</ul>
           <div class="project-actions">
             <a class="button button-primary" href={"/" + locale + "/work/" + project.slug + "/"}>{copy.work.caseStudy}</a>
             {project.url ? <a class="button" href={project.url} target="_blank" rel="noopener noreferrer">{copy.work.live} ↗</a> : null}
