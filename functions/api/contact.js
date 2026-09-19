@@ -17,14 +17,30 @@ function clean(value, max) {
 }
 
 export async function onRequestPost({ request, env }) {
-  const contentLength = Number(request.headers.get("content-length") || 0);
-  if (Number.isFinite(contentLength) && contentLength > MAX_BODY_BYTES) {
+  const contentType = request.headers.get("content-type") || "";
+  if (!contentType.toLowerCase().startsWith("application/json")) {
+    return json({ ok: false, error: "unsupported_media_type" }, 415);
+  }
+
+  const declaredLength = Number(request.headers.get("content-length") || 0);
+  if (Number.isFinite(declaredLength) && declaredLength > MAX_BODY_BYTES) {
+    return json({ ok: false, error: "payload_too_large" }, 413);
+  }
+
+  let raw;
+  try {
+    raw = await request.text();
+  } catch {
+    return json({ ok: false, error: "invalid_body" }, 400);
+  }
+
+  if (new TextEncoder().encode(raw).byteLength > MAX_BODY_BYTES) {
     return json({ ok: false, error: "payload_too_large" }, 413);
   }
 
   let input;
   try {
-    input = await request.json();
+    input = JSON.parse(raw);
   } catch {
     return json({ ok: false, error: "invalid_json" }, 400);
   }

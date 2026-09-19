@@ -98,6 +98,20 @@ for (const file of htmlFiles) {
     if (!attrs.type) fail(file, "button missing explicit type");
   }
 
+  for (const match of html.matchAll(/<script\b[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)) {
+    try {
+      const data = JSON.parse(match[1]);
+      const entries = Array.isArray(data) ? data : [data];
+      for (const entry of entries) {
+        if (!entry || entry["@context"] !== "https://schema.org" || !entry["@type"]) {
+          fail(file, "structured data missing schema.org context or type");
+        }
+      }
+    } catch {
+      fail(file, "contains invalid JSON-LD");
+    }
+  }
+
   if (/localhost|127\.0\.0\.1/.test(html)) fail(file, "contains localhost reference");
 
   if (rel.startsWith("en/") && !/<html\b[^>]*\blang=["']en["']/i.test(html)) {

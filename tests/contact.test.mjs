@@ -29,6 +29,19 @@ test("rejects unsupported methods", async () => {
   assert.deepEqual(await response.json(), { ok: false, error: "method_not_allowed" });
 });
 
+test("requires JSON requests", async () => {
+  const response = await onRequestPost({
+    request: new Request("https://faysk.dev/api/contact", {
+      method: "POST",
+      headers: { "content-type": "text/plain" },
+      body: "hello"
+    }),
+    env: {}
+  });
+  assert.equal(response.status, 415);
+  assert.equal((await response.json()).error, "unsupported_media_type");
+});
+
 test("rejects malformed JSON", async () => {
   const response = await onRequestPost({
     request: request("{"),
@@ -41,6 +54,18 @@ test("rejects malformed JSON", async () => {
 test("rejects oversized declared payloads before parsing", async () => {
   const response = await onRequestPost({
     request: request(validPayload, { "content-length": String(20 * 1024) }),
+    env: {}
+  });
+  assert.equal(response.status, 413);
+  assert.equal((await response.json()).error, "payload_too_large");
+});
+
+test("rejects oversized actual payloads even without a trustworthy length", async () => {
+  const response = await onRequestPost({
+    request: request({
+      ...validPayload,
+      message: "x".repeat(17 * 1024)
+    }, { "content-length": "1" }),
     env: {}
   });
   assert.equal(response.status, 413);
