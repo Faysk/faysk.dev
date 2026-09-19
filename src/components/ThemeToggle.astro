@@ -9,9 +9,15 @@
   const button = document.querySelector("[data-theme-toggle]");
   const label = button?.querySelector("[data-theme-label]");
   const storageKey = "faysk-theme";
-  const order = ["system", "light", "dark"];
+  const order = ["system", "light", "dark"] as const;
+  type ThemePreference = typeof order[number];
 
-  const applyTheme = (preference) => {
+  const getPreference = (): ThemePreference => {
+    const saved = localStorage.getItem(storageKey);
+    return saved === "light" || saved === "dark" ? saved : "system";
+  };
+
+  const applyTheme = (preference: ThemePreference) => {
     const effective = preference === "system"
       ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
       : preference;
@@ -27,13 +33,11 @@
     }
   };
 
-  const getPreference = () => localStorage.getItem(storageKey) || "system";
-
   applyTheme(getPreference());
 
   button?.addEventListener("click", () => {
     const current = getPreference();
-    const next = order[(order.indexOf(current) + 1) % order.length];
+    const next = order[(order.indexOf(current) + 1) % order.length] ?? "system";
     localStorage.setItem(storageKey, next);
     applyTheme(next);
   });

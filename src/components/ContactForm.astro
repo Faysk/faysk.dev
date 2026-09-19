@@ -5,35 +5,79 @@ import { getCopy } from "@i18n/index";
 interface Props { locale: Locale; }
 const { locale } = Astro.props;
 const copy = getCopy(locale);
+const state = locale === "pt"
+  ? {
+      sending: "Enviando…",
+      sent: "Mensagem enviada. Valeu — eu respondo pelo email informado.",
+      fallback: "O envio direto ainda não está disponível aqui. Abri um rascunho no seu email para você não perder a mensagem."
+    }
+  : {
+      sending: "Sending…",
+      sent: "Message sent. Thanks — I will reply to the email you provided.",
+      fallback: "Direct delivery is not available here yet. I opened an email draft so your message is not lost."
+    };
 ---
 
-<form class="contact-form" data-contact-form data-contact-email={site.email}>
+<form class="contact-form" data-contact-form data-contact-email={site.email} data-locale={locale}>
   <div class="field-grid">
     <label><span>{copy.contact.name}</span><input name="name" type="text" autocomplete="name" minlength="2" maxlength="100" required /></label>
     <label><span>{copy.contact.email}</span><input name="email" type="email" autocomplete="email" inputmode="email" maxlength="254" required /></label>
   </div>
   <label><span>{copy.contact.subject}</span><input name="subject" type="text" minlength="3" maxlength="140" required /></label>
   <label><span>{copy.contact.message}</span><textarea name="message" rows="7" minlength="10" maxlength="4000" required></textarea></label>
+  <label class="hp-field" aria-hidden="true">Website<input name="website" type="text" tabindex="-1" autocomplete="off" /></label>
   <div class="contact-submit"><button class="button button-primary" type="submit">{copy.contact.send} ↗</button><p role="status" aria-live="polite" data-contact-status></p></div>
   <p class="form-note">{copy.contact.privacy}</p>
 </form>
 
-<script define:vars={{ readyMessage: copy.contact.ready }}>
+<script is:inline define:vars={{ sendingMessage: state.sending, sentMessage: state.sent, fallbackMessage: state.fallback }}>
   const form = document.querySelector("[data-contact-form]");
   const status = form?.querySelector("[data-contact-status]");
 
-  form?.addEventListener("submit", (event) => {
-    event.preventDefault();
-    if (!(form instanceof HTMLFormElement) || !form.reportValidity()) return;
-    const data = new FormData(form);
+  function openFallback(data, recipient) {
     const name = String(data.get("name") || "").trim();
     const email = String(data.get("email") || "").trim();
     const subject = String(data.get("subject") || "").trim();
     const message = String(data.get("message") || "").trim();
-    const recipient = form.dataset.contactEmail || "";
     const body = ["Name: " + name, "Reply email: " + email, "", message].join("\n");
     const query = new URLSearchParams({ subject, body });
-    if (status) status.textContent = readyMessage;
+    if (status) status.textContent = fallbackMessage;
     window.location.href = "mailto:" + recipient + "?" + query.toString();
+  }
+
+  form?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    if (!(form instanceof HTMLFormElement) || !form.reportValidity()) return;
+
+    const data = new FormData(form);
+    const recipient = form.dataset.contactEmail || "";
+    const button = form.querySelector('button[type="submit"]');
+    if (status) status.textContent = sendingMessage;
+    if (button instanceof HTMLButtonElement) button.disabled = true;
+
+    const payload = {
+      name: String(data.get("name") || "").trim(),
+      email: String(data.get("email") || "").trim(),
+      subject: String(data.get("subject") || "").trim(),
+      message: String(data.get("message") || "").trim(),
+      website: String(data.get("website") || "").trim(),
+      locale: form.dataset.locale || "en"
+    };
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+
+      if (!response.ok) throw new Error("contact unavailable");
+      form.reset();
+      if (status) status.textContent = sentMessage;
+    } catch {
+      openFallback(data, recipient);
+    } finally {
+      if (button instanceof HTMLButtonElement) button.disabled = false;
+    }
   });
 </script>
