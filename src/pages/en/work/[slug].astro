@@ -1,0 +1,20 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Header from "@components/Header.astro";
+import Footer from "@components/Footer.astro";
+import ProjectPage from "@components/ProjectPage.astro";
+import { projects } from "@data/projects";
+
+export function getStaticPaths() {
+  return projects.map((project) => ({ params: { slug: project.slug }, props: { project } }));
+}
+
+const { project } = Astro.props;
+---
+<BaseLayout locale="en" title={project.name + " — Case Study | Faysk"} description={project.summary.en} image={project.image} imageAlt={project.imageAlt.en} canonicalPath={"/en/work/" + project.slug + "/"} type="article">
+  <div class="site-shell">
+    <Header locale="en" />
+    <main id="main-content" tabindex="-1"><ProjectPage locale="en" project={project} /></main>
+    <Footer locale="en" />
+  </div>
+</BaseLayout>
