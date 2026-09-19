@@ -1,6 +1,7 @@
 ---
 import type { Locale } from "@data/site";
 import { getCopy } from "@i18n/index";
+import { themeColors } from "@data/theme";
 interface Props { locale: Locale; }
 const { locale } = Astro.props;
 const copy = getCopy(locale);
@@ -23,7 +24,7 @@ const labels = copy.common.theme;
   <span class="utility-label" data-theme-label>{labels.system}</span>
 </button>
 
-<script>
+<script define:vars={{ lightThemeColor: themeColors.light, darkThemeColor: themeColors.dark }}>
   const button = document.querySelector("[data-theme-toggle]");
   const label = button?.querySelector("[data-theme-label]");
   const themeColor = document.querySelector("[data-theme-color]");
@@ -46,7 +47,7 @@ const labels = copy.common.theme;
 
     document.documentElement.dataset.theme = effective;
     document.documentElement.dataset.themePreference = preference;
-    themeColor?.setAttribute("content", effective === "dark" ? "#0b0e0c" : "#f3f5ef");
+    themeColor?.setAttribute("content", effective === "dark" ? darkThemeColor : lightThemeColor);
 
     const display = getDisplay(preference);
     if (label) label.textContent = display;
