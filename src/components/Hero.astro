@@ -1,28 +1,37 @@
 ---
-import { site } from "@data/projects";
-import ButtonLink from "./ButtonLink.astro";
+import type { Locale } from "@data/site";
+import { getCopy } from "@i18n/index";
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+const copy = getCopy(locale);
 ---
 
 <section class="hero" aria-labelledby="hero-title">
   <div class="hero-content">
-    <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span>{site.name} / {site.role}</p>
-    <h1 class="hero-title" id="hero-title">Reliable systems.<br /><span>Repeatable delivery.</span></h1>
-    <p class="hero-copy">
-      I design, automate and operate the infrastructure behind dependable software — from code and CI/CD to cloud environments and production support.
-    </p>
+    <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span>{copy.hero.eyebrow}</p>
+    <h1 id="hero-title">{copy.hero.titleA}<br /><span>{copy.hero.titleB}</span></h1>
+    <p class="hero-copy">{copy.hero.copy}</p>
     <div class="hero-actions">
-      <ButtonLink href="#projects" label="Explore selected work" variant="primary" />
-      <ButtonLink href={site.githubUrl} label="View GitHub ↗" ariaLabel="Open Faysk on GitHub" />
+      <a class="button button-primary" href="#work">{copy.hero.workCta}</a>
+      <a class="button" href={"/" + locale + "/cv/"}>{copy.hero.cvCta}</a>
+      <a class="text-action" href="#contact">{copy.hero.contactCta}<span aria-hidden="true">↘</span></a>
     </div>
   </div>
 
-  <aside class="hero-note" aria-label="Core focus">
-    <p class="hero-note-label">Core focus</p>
-    <ol>
-      <li><span>01</span>Automate the path from commit to production.</li>
-      <li><span>02</span>Make infrastructure repeatable and documented.</li>
-      <li><span>03</span>Keep critical systems observable and recoverable.</li>
+  <aside class="pipeline-card" aria-label={copy.hero.pipelineLabel}>
+    <div class="pipeline-head">
+      <span>{copy.hero.pipelineLabel}</span>
+      <span class="pipeline-state"><i aria-hidden="true"></i> production</span>
+    </div>
+    <ol class="pipeline-flow">
+      {copy.hero.pipeline.map((item, index) => (
+        <li>
+          <span class="pipeline-index">{String(index + 1).padStart(2, "0")}</span>
+          <strong>{item}</strong>
+          {index < copy.hero.pipeline.length - 1 ? <span class="pipeline-line" aria-hidden="true"></span> : null}
+        </li>
+      ))}
     </ol>
-    <p class="hero-note-footer">Infrastructure · CI/CD · Cloud operations</p>
+    <p>{copy.hero.pipelineNote}</p>
   </aside>
 </section>

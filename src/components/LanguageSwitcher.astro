@@ -1,0 +1,21 @@
+---
+import type { Locale } from "@data/site";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const pathname = Astro.url.pathname;
+const targetLocale: Locale = locale === "en" ? "pt" : "en";
+const targetPath = pathname.startsWith("/en/")
+  ? pathname.replace(/^\/en\//, "/pt/")
+  : pathname.startsWith("/pt/")
+    ? pathname.replace(/^\/pt\//, "/en/")
+    : "/" + targetLocale + "/";
+---
+
+<a class="utility-button language-switcher" href={targetPath} lang={targetLocale} hreflang={targetLocale} aria-label={targetLocale === "en" ? "Switch to English" : "Mudar para Português"}>
+  <svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"></path></svg>
+  <span>{targetLocale.toUpperCase()}</span>
+</a>

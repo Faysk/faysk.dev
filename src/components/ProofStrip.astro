@@ -1,0 +1,13 @@
+---
+import type { Locale } from "@data/site";
+import { getCopy } from "@i18n/index";
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+const copy = getCopy(locale);
+---
+
+<section class="proof-strip" aria-label="Professional context">
+  {copy.proof.map(([value, label]) => (
+    <div class="proof-item"><strong>{value}</strong><span>{label}</span></div>
+  ))}
+</section>

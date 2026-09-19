@@ -1,33 +1,28 @@
 ---
-import { careerTimeline } from "@data/projects";
+import type { Locale } from "@data/site";
+import { experience } from "@data/projects";
+import { getCopy } from "@i18n/index";
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+const copy = getCopy(locale);
 ---
 
 <section class="section" id="experience" aria-labelledby="experience-title">
   <div class="section-heading">
-    <p class="eyebrow">Experience</p>
-    <h2 class="section-title" id="experience-title">Built from support up.</h2>
-    <p class="section-copy">
-      Hands-on experience across software, infrastructure and operations — the layers that make reliable delivery possible.
-    </p>
+    <p class="eyebrow">{copy.experience.eyebrow}</p>
+    <h2 id="experience-title">{copy.experience.title}</h2>
+    <p>{copy.experience.copy}</p>
   </div>
-
   <div class="experience-list">
-    {
-      careerTimeline.map((item) => (
-        <article class="experience-row">
-          <p class="experience-period">{item.period}</p>
-          <div class="experience-main">
-            <div class="experience-title">
-              <h3>{item.role}</h3>
-              <p>{item.company}</p>
-            </div>
-            <p class="experience-copy">{item.focus}</p>
-            <ul class="tag-list" aria-label={item.company + " stack"}>
-              {item.stack.map((skill) => <li>{skill}</li>)}
-            </ul>
-          </div>
-        </article>
-      ))
-    }
+    {experience.map((item) => (
+      <article class="experience-row">
+        <p class="experience-period">{item.period}</p>
+        <div class="experience-main">
+          <div class="experience-title"><h3>{item.role}</h3><span>{item.company}</span></div>
+          <p>{item.focus[locale]}</p>
+          <ul class="tag-list" aria-label={item.company + " technologies"}>{item.stack.map((skill) => <li>{skill}</li>)}</ul>
+        </div>
+      </article>
+    ))}
   </div>
 </section>

@@ -1,63 +1,56 @@
 ---
+import type { Locale } from "@data/site";
 import { projects } from "@data/projects";
-import ProjectCard from "./ProjectCard.astro";
-
-const proofPoints = [
-  { value: "0", label: "paid runtime services", detail: "The contact flow prepares a local email draft without storing visitor data." },
-  { value: "1", label: "static route", detail: "A deliberately small deploy surface." },
-  { value: String(projects.length), label: "shipped projects", detail: "Public work and private systems are clearly identified." }
-];
+import { getCopy } from "@i18n/index";
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+const copy = getCopy(locale);
+const featured = projects.filter((project) => project.featured);
+const more = projects.filter((project) => !project.featured);
 ---
 
-<section class="section" id="projects" aria-labelledby="projects-title">
-  <div class="section-heading">
-    <p class="eyebrow">Selected work</p>
-    <h2 class="section-title" id="projects-title">Useful work, shipped.</h2>
-    <p class="section-copy">
-      A focused selection of client delivery, technical experiments and the infrastructure behind them.
-    </p>
+<section class="section" id="work" aria-labelledby="work-title">
+  <div class="section-heading split-heading">
+    <div><p class="eyebrow">{copy.work.eyebrow}</p><h2 id="work-title">{copy.work.title}</h2></div>
+    <p>{copy.work.copy}</p>
   </div>
 
-  <div class="project-list">
-    {projects.map((project, index) => <ProjectCard project={project} index={index} />)}
-  </div>
-
-  <article class="delivery-note" aria-labelledby="delivery-note-title">
-    <div class="delivery-note-heading">
-      <p class="eyebrow">Delivery note / faysk.dev</p>
-      <h3 id="delivery-note-title">The portfolio follows the same operating principles it describes.</h3>
-      <p>
-        The redesign treated the site as a production system: remove unnecessary moving parts, make the important path obvious and keep the output easy to verify.
-      </p>
-    </div>
-
-    <dl class="proof-grid" aria-label="Portfolio delivery proof points">
-      {
-        proofPoints.map((point) => (
-          <div>
-            <dt>{point.value}</dt>
-            <dd>
-              <strong>{point.label}</strong>
-              <span>{point.detail}</span>
-            </dd>
+  <div class="featured-work">
+    {featured.map((project, index) => (
+      <article class="featured-project">
+        <div class="project-media">
+          <img src={project.image} alt={project.imageAlt[locale]} width="1440" height="900" loading={index === 0 ? "eager" : "lazy"} decoding="async" />
+          <span class="project-sequence">{String(index + 1).padStart(2, "0")}</span>
+        </div>
+        <div class="project-copy">
+          <p class="project-kicker">{project.category[locale]} <span aria-hidden="true">/</span> {project.status}</p>
+          <h3>{project.name}</h3>
+          <p class="project-summary">{project.summary[locale]}</p>
+          <ul class="tag-list" aria-label={project.name + " technologies"}>{project.stack.map((item) => <li>{item}</li>)}</ul>
+          <div class="project-actions">
+            <a class="button button-primary" href={"/" + locale + "/work/" + project.slug + "/"}>{copy.work.caseStudy}</a>
+            {project.url ? <a class="button" href={project.url} target="_blank" rel="noopener noreferrer">{copy.work.live} ↗</a> : null}
+            {project.repo ? <a class="text-link" href={project.repo} target="_blank" rel="noopener noreferrer">{copy.work.source} ↗</a> : null}
           </div>
-        ))
-      }
-    </dl>
+        </div>
+      </article>
+    ))}
+  </div>
 
-    <div class="decision-list">
-      <div>
-        <p><span>01</span> Problem</p>
-        <h4>Real work was competing with dashboard decoration and repeated sections.</h4>
-      </div>
-      <div>
-        <p><span>02</span> Decision</p>
-        <h4>Use a text-led hero, editorial rows, one accent and static Astro output.</h4>
-      </div>
-      <div>
-        <p><span>03</span> Result</p>
-        <h4>{projects.length} real projects, authentic previews and no placeholder inventory.</h4>
-      </div>
+  <div class="more-work">
+    <div class="more-work-head"><h3>{copy.work.more}</h3><span>{String(more.length).padStart(2, "0")}</span></div>
+    <div class="more-work-grid">
+      {more.map((project) => (
+        <article class="compact-project">
+          <img src={project.image} alt={project.imageAlt[locale]} width="720" height="450" loading="lazy" decoding="async" />
+          <div>
+            <p>{project.category[locale]}</p>
+            <h3>{project.name}</h3>
+            <p>{project.summary[locale]}</p>
+            <a class="text-link" href={"/" + locale + "/work/" + project.slug + "/"}>{copy.work.caseStudy} →</a>
+          </div>
+        </article>
+      ))}
     </div>
-  </article>
+  </div>
 </section>

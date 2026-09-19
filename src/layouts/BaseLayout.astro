@@ -1,72 +1,94 @@
 ---
-import { site } from "@data/projects";
+import type { Locale } from "@data/site";
+import { site } from "@data/site";
+import { getCopy } from "@i18n/index";
 import "@styles/site.css";
 
 interface Props {
+  locale: Locale;
   title?: string;
   description?: string;
   image?: string;
   imageAlt?: string;
+  canonicalPath?: string;
+  type?: "website" | "article";
 }
 
-const {
-  title = site.title,
-  description = site.description,
-  image = "/assets/img/og-card.png",
-  imageAlt = "Faysk DevOps Engineer — Reliable systems, repeatable delivery"
-} = Astro.props;
-
-const canonicalUrl = new URL(Astro.url.pathname, site.url).toString();
+const { locale, title, description, image = "/assets/img/og-card.png", imageAlt = "Faysk — engineering portfolio", canonicalPath = Astro.url.pathname, type = "website" } = Astro.props;
+const copy = getCopy(locale);
+const pageTitle = title ?? copy.meta.title;
+const pageDescription = description ?? copy.meta.description;
+const canonicalUrl = new URL(canonicalPath, site.url).toString();
 const socialImage = new URL(image, site.url).toString();
-const faviconUrl = new URL("/favicon.svg", site.url).toString();
-const structuredData = {
+const currentWithoutLocale = canonicalPath.replace(/^\/(en|pt)/, "/");
+const alternateEn = new URL("/en" + currentWithoutLocale, site.url).toString();
+const alternatePt = new URL("/pt" + currentWithoutLocale, site.url).toString();
+
+const personSchema = {
   "@context": "https://schema.org",
   "@type": "Person",
-  name: site.owner,
+  name: site.personName,
+  alternateName: site.brand,
   url: site.url,
-  description,
-  image: socialImage,
-  jobTitle: site.role,
-  email: site.contactEmail,
-  sameAs: [site.githubUrl, site.labUrl],
-  knowsAbout: ["DevOps", "CI/CD", "Infrastructure as Code", "Cloud operations", "Observability"],
-  mainEntityOfPage: site.url,
-  logo: faviconUrl
+  jobTitle: "DevOps Engineer",
+  email: "mailto:" + site.email,
+  sameAs: [site.github, site.linkedin],
+  knowsAbout: ["DevOps", "Cloud infrastructure", "CI/CD", "Automation", "Infrastructure as Code", "Product engineering"]
+};
+
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: site.brand,
+  url: site.url,
+  inLanguage: ["en", "pt"]
 };
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={locale} data-theme-preference="system">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content={description} />
-    <meta name="author" content={site.owner} />
-    <meta name="color-scheme" content="dark" />
-    <meta name="theme-color" content="#0b0d0c" />
+    <script is:inline>
+      (() => {
+        try {
+          const preference = localStorage.getItem("faysk-theme") || "system";
+          const effective = preference === "system" ? (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light") : preference;
+          document.documentElement.dataset.theme = effective;
+          document.documentElement.dataset.themePreference = preference;
+        } catch {
+          document.documentElement.dataset.theme = "dark";
+        }
+      })();
+    </script>
+    <meta name="description" content={pageDescription} />
+    <meta name="author" content={site.personName} />
     <meta name="robots" content="index, follow, max-image-preview:large" />
-    <meta property="og:site_name" content={site.name} />
-    <meta property="og:locale" content="en_GB" />
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#0b0e0c" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#f3f5ef" media="(prefers-color-scheme: light)" />
+    <meta property="og:site_name" content={site.brand} />
+    <meta property="og:locale" content={locale === "pt" ? "pt_PT" : "en_GB"} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
     <meta property="og:image" content={socialImage} />
     <meta property="og:image:alt" content={imageAlt} />
-    <meta property="og:image:type" content="image/png" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={type} />
     <meta property="og:url" content={canonicalUrl} />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={description} />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={pageDescription} />
     <meta name="twitter:image" content={socialImage} />
-    <meta name="twitter:image:alt" content={imageAlt} />
     <link rel="canonical" href={canonicalUrl} />
-    <title>{title}</title>
+    <link rel="alternate" hreflang="en" href={alternateEn} />
+    <link rel="alternate" hreflang="pt" href={alternatePt} />
+    <link rel="alternate" hreflang="x-default" href={alternateEn} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" sizes="any" />
-    <link rel="shortcut icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="manifest" href="/site.webmanifest" />
-    <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+    <title>{pageTitle}</title>
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(personSchema)} />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
   </head>
   <body>
     <a class="skip-link" href="#main-content">Skip to content</a>
