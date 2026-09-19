@@ -5,6 +5,8 @@ import { getCopy } from "@i18n/index";
 import "@styles/site.css";
 import "@styles/pages.css";
 
+type StructuredData = Record<string, unknown> | Array<Record<string, unknown>>;
+
 interface Props {
   locale: Locale;
   title?: string;
@@ -15,7 +17,9 @@ interface Props {
   type?: "website" | "article";
   robots?: string;
   alternates?: boolean;
+  structuredData?: StructuredData;
 }
+
 const {
   locale,
   title,
@@ -25,7 +29,8 @@ const {
   canonicalPath = Astro.url.pathname,
   type = "website",
   robots = "index, follow, max-image-preview:large",
-  alternates = true
+  alternates = true,
+  structuredData
 } = Astro.props;
 
 const copy = getCopy(locale);
@@ -36,6 +41,7 @@ const socialImage = new URL(image, site.url).toString();
 const currentWithoutLocale = canonicalPath.replace(/^\/(en|pt)/, "/");
 const alternateEn = new URL("/en" + currentWithoutLocale, site.url).toString();
 const alternatePt = new URL("/pt" + currentWithoutLocale, site.url).toString();
+
 const personSchema = {
   "@context": "https://schema.org",
   "@type": "Person",
@@ -47,6 +53,7 @@ const personSchema = {
   sameAs: [site.github, site.linkedin],
   knowsAbout: ["DevOps", "Cloud infrastructure", "CI/CD", "Automation", "Infrastructure as Code", "Product engineering"]
 };
+
 const websiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
@@ -94,6 +101,7 @@ const websiteSchema = {
 <meta name="twitter:title" content={pageTitle} />
 <meta name="twitter:description" content={pageDescription} />
 <meta name="twitter:image" content={socialImage} />
+<meta name="twitter:image:alt" content={imageAlt} />
 <link rel="canonical" href={canonicalUrl} />
 {alternates ? <link rel="alternate" hreflang="en" href={alternateEn} /> : null}
 {alternates ? <link rel="alternate" hreflang="pt" href={alternatePt} /> : null}
@@ -103,6 +111,7 @@ const websiteSchema = {
 <title>{pageTitle}</title>
 <script is:inline type="application/ld+json" set:html={JSON.stringify(personSchema)} />
 <script is:inline type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
+{structuredData ? <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)} /> : null}
 </head>
 <body><a class="skip-link" href="#main-content">{copy.common.skip}</a><slot /></body>
 </html>

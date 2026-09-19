@@ -1,5 +1,5 @@
 import { access, readdir, readFile, stat } from "node:fs/promises";
-import { dirname, extname, join, normalize, relative } from "node:path";
+import { extname, join, relative } from "node:path";
 
 const root = "dist";
 const failures = [];

@@ -1,7 +1,31 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
 import CvPage from "@components/CvPage.astro";
+import { site } from "@data/site";
+
+const canonicalPath = "/en/cv/";
+const profileSchema = {
+  "@context": "https://schema.org",
+  "@type": "ProfilePage",
+  url: new URL(canonicalPath, site.url).toString(),
+  inLanguage: "en",
+  mainEntity: {
+    "@type": "Person",
+    name: site.personName,
+    alternateName: site.brand,
+    jobTitle: "DevOps Engineer",
+    url: site.url,
+    email: "mailto:" + site.email,
+    sameAs: [site.github, site.linkedin]
+  }
+};
 ---
-<BaseLayout locale="en" title="Renan Silva — DevOps Engineer | CV" description="Renan Silva — DevOps engineer focused on cloud, automation, CI/CD, infrastructure and product engineering." canonicalPath="/en/cv/">
+<BaseLayout
+  locale="en"
+  title="Renan Silva — DevOps Engineer | CV"
+  description="Renan Silva — DevOps engineer focused on cloud, automation, CI/CD, infrastructure and product engineering."
+  canonicalPath={canonicalPath}
+  structuredData={profileSchema}
+>
   <CvPage locale="en" />
 </BaseLayout>
