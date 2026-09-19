@@ -26,6 +26,7 @@ const labels = copy.common.theme;
 <script>
   const button = document.querySelector("[data-theme-toggle]");
   const label = button?.querySelector("[data-theme-label]");
+  const themeColor = document.querySelector("[data-theme-color]");
   const storageKey = "faysk-theme";
   const order = ["system", "light", "dark"] as const;
   type ThemePreference = typeof order[number];
@@ -42,8 +43,11 @@ const labels = copy.common.theme;
     const effective = preference === "system"
       ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
       : preference;
+
     document.documentElement.dataset.theme = effective;
     document.documentElement.dataset.themePreference = preference;
+    themeColor?.setAttribute("content", effective === "dark" ? "#0b0e0c" : "#f3f5ef");
+
     const display = getDisplay(preference);
     if (label) label.textContent = display;
     if (button) {
@@ -53,12 +57,14 @@ const labels = copy.common.theme;
   };
 
   applyTheme(getPreference());
+
   button?.addEventListener("click", () => {
     const current = getPreference();
     const next = order[(order.indexOf(current) + 1) % order.length] ?? "system";
     localStorage.setItem(storageKey, next);
     applyTheme(next);
   });
+
   window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => {
     if (getPreference() === "system") applyTheme("system");
   });

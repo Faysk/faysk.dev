@@ -13,8 +13,21 @@ interface Props {
   imageAlt?: string;
   canonicalPath?: string;
   type?: "website" | "article";
+  robots?: string;
+  alternates?: boolean;
 }
-const { locale, title, description, image = "/assets/img/og-card.png", imageAlt = "Faysk — engineering portfolio", canonicalPath = Astro.url.pathname, type = "website" } = Astro.props;
+const {
+  locale,
+  title,
+  description,
+  image = "/assets/img/og-card.png",
+  imageAlt = "Faysk — engineering portfolio",
+  canonicalPath = Astro.url.pathname,
+  type = "website",
+  robots = "index, follow, max-image-preview:large",
+  alternates = true
+} = Astro.props;
+
 const copy = getCopy(locale);
 const pageTitle = title ?? copy.meta.title;
 const pageDescription = description ?? copy.meta.description;
@@ -23,25 +36,73 @@ const socialImage = new URL(image, site.url).toString();
 const currentWithoutLocale = canonicalPath.replace(/^\/(en|pt)/, "/");
 const alternateEn = new URL("/en" + currentWithoutLocale, site.url).toString();
 const alternatePt = new URL("/pt" + currentWithoutLocale, site.url).toString();
-const personSchema = {"@context":"https://schema.org","@type":"Person",name:site.personName,alternateName:site.brand,url:site.url,jobTitle:"DevOps Engineer",email:"mailto:"+site.email,sameAs:[site.github,site.linkedin],knowsAbout:["DevOps","Cloud infrastructure","CI/CD","Automation","Infrastructure as Code","Product engineering"]};
-const websiteSchema = {"@context":"https://schema.org","@type":"WebSite",name:site.brand,url:site.url,inLanguage:["en","pt"]};
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: site.personName,
+  alternateName: site.brand,
+  url: site.url,
+  jobTitle: "DevOps Engineer",
+  email: "mailto:" + site.email,
+  sameAs: [site.github, site.linkedin],
+  knowsAbout: ["DevOps", "Cloud infrastructure", "CI/CD", "Automation", "Infrastructure as Code", "Product engineering"]
+};
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: site.brand,
+  url: site.url,
+  inLanguage: ["en", "pt"]
+};
 ---
 <!doctype html>
 <html lang={locale} data-theme-preference="system">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#0b0e0c" data-theme-color />
 <script is:inline define:vars={{ locale }}>
   try { localStorage.setItem("faysk-locale", locale); } catch {}
-  (()=>{try{const p=localStorage.getItem("faysk-theme")||"system";const e=p==="system"?(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"):p;document.documentElement.dataset.theme=e;document.documentElement.dataset.themePreference=p}catch{document.documentElement.dataset.theme="dark"}})();
+  (() => {
+    try {
+      const preference = localStorage.getItem("faysk-theme") || "system";
+      const effective = preference === "system"
+        ? (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
+        : preference;
+      document.documentElement.dataset.theme = effective;
+      document.documentElement.dataset.themePreference = preference;
+      const themeColor = document.querySelector("[data-theme-color]");
+      if (themeColor) themeColor.setAttribute("content", effective === "dark" ? "#0b0e0c" : "#f3f5ef");
+    } catch {
+      document.documentElement.dataset.theme = "dark";
+    }
+  })();
 </script>
-<meta name="description" content={pageDescription} /><meta name="author" content={site.personName} /><meta name="robots" content="index, follow, max-image-preview:large" /><meta name="color-scheme" content="light dark" />
-<meta name="theme-color" content="#0b0e0c" media="(prefers-color-scheme: dark)" /><meta name="theme-color" content="#f3f5ef" media="(prefers-color-scheme: light)" />
-<meta property="og:site_name" content={site.brand} /><meta property="og:locale" content={locale==="pt"?"pt_PT":"en_GB"} /><meta property="og:title" content={pageTitle} /><meta property="og:description" content={pageDescription} /><meta property="og:image" content={socialImage} /><meta property="og:image:alt" content={imageAlt} /><meta property="og:type" content={type} /><meta property="og:url" content={canonicalUrl} />
-<meta name="twitter:card" content="summary_large_image" /><meta name="twitter:title" content={pageTitle} /><meta name="twitter:description" content={pageDescription} /><meta name="twitter:image" content={socialImage} />
-<link rel="canonical" href={canonicalUrl} /><link rel="alternate" hreflang="en" href={alternateEn} /><link rel="alternate" hreflang="pt" href={alternatePt} /><link rel="alternate" hreflang="x-default" href={alternateEn} />
-<link rel="icon" href="/favicon.svg" type="image/svg+xml" sizes="any" /><link rel="manifest" href="/site.webmanifest" /><title>{pageTitle}</title>
-<script is:inline type="application/ld+json" set:html={JSON.stringify(personSchema)} /><script is:inline type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
+<meta name="description" content={pageDescription} />
+<meta name="author" content={site.personName} />
+<meta name="robots" content={robots} />
+<meta name="color-scheme" content="light dark" />
+<meta property="og:site_name" content={site.brand} />
+<meta property="og:locale" content={locale === "pt" ? "pt_PT" : "en_GB"} />
+<meta property="og:title" content={pageTitle} />
+<meta property="og:description" content={pageDescription} />
+<meta property="og:image" content={socialImage} />
+<meta property="og:image:alt" content={imageAlt} />
+<meta property="og:type" content={type} />
+<meta property="og:url" content={canonicalUrl} />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={pageTitle} />
+<meta name="twitter:description" content={pageDescription} />
+<meta name="twitter:image" content={socialImage} />
+<link rel="canonical" href={canonicalUrl} />
+{alternates ? <link rel="alternate" hreflang="en" href={alternateEn} /> : null}
+{alternates ? <link rel="alternate" hreflang="pt" href={alternatePt} /> : null}
+{alternates ? <link rel="alternate" hreflang="x-default" href={alternateEn} /> : null}
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" sizes="any" />
+<link rel="manifest" href="/site.webmanifest" />
+<title>{pageTitle}</title>
+<script is:inline type="application/ld+json" set:html={JSON.stringify(personSchema)} />
+<script is:inline type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
 </head>
 <body><a class="skip-link" href="#main-content">{copy.common.skip}</a><slot /></body>
 </html>

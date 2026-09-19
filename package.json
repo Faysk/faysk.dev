@@ -7,7 +7,7 @@
     "dev": "astro dev --host 127.0.0.1",
     "build": "astro check && astro build",
     "postbuild": "node scripts/generate-sitemap.mjs",
-    "validate": "node scripts/validate-dist.mjs && node scripts/check-budgets.mjs",
+    "validate": "node scripts/validate-dist.mjs && node scripts/audit-html.mjs && node scripts/check-budgets.mjs",
     "quality": "npm run build && npm run validate",
     "preview": "astro preview --host 127.0.0.1",
     "check": "astro check"
