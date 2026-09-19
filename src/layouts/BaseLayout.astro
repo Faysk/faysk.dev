@@ -65,13 +65,13 @@ const websiteSchema = {
 };
 ---
 <!doctype html>
-<html lang={locale} data-theme-preference="system">
+<html lang={locale} data-theme-preference="system" data-theme-light={themeColors.light} data-theme-dark={themeColors.dark}>
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="theme-color" content={themeColors.dark} data-theme-color />
-<script is:inline define:vars={{ locale, lightThemeColor: themeColors.light, darkThemeColor: themeColors.dark }}>
-  try { localStorage.setItem("faysk-locale", locale); } catch {}
+<script is:inline>
+  try { localStorage.setItem("faysk-locale", document.documentElement.lang); } catch {}
   (() => {
     try {
       const preference = localStorage.getItem("faysk-theme") || "system";
@@ -81,7 +81,7 @@ const websiteSchema = {
       document.documentElement.dataset.theme = effective;
       document.documentElement.dataset.themePreference = preference;
       const themeColor = document.querySelector("[data-theme-color]");
-      if (themeColor) themeColor.setAttribute("content", effective === "dark" ? darkThemeColor : lightThemeColor);
+      if (themeColor) themeColor.setAttribute("content", effective === "dark" ? document.documentElement.dataset.themeDark : document.documentElement.dataset.themeLight);
     } catch {
       document.documentElement.dataset.theme = "dark";
     }
