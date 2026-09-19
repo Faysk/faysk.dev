@@ -45,6 +45,13 @@ const state = locale === "pt"
     window.location.href = "mailto:" + recipient + "?" + query.toString();
   }
 
+  function makeRequestId() {
+    if (globalThis.crypto?.randomUUID) return globalThis.crypto.randomUUID();
+    const values = new Uint32Array(4);
+    globalThis.crypto?.getRandomValues?.(values);
+    return Array.from(values, (value) => value.toString(16).padStart(8, "0")).join("");
+  }
+
   form?.addEventListener("submit", async (event) => {
     event.preventDefault();
     if (!(form instanceof HTMLFormElement) || !form.reportValidity()) return;
@@ -61,7 +68,8 @@ const state = locale === "pt"
       subject: String(data.get("subject") || "").trim(),
       message: String(data.get("message") || "").trim(),
       website: String(data.get("website") || "").trim(),
-      locale: form.dataset.locale || "en"
+      locale: form.dataset.locale || "en",
+      requestId: makeRequestId()
     };
 
     try {

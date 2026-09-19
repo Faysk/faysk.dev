@@ -28,6 +28,8 @@ jobs:
         run: npm ci
       - name: Production dependency audit
         run: npm audit --omit=dev --audit-level=high
+      - name: Unit tests
+        run: npm test
       - name: Build and type-check
         run: npm run build
       - name: Validate generated site

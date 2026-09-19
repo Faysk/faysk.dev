@@ -1,4 +1,6 @@
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const REQUEST_ID_PATTERN = /^[a-zA-Z0-9_-]{8,128}$/;
+const MAX_BODY_BYTES = 16 * 1024;
 
 function json(body, status = 200) {
   return new Response(JSON.stringify(body), {
@@ -15,6 +17,11 @@ function clean(value, max) {
 }
 
 export async function onRequestPost({ request, env }) {
+  const contentLength = Number(request.headers.get("content-length") || 0);
+  if (Number.isFinite(contentLength) && contentLength > MAX_BODY_BYTES) {
+    return json({ ok: false, error: "payload_too_large" }, 413);
+  }
+
   let input;
   try {
     input = await request.json();
@@ -30,8 +37,15 @@ export async function onRequestPost({ request, env }) {
   const subject = clean(input.subject, 140).replace(/[\r\n]+/g, " ");
   const message = clean(input.message, 4000);
   const locale = clean(input.locale, 8);
+  const requestId = clean(input.requestId, 128);
 
-  if (name.length < 2 || subject.length < 3 || message.length < 10 || !EMAIL_PATTERN.test(email)) {
+  if (
+    name.length < 2 ||
+    subject.length < 3 ||
+    message.length < 10 ||
+    !EMAIL_PATTERN.test(email) ||
+    !REQUEST_ID_PATTERN.test(requestId)
+  ) {
     return json({ ok: false, error: "invalid_fields" }, 400);
   }
 
@@ -43,7 +57,8 @@ export async function onRequestPost({ request, env }) {
     method: "POST",
     headers: {
       "authorization": "Bearer " + env.RESEND_API_KEY,
-      "content-type": "application/json"
+      "content-type": "application/json",
+      "idempotency-key": "portfolio-contact/" + requestId
     },
     body: JSON.stringify({
       from: env.CONTACT_FROM,
