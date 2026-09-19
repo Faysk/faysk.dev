@@ -198,6 +198,11 @@ Node: 22+
 
 The main branch remains production. Significant work should arrive through reviewed pull requests with a green quality check.
 
+## Maintenance guides
+
+- [Brand integration](docs/BRAND-INTEGRATION.md)
+- [Portfolio content guide](docs/CONTENT-GUIDE.md)
+
 ## Working principle
 
 Before adding a feature:
