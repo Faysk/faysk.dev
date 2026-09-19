@@ -6,13 +6,12 @@ const content = {
       title: "Faysk — DevOps, Cloud, Automation & Product Engineering",
       description: "DevOps engineer building reliable infrastructure, automation, production systems and thoughtful digital products."
     },
-    nav: {
-      work: "Work",
-      solutions: "What I solve",
-      experience: "Experience",
-      capabilities: "Capabilities",
-      contact: "Contact",
-      cv: "CV"
+    nav: { work: "Work", solutions: "What I solve", experience: "Experience", capabilities: "Capabilities", contact: "Contact", cv: "CV" },
+    common: {
+      skip: "Skip to content",
+      theme: { system: "System", light: "Light", dark: "Dark" },
+      status: { live: "Live", private: "Private", experiment: "Experiment" },
+      systemView: "System view"
     },
     hero: {
       eyebrow: "DevOps · Cloud · Automation · Product Engineering",
@@ -24,6 +23,7 @@ const content = {
       contactCta: "Let's talk",
       pipelineLabel: "How I think",
       pipeline: ["Code", "Build", "Deploy", "Observe"],
+      pipelineStatus: "production",
       pipelineNote: "Infrastructure to interface · designed for production"
     },
     proof: [
@@ -73,28 +73,24 @@ const content = {
       email: "Your email",
       subject: "Subject",
       message: "Message",
-      send: "Open email draft",
+      send: "Send message",
       direct: "Or email directly",
-      privacy: "This version prepares the message locally and opens your email app. Nothing is stored by this site.",
-      ready: "Draft prepared. Review it in your email app before sending."
+      privacy: "Messages are delivered by the contact endpoint and are not stored in a site database. If delivery is unavailable, the site opens a local email draft instead.",
+      ready: "Message ready."
     },
-    footer: {
-      note: "Built with Astro · designed as a production system",
-      back: "Back to top"
-    }
+    footer: { note: "Built with Astro · designed as a production system", back: "Back to top" }
   },
   pt: {
     meta: {
       title: "Faysk — DevOps, Cloud, Automação & Product Engineering",
       description: "Engenheiro DevOps construindo infraestrutura confiável, automação, sistemas de produção e produtos digitais bem pensados."
     },
-    nav: {
-      work: "Projetos",
-      solutions: "O que resolvo",
-      experience: "Experiência",
-      capabilities: "Capacidades",
-      contact: "Contato",
-      cv: "CV"
+    nav: { work: "Projetos", solutions: "O que resolvo", experience: "Experiência", capabilities: "Capacidades", contact: "Contato", cv: "CV" },
+    common: {
+      skip: "Pular para o conteúdo",
+      theme: { system: "Sistema", light: "Claro", dark: "Escuro" },
+      status: { live: "Online", private: "Privado", experiment: "Experimento" },
+      systemView: "Visão do sistema"
     },
     hero: {
       eyebrow: "DevOps · Cloud · Automação · Product Engineering",
@@ -106,6 +102,7 @@ const content = {
       contactCta: "Vamos conversar",
       pipelineLabel: "Como eu penso",
       pipeline: ["Código", "Build", "Deploy", "Observar"],
+      pipelineStatus: "produção",
       pipelineNote: "Da infraestrutura à interface · pensado para produção"
     },
     proof: [
@@ -155,15 +152,12 @@ const content = {
       email: "Seu email",
       subject: "Assunto",
       message: "Mensagem",
-      send: "Abrir rascunho de email",
+      send: "Enviar mensagem",
       direct: "Ou envie direto",
-      privacy: "Esta versão prepara a mensagem localmente e abre seu aplicativo de email. Nada é armazenado por este site.",
-      ready: "Rascunho preparado. Revise no seu aplicativo de email antes de enviar."
+      privacy: "As mensagens são entregues pelo endpoint de contato e não ficam armazenadas em banco do site. Se o envio estiver indisponível, o site abre um rascunho local no seu aplicativo de email.",
+      ready: "Mensagem pronta."
     },
-    footer: {
-      note: "Construído com Astro · pensado como sistema de produção",
-      back: "Voltar ao topo"
-    }
+    footer: { note: "Construído com Astro · pensado como sistema de produção", back: "Voltar ao topo" }
   }
 } as const;
 

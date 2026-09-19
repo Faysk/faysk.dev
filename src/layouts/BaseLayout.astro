@@ -31,7 +31,10 @@ const websiteSchema = {"@context":"https://schema.org","@type":"WebSite",name:si
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<script is:inline>(()=>{try{const p=localStorage.getItem("faysk-theme")||"system";const e=p==="system"?(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"):p;document.documentElement.dataset.theme=e;document.documentElement.dataset.themePreference=p}catch{document.documentElement.dataset.theme="dark"}})();</script>
+<script is:inline define:vars={{ locale }}>
+  try { localStorage.setItem("faysk-locale", locale); } catch {}
+  (()=>{try{const p=localStorage.getItem("faysk-theme")||"system";const e=p==="system"?(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"):p;document.documentElement.dataset.theme=e;document.documentElement.dataset.themePreference=p}catch{document.documentElement.dataset.theme="dark"}})();
+</script>
 <meta name="description" content={pageDescription} /><meta name="author" content={site.personName} /><meta name="robots" content="index, follow, max-image-preview:large" /><meta name="color-scheme" content="light dark" />
 <meta name="theme-color" content="#0b0e0c" media="(prefers-color-scheme: dark)" /><meta name="theme-color" content="#f3f5ef" media="(prefers-color-scheme: light)" />
 <meta property="og:site_name" content={site.brand} /><meta property="og:locale" content={locale==="pt"?"pt_PT":"en_GB"} /><meta property="og:title" content={pageTitle} /><meta property="og:description" content={pageDescription} /><meta property="og:image" content={socialImage} /><meta property="og:image:alt" content={imageAlt} /><meta property="og:type" content={type} /><meta property="og:url" content={canonicalUrl} />
@@ -40,5 +43,5 @@ const websiteSchema = {"@context":"https://schema.org","@type":"WebSite",name:si
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" sizes="any" /><link rel="manifest" href="/site.webmanifest" /><title>{pageTitle}</title>
 <script is:inline type="application/ld+json" set:html={JSON.stringify(personSchema)} /><script is:inline type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
 </head>
-<body><a class="skip-link" href="#main-content">Skip to content</a><slot /></body>
+<body><a class="skip-link" href="#main-content">{copy.common.skip}</a><slot /></body>
 </html>

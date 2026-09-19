@@ -23,7 +23,7 @@ const more = projects.filter((project) => !project.featured);
           <span class="project-sequence">{String(index + 1).padStart(2, "0")}</span>
         </div>
         <div class="project-copy">
-          <p class="project-kicker">{project.category[locale]} <span aria-hidden="true">/</span> {project.status}</p>
+          <p class="project-kicker">{project.category[locale]} <span aria-hidden="true">/</span> {copy.common.status[project.status]}</p>
           <h3>{project.name}</h3>
           <p class="project-summary">{project.summary[locale]}</p>
           <ul class="tag-list" aria-label={project.name + " technologies"}>{project.stack.map((item) => <li>{item}</li>)}</ul>

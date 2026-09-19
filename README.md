@@ -1,163 +1,207 @@
 # faysk.dev
 
-Personal portfolio for DevOps, infrastructure, CI/CD and production operations.
+Personal engineering portfolio for **Renan Silva / Faysk**.
 
 - Production: https://faysk.dev
-- Repository: https://github.com/Faysk/faysk.dev
+- LinkedIn: https://www.linkedin.com/in/-renansilva/
+- GitHub: https://github.com/Faysk
 - Lab: https://lab.faysk.dev
-- Contact: contato@faysk.dev
 
-## Purpose
+## Product goal
 
-The root domain is a fast, low-maintenance introduction to Faysk's work. It prioritises three things:
+The site is designed as evidence, not just a résumé. It presents infrastructure, DevOps, automation and product engineering through real work, experiments and inspectable technical decisions.
 
-1. shipped work;
-2. relevant professional experience;
-3. a clear operating approach.
+The portfolio intentionally does **not** depend on having a long client list. Personal products, labs and private systems are presented according to what they actually are.
 
-Experiments stay in the lab and larger projects remain in their own repositories. The portfolio links to them instead of becoming a heavy application.
-
-## Current structure
-
-The home page is intentionally short:
-
-- a text-led introduction with a clear DevOps proposition;
-- selected client work and technical experiments with authentic screenshots;
-- a compact delivery note with verifiable build signals;
-- reverse-chronological professional experience;
-- delivery, infrastructure and operations capabilities;
-- an on-site email composer, plus GitHub and the browser lab.
-
-The visual system uses one accent colour, editorial rows instead of repeated card grids, responsive type and hairline borders for hierarchy.
-
-## Stack
+## V2 architecture
 
 - Astro 6
 - TypeScript
 - CSS
+- static output
 - Cloudflare Pages
-- a small static output with no client-side framework or paid runtime service
+- optional Cloudflare Pages Function for contact delivery
+- English and Portuguese routes
+- System / Light / Dark theme
+- no client-side UI framework
 
-## Project layout
+Primary routes:
 
 ~~~text
-faysk.dev/
-├── public/
-│   ├── assets/
-│   ├── _headers
-│   ├── robots.txt
-│   ├── sitemap.xml
-│   └── site.webmanifest
-├── src/
-│   ├── components/
-│   ├── data/
-│   │   └── projects.ts
-│   ├── layouts/
-│   ├── pages/
-│   │   └── index.astro
-│   └── styles/
-├── astro.config.mjs
-└── package.json
+/
+├── en/
+│   ├── cv/
+│   └── work/<slug>/
+└── pt/
+    ├── cv/
+    └── work/<slug>/
 ~~~
 
-## Editing content
+The root route chooses an initial locale from the visitor's saved preference or browser language. Explicit language choices are persisted.
 
-Most portfolio content lives in src/data/projects.ts:
+## Content model
 
-- site: title, description and external URLs;
-- projects: published work shown on the homepage;
-- careerTimeline: professional experience in reverse chronological order;
-- capabilities: the three core areas in the approach section.
+Portfolio content lives primarily in:
 
-Add published work to projects:
-
-~~~ts
-{
-  name: "Project name",
-  type: "client work",
-  status: "live",
-  url: "https://example.com",
-  repo: "https://github.com/Faysk/example",
-  image: "/assets/img/projects/example.jpg",
-  imageAlt: "Concise description of the real project screenshot",
-  description: "One concise sentence about the problem and outcome.",
-  stack: ["Astro", "TypeScript", "Cloudflare"],
-  featured: true
-}
+~~~text
+src/data/site.ts
+src/data/projects.ts
+src/i18n/index.ts
 ~~~
 
-Do not add placeholder projects. A smaller selection of real, reviewable work is more useful than an inventory of future ideas.
+Projects are classified honestly as products, production builds, labs, private systems or portfolio work. Case studies focus on problem, delivery, result and technical surface.
 
-Project screenshots live in public/assets/img/projects. Capture the real production interface, keep the viewport consistent and update the alt text whenever the image changes.
+Commercial metrics are only added when they are real and verifiable.
 
-## Local development
+## Development
 
-Requirements: Node.js 22 or newer.
+Node.js 22 or newer.
 
-~~~powershell
-npm install
+~~~bash
+npm ci
 npm run dev
 ~~~
 
-The local server runs at http://127.0.0.1:4321/.
-
 Quality checks:
 
-~~~powershell
+~~~bash
 npm run check
 npm run build
+npm run validate
 ~~~
 
-Preview the static build:
+The build also generates the sitemap. Validation checks critical generated routes, metadata and initial performance budgets.
 
-~~~powershell
-npm run preview
-~~~
+## Contact endpoint
 
-## Contact composer
-
-The contact section is deliberately static and free:
+The form progressively enhances from an email fallback to direct delivery:
 
 ~~~text
-Form fields → local mailto draft → contato@faysk.dev
-                                → Email Routing → private inbox
+Browser
+  ↓
+POST /api/contact
+  ↓
+Cloudflare Pages Function
+  ↓
+Resend
+  ↓
+contato@faysk.dev
 ~~~
 
-The browser builds the draft locally. The site does not submit, store or process the visitor's name, email, subject or message. The visitor reviews the draft in their configured email application and presses **Send** there.
+If the endpoint is unavailable or not configured, the browser opens a local mail draft instead of discarding the visitor's message.
 
-This avoids a paid email-sending service, a server endpoint and anti-bot infrastructure. The trade-off is that the visitor needs an email application configured on the device. A direct mailto link remains available below the form.
+Required production variables:
 
-contato@faysk.dev is the only destination exposed by the site. The private forwarding inbox is intentionally absent from the repository and browser bundle.
+~~~text
+RESEND_API_KEY
+CONTACT_FROM
+CONTACT_TO
+~~~
+
+CONTACT_TO defaults to contato@faysk.dev.
+
+Copy .env.example for local configuration and **never commit real keys**.
+
+Before enabling direct delivery in production:
+
+1. verify the sending domain with the email provider;
+2. set the secrets in Cloudflare Pages;
+3. test the endpoint from the production domain;
+4. add Turnstile/rate limiting when abuse warrants it.
+
+## Theme
+
+Theme preference cycles through:
+
+~~~text
+System → Light → Dark
+~~~
+
+System mode respects prefers-color-scheme. A tiny head script applies the effective theme before paint to avoid a light/dark flash.
+
+## Internationalisation
+
+Canonical language routes:
+
+~~~text
+/en/
+/pt/
+~~~
+
+Each localized page includes canonical and hreflang metadata. Content and navigation do not rely on client-side translation.
+
+## Case studies
+
+Every current project has an English and Portuguese route. The structure is intentionally reusable so smaller personal projects can become strong portfolio evidence without pretending they were client engagements.
+
+The faysk.dev case study also documents its own delivery architecture.
+
+## CV
+
+The web CV is available at:
+
+~~~text
+/en/cv/
+/pt/cv/
+~~~
+
+It includes print CSS so the browser can save a clean PDF. The long-term goal is to keep web and downloadable CV content derived from the same factual source.
+
+## Quality gates
+
+GitHub Actions runs:
+
+- production dependency audit;
+- Astro type checking;
+- static build;
+- generated-route validation;
+- metadata checks;
+- performance budgets.
+
+Dependabot monitors npm tooling and GitHub Actions monthly.
+
+Current initial per-file budgets:
+
+~~~text
+CSS  ≤ 120 KB
+JS   ≤ 90 KB
+HTML ≤ 180 KB
+~~~
+
+These are guardrails, not performance targets. Real Core Web Vitals remain the product metric.
+
+## Security and privacy
+
+public/_headers contains the security policy for static content.
+
+The site also publishes:
+
+~~~text
+/.well-known/security.txt
+/humans.txt
+~~~
+
+The contact endpoint validates input server-side and includes a honeypot. Messages are delivered by email and are not intentionally stored in a site database.
+
+Do not expose deployment secrets, private infrastructure, customer data or credentials in case studies.
 
 ## Deployment
 
-Recommended Cloudflare Pages settings:
+Cloudflare Pages:
 
 ~~~text
 Framework preset: Astro
-Build command:    npm run build
-Build output:     dist
-Production branch: main
-Node version:     22 or newer
+Build command: npm run build
+Build output: dist
+Node: 22+
 ~~~
 
-public/_headers provides cache and security headers for the deployed site. No Pages Function, Worker secret, Turnstile widget or Email Sending subscription is required.
+The main branch remains production. Significant work should arrive through reviewed pull requests with a green quality check.
 
-## Content guidelines
+## Working principle
 
-- Lead with outcomes, then mention technology.
-- Keep project descriptions to one useful sentence.
-- Add case studies only when there is enough context to explain the problem, constraints and result.
-- Keep navigation small and avoid adding a section unless it introduces new information.
-- Maintain keyboard focus, reduced-motion behaviour and responsive layouts at high zoom.
-- Prefer static content; add client-side JavaScript only when it creates clear user value.
+Before adding a feature:
 
-## Suggested next steps
+> Does it improve the experience, the evidence, or the conversion?
 
-1. Publish one case study with measurable outcomes and before/after context.
-2. Add privacy-friendly analytics only if there is a concrete question to answer.
-3. Recheck project screenshots and external links whenever a project changes.
-
-## Licence
-
-MIT.
+If the answer is only "it shows we can code another thing", it probably does not belong here.

@@ -1,37 +1,23 @@
 ---
 import type { Locale } from "@data/site";
 import type { Project } from "@data/projects";
+import { getCopy } from "@i18n/index";
 
-interface Props {
-  locale: Locale;
-  project: Project;
-}
-
+interface Props { locale: Locale; project: Project; }
 const { locale, project } = Astro.props;
+const copy = getCopy(locale);
 const labels = locale === "pt"
   ? {
-      back: "Projetos",
-      context: "Contexto",
-      problem: "Problema",
-      delivery: "Entrega",
-      result: "Resultado",
-      tech: "Superfície técnica",
+      back: "Projetos", problem: "Problema", delivery: "Entrega", result: "Resultado", tech: "Superfície técnica",
       architecture: "Arquitetura do faysk.dev",
       architectureCopy: "O próprio portfólio é mantido deliberadamente pequeno: conteúdo estático, pouca superfície de execução e deploy previsível.",
-      live: "Ver online",
-      source: "Ver código"
+      live: "Ver online", source: "Ver código"
     }
   : {
-      back: "Work",
-      context: "Context",
-      problem: "Problem",
-      delivery: "Delivery",
-      result: "Result",
-      tech: "Technical surface",
+      back: "Work", problem: "Problem", delivery: "Delivery", result: "Result", tech: "Technical surface",
       architecture: "faysk.dev architecture",
       architectureCopy: "The portfolio is deliberately kept small: static content, little runtime surface and predictable delivery.",
-      live: "View live",
-      source: "View source"
+      live: "View live", source: "View source"
     };
 ---
 
@@ -39,7 +25,7 @@ const labels = locale === "pt"
   <a class="case-back" href={"/" + locale + "/#work"}>← {labels.back}</a>
   <div class="case-hero-grid">
     <div>
-      <p class="eyebrow">{project.category[locale]} · {project.status}</p>
+      <p class="eyebrow">{project.category[locale]} · {copy.common.status[project.status]}</p>
       <h1>{project.name}</h1>
       <p class="case-lede">{project.summary[locale]}</p>
       <div class="project-actions">
@@ -53,12 +39,10 @@ const labels = locale === "pt"
       <ul class="case-disciplines">{project.disciplines.map((item) => <li>{item}</li>)}</ul>
     </div>
   </div>
-  <figure class="case-cover">
-    <img src={project.image} alt={project.imageAlt[locale]} width="1440" height="900" decoding="async" />
-  </figure>
+  <figure class="case-cover"><img src={project.image} alt={project.imageAlt[locale]} width="1440" height="900" decoding="async" /></figure>
 </section>
 
-<section class="case-story" aria-label={labels.context}>
+<section class="case-story">
   <article><span>01</span><h2>{labels.problem}</h2><p>{project.problem[locale]}</p></article>
   <article><span>02</span><h2>{labels.delivery}</h2><p>{project.delivery[locale]}</p></article>
   <article><span>03</span><h2>{labels.result}</h2><p>{project.outcome[locale]}</p></article>
@@ -67,17 +51,14 @@ const labels = locale === "pt"
 {project.slug === "faysk-dev" ? (
   <section class="case-architecture" aria-labelledby="architecture-title">
     <div>
-      <p class="eyebrow">System view</p>
+      <p class="eyebrow">{copy.common.systemView}</p>
       <h2 id="architecture-title">{labels.architecture}</h2>
       <p>{labels.architectureCopy}</p>
     </div>
     <div class="architecture-flow" aria-label="Source to production architecture">
-      <div><span>01</span><strong>GitHub</strong><small>source</small></div>
-      <i aria-hidden="true">→</i>
-      <div><span>02</span><strong>Astro</strong><small>static build</small></div>
-      <i aria-hidden="true">→</i>
-      <div><span>03</span><strong>Cloudflare</strong><small>delivery</small></div>
-      <i aria-hidden="true">→</i>
+      <div><span>01</span><strong>GitHub</strong><small>source</small></div><i aria-hidden="true">→</i>
+      <div><span>02</span><strong>Astro</strong><small>static build</small></div><i aria-hidden="true">→</i>
+      <div><span>03</span><strong>Cloudflare</strong><small>delivery</small></div><i aria-hidden="true">→</i>
       <div><span>04</span><strong>Browser</strong><small>experience</small></div>
     </div>
   </section>

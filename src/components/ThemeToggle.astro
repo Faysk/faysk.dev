@@ -1,8 +1,26 @@
-<button class="utility-button theme-toggle" type="button" data-theme-toggle aria-label="Theme: system" title="Theme: system">
+---
+import type { Locale } from "@data/site";
+import { getCopy } from "@i18n/index";
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+const copy = getCopy(locale);
+const labels = copy.common.theme;
+---
+
+<button
+  class="utility-button theme-toggle"
+  type="button"
+  data-theme-toggle
+  data-label-system={labels.system}
+  data-label-light={labels.light}
+  data-label-dark={labels.dark}
+  aria-label={labels.system}
+  title={labels.system}
+>
   <svg class="theme-icon theme-icon-system" aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="2"></rect><path d="M8 21h8M12 17v4"></path></svg>
   <svg class="theme-icon theme-icon-light" aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.66 6.34l1.41-1.41"></path></svg>
   <svg class="theme-icon theme-icon-dark" aria-hidden="true" viewBox="0 0 24 24"><path d="M20.2 15.3A8.5 8.5 0 0 1 8.7 3.8 8.5 8.5 0 1 0 20.2 15.3Z"></path></svg>
-  <span class="utility-label" data-theme-label>System</span>
+  <span class="utility-label" data-theme-label>{labels.system}</span>
 </button>
 
 <script>
@@ -17,31 +35,30 @@
     return saved === "light" || saved === "dark" ? saved : "system";
   };
 
+  const getDisplay = (preference: ThemePreference) =>
+    button?.getAttribute("data-label-" + preference) || preference;
+
   const applyTheme = (preference: ThemePreference) => {
     const effective = preference === "system"
       ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
       : preference;
-
     document.documentElement.dataset.theme = effective;
     document.documentElement.dataset.themePreference = preference;
-
-    const display = preference.charAt(0).toUpperCase() + preference.slice(1);
+    const display = getDisplay(preference);
     if (label) label.textContent = display;
     if (button) {
-      button.setAttribute("aria-label", "Theme: " + display);
-      button.setAttribute("title", "Theme: " + display);
+      button.setAttribute("aria-label", display);
+      button.setAttribute("title", display);
     }
   };
 
   applyTheme(getPreference());
-
   button?.addEventListener("click", () => {
     const current = getPreference();
     const next = order[(order.indexOf(current) + 1) % order.length] ?? "system";
     localStorage.setItem(storageKey, next);
     applyTheme(next);
   });
-
   window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => {
     if (getPreference() === "system") applyTheme("system");
   });

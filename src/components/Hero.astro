@@ -21,7 +21,7 @@ const copy = getCopy(locale);
   <aside class="pipeline-card" aria-label={copy.hero.pipelineLabel}>
     <div class="pipeline-head">
       <span>{copy.hero.pipelineLabel}</span>
-      <span class="pipeline-state"><i aria-hidden="true"></i> production</span>
+      <span class="pipeline-state"><i aria-hidden="true"></i>{copy.hero.pipelineStatus}</span>
     </div>
     <ol class="pipeline-flow">
       {copy.hero.pipeline.map((item, index) => (
