@@ -56,6 +56,9 @@ faysk.dev/
 │   ├── pages/
 │   │   └── index.astro
 │   └── styles/
+├── functions/
+│   └── api/
+│       └── contact.ts
 ├── astro.config.mjs
 └── package.json
 ~~~
@@ -114,20 +117,23 @@ Preview the static build:
 npm run preview
 ~~~
 
-## Contact composer
+## Contact form
 
-The contact section is deliberately static and free:
+The contact form submits to a Cloudflare Pages Function, which delivers messages through Resend:
 
 ~~~text
-Form fields → local mailto draft → contato@faysk.dev
-                                → Email Routing → private inbox
+Form fields → /api/contact → Resend → configured contact inbox
 ~~~
 
-The browser builds the draft locally. The site does not submit, store or process the visitor's name, email, subject or message. The visitor reviews the draft in their configured email application and presses **Send** there.
+Configure these in Cloudflare Pages for both preview and production. Store `RESEND_API_KEY` as an encrypted secret; set the sender and recipient as environment variables:
 
-This avoids a paid email-sending service, a server endpoint and anti-bot infrastructure. The trade-off is that the visitor needs an email application configured on the device. A direct mailto link remains available below the form.
+~~~text
+RESEND_API_KEY  Restricted Resend API key with permission to send email
+CONTACT_FROM    Sender address on a domain verified with Resend
+CONTACT_TO      contato@faysk.dev
+~~~
 
-contato@faysk.dev is the only destination exposed by the site. The private forwarding inbox is intentionally absent from the repository and browser bundle.
+Never commit or expose `RESEND_API_KEY` in client-side code. The function validates the request, rejects cross-origin submissions, and includes a honeypot field. It does not persist messages. A direct mailto link remains available if delivery is unavailable. The email provider processes the message to deliver it; visitors should not submit sensitive information.
 
 ## Deployment
 
@@ -141,7 +147,7 @@ Production branch: main
 Node version:     22 or newer
 ~~~
 
-public/_headers provides cache and security headers for the deployed site. No Pages Function, Worker secret, Turnstile widget or Email Sending subscription is required.
+public/_headers provides cache and security headers for the deployed site. Cloudflare Pages deploys the `functions/api/contact.ts` function alongside the static output. Configure the environment variables above, then redeploy the preview environment and test delivery before production. Turnstile is not enabled; add it if spam or abuse warrants the additional friction.
 
 ## Content guidelines
 
