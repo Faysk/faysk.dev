@@ -721,6 +721,15 @@ textarea:focus-visible {
   gap: 1.15rem;
 }
 
+.contact-honeypot {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
 .contact-field-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -787,8 +796,17 @@ textarea:focus-visible {
   line-height: 1.5;
 }
 
-.contact-form[data-state="ready"] .contact-status {
+.contact-form[data-state="sent"] .contact-status {
   color: var(--accent);
+}
+
+.contact-form[data-state="error"] .contact-status {
+  color: #e39a91;
+}
+
+.contact-form button:disabled {
+  cursor: wait;
+  opacity: 0.7;
 }
 
 .contact-privacy,
