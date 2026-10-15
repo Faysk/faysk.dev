@@ -161,3 +161,7 @@ public/_headers provides cache and security headers for the deployed site. No Pa
 ## Licence
 
 MIT.
+
+## Search discovery
+
+`public/projects-sitemap.xml` lists the public home pages on the root domain and public project subdomains. It is submitted under the DNS-verified Search Console domain property `faysk.dev`, which establishes ownership for cross-site sitemap submission. Private control planes, vaults, authentication endpoints, media hosts and staging sites are deliberately excluded. Keep this explicit list restricted to public, indexable URLs. Existing project-specific sitemaps remain authoritative for their deeper public pages. Submitting a sitemap does not prove indexing.
